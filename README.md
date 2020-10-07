@@ -4,6 +4,18 @@ Tady budu ukládat svůj závěrečný maturitní projekt. Chci s <a href="https
 <h3>Cíle</h3>
 <p>Cílem tohoto projektu je vytvořit nástěnku úkolů pro více uživatelů, kde můžou mít různí uživatelé různé role a můžou být přiřazováni do různých skupin. Back-end chci vytvořit v Django REST, data ukládat do nějaké SQL databáze a aplikaci jako takovou vyvíjet pro Docker. Bylo by vhodné ukládat k příspěvkům (úkolům) přílohy a externí soubory, zaznamenávat čas a mít možnost provádět řazení a vyhledávání. Dále bych chtěl umožnit autentifikaci uživatelů pomocí E-mailu při registraci/zapomenutí hesla (na e-mail uživatele přijde zpráva s odkazem/kontrolním kódem).</p>
 
+<h3>Jak nainstalovat</h3>
+<p>Prvním a asi nejsložitějším krokem je nainstalování Dockeru. Ve Windows a Mac stačí nainstalovat <a href="https://docs.docker.com/desktop/">Docker Desktop</a>. V Linuxu je to lehce složitější. Mně v Ubuntu 18.04 pomohl <a href="https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04">tento návod</a>, avšak nevěřím, že to půjde takhle lehce všude. Poté je ještě potřeba doinstalovat git a pak už stačí zadat jen tyto 3 příkazy do příkazové řádky: 
+<br>
+```
+git clone https://github.com/matejnesuta/zaverecny-projekt
+cd zaverecny-projekt
+docker-compose up
+```
+Při prvním spuštění ```docker-compose up``` se vytvoří image kontejnerů a poté spustí. Při dalších spuštěních tohoto příkazu se již vytvořené image kontejnerů jen spustí. Kontejnery se dají postavit znovu pomocí příkazů ```docker-compose build```.
+<br>
+Na Windows se může objevit error ohledně toho, že Docker nemá přístup ke složce s projektem (vyznačuje se hláškou: ```ERROR: for db  Cannot create container for service db: status code not OK but 500```). Jeho řešení se dá najít <a href="https://stackoverflow.com/questions/60754297/docker-compose-failed-to-build-filesharing-has-been-cancelled">zde</a></p>
+
 <h3>Testovací repozitáře</h3>
 
 <a href="https://github.com/matejnesuta/django_rest_tutorial">Mé první setkání s Django REST</a>
