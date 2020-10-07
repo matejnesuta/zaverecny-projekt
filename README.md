@@ -7,11 +7,11 @@ Tady budu ukládat svůj závěrečný maturitní projekt. Chci s <a href="https
 <h3>Jak nainstalovat</h3>
 <p>Prvním a asi nejsložitějším krokem je nainstalování Dockeru. Ve Windows a Mac stačí nainstalovat <a href="https://docs.docker.com/desktop/">Docker Desktop</a>. V Linuxu je to lehce složitější. Mně v Ubuntu 18.04 pomohl <a href="https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04">tento návod</a>, avšak nevěřím, že to půjde takhle lehce všude. Poté je ještě potřeba doinstalovat git a pak už stačí zadat jen tyto 3 příkazy do příkazové řádky: 
 <br>
-```
-git clone https://github.com/matejnesuta/zaverecny-projekt<br>
+
+```git clone https://github.com/matejnesuta/zaverecny-projekt<br>
 cd zaverecny-projekt<br>
-docker-compose up<br>
-```
+docker-compose up<br>```
+
 Při prvním spuštění <code>docker-compose up</code> se vytvoří image kontejnerů a poté spustí. Při dalších spuštěních tohoto příkazu se již vytvořené image kontejnerů jen spustí. Kontejnery se dají postavit znovu pomocí příkazů <code>docker-compose build</code>.
 <br>
 Na Windows se může objevit error ohledně toho, že Docker nemá přístup ke složce s projektem (vyznačuje se hláškou: <code>ERROR: for db  Cannot create container for service db: status code not OK but 500</code>). Jeho řešení se dá najít <a href="https://stackoverflow.com/questions/60754297/docker-compose-failed-to-build-filesharing-has-been-cancelled">zde</a>.</p>
