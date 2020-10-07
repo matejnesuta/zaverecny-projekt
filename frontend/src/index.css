@@ -1,0 +1,23 @@
+.center {
+  text-align: center;
+  display: flex;
+}
+
+input {
+  padding: 5px;
+  border-radius: 7px;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+input:focus {
+  border-color: skyblue;
+  background-color: lightgray;
+}
+
+.badge {
+  border-radius: 50%;
+}
