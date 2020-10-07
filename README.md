@@ -8,9 +8,11 @@ Tady budu ukládat svůj závěrečný maturitní projekt. Chci s <a href="https
 <p>Prvním a asi nejsložitějším krokem je nainstalování Dockeru. Ve Windows a Mac stačí nainstalovat <a href="https://docs.docker.com/desktop/">Docker Desktop</a>. V Linuxu je to lehce složitější. Mně v Ubuntu 18.04 pomohl <a href="https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04">tento návod</a>, avšak nevěřím, že to půjde takhle lehce všude. Poté je ještě potřeba doinstalovat git a pak už stačí zadat jen tyto 3 příkazy do příkazové řádky: 
 <br>
 
-```git clone https://github.com/matejnesuta/zaverecny-projekt<br>
-cd zaverecny-projekt<br>
-docker-compose up<br>```
+```
+git clone https://github.com/matejnesuta/zaverecny-projekt
+cd zaverecny-projekt
+docker-compose up
+```
 
 Při prvním spuštění <code>docker-compose up</code> se vytvoří image kontejnerů a poté spustí. Při dalších spuštěních tohoto příkazu se již vytvořené image kontejnerů jen spustí. Kontejnery se dají postavit znovu pomocí příkazů <code>docker-compose build</code>.
 <br>
