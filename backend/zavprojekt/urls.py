@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.views.generic import RedirectView
 from taskboard import views
 from . import settings
@@ -22,14 +22,19 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from dj_rest_auth.registration.views import VerifyEmailView
 from allauth.account.views import ConfirmEmailView
+from accounts.views import null_view
 
 urlpatterns = [
     path('home', views.home, name='home'),
     path('admin/', admin.site.urls),
-    path(r'accounts/', include('accounts.urls')),
+    path(r'^rest-auth/registration/account-email-verification-sent/', null_view,
+        name='account_email_verification_sent'),
+    path(r'^rest-auth/registration/account-confirm-email/', null_view, name='account_confirm_email'),
+    path(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        null_view, name='password_reset_confirm'),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-    path(r'dj-rest-auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$', ConfirmEmailView.as_view(), name='account_email_verification_sent')
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()
