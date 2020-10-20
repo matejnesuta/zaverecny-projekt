@@ -21,20 +21,18 @@ from . import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from dj_rest_auth.registration.views import VerifyEmailView
-from allauth.account.views import ConfirmEmailView
-from accounts.views import null_view
+
+
 
 urlpatterns = [
     path('home', views.home, name='home'),
     path('admin/', admin.site.urls),
-    path(r'^rest-auth/registration/account-email-verification-sent/', null_view,
-        name='account_email_verification_sent'),
-    path(r'^rest-auth/registration/account-confirm-email/', null_view, name='account_confirm_email'),
-    path(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        null_view, name='password_reset_confirm'),
+    path(
+        'dj-rest-auth/registration/account-confirm-email/<str:key>/',
+        VerifyEmailView.as_view(),
+    ),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-
 ]
 
 urlpatterns += staticfiles_urlpatterns()
