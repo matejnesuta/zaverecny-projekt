@@ -1,15 +1,14 @@
-import 'bootstrap/dist/css/bootstrap.css'
-import React from 'react';
-import Login from '../src/Login.js'
-import Registration from '../src/Registration.js'
+import "bootstrap/dist/css/bootstrap.css";
+import React from "react";
+import Login from "./Login";
+import Registration from "./Registration";
+import Main from "./Main";
 
 function App() {
   return (
     <div className="App">
-      <Registration />
-      <Login />
-    </div >
-
+      <Main />
+    </div>
   );
 }
 

@@ -14,10 +14,15 @@ input:focus {
 }
 
 input:focus {
-  border-color: skyblue;
+  border-color: red;
   background-color: lightgray;
 }
 
 .badge {
   border-radius: 50%;
+}
+
+p {
+  text-align: center;
+  text-decoration-line: line-through;
 }
