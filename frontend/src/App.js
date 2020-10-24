@@ -1,13 +1,12 @@
 import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
-import Login from "./Login";
-import Registration from "./Registration";
+import Verification from "./Verification";
 import Main from "./Main";
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      <Verification />
     </div>
   );
 }

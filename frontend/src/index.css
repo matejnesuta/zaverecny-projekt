@@ -14,15 +14,44 @@ input:focus {
 }
 
 input:focus {
-  border-color: red;
-  background-color: lightgray;
+  background-color: #ededed;
 }
 
 .badge {
   border-radius: 50%;
 }
 
-p {
+.logs {
+  background-color: #ededed;
+  border-radius: 5px;
+  border: black 1px dashed;
+  font-size: 0.9em;
+}
+
+.logs_header {
+  font-weight: 500;
+  font-size: 1.1em;
+  border-bottom: gray 1px solid;
+}
+
+.logs_body {
+  font-size: 0.9em;
+}
+
+footer {
   text-align: center;
   text-decoration-line: line-through;
+}
+
+th {
+  font-size: 1.1em;
+}
+
+ul {
+  display: flex;
+}
+
+li {
+  flex: 1;
+  font-size: 1.1em;
 }

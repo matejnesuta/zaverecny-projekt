@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import CalendarDay from "./CalendarDay";
 
 class Calendar extends Component {
   state = {
-    month: [
+    months: [
       "Leden",
       "Únor",
       "Březen",
@@ -21,12 +20,22 @@ class Calendar extends Component {
     year: 2020,
   };
 
-  handleClickLeft = () => {
+  handleYearClickLeft = () => {
+    this.setState({
+      year: this.state.year - 1,
+    });
+  };
+
+  handleYearClickRight = () => {
+    this.setState({
+      year: this.state.year + 1,
+    });
+  };
+
+  handleMonthClickLeft = () => {
     if (this.state.monthIndex === 0) {
       this.setState({
         monthIndex: 11,
-      });
-      this.setState({
         year: this.state.year - 1,
       });
     } else {
@@ -36,12 +45,10 @@ class Calendar extends Component {
     }
   };
 
-  handleClickRight = () => {
+  handleMonthClickRight = () => {
     if (this.state.monthIndex === 11) {
       this.setState({
         monthIndex: 0,
-      });
-      this.setState({
         year: this.state.year + 1,
       });
     } else {
@@ -53,58 +60,67 @@ class Calendar extends Component {
 
   render() {
     return (
-      <div className="row m-4">
-        <div className="col-12">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>
-                  <div className="row">
-                    <div className="col-2">
-                      <button
-                        id="mnth_left"
-                        className="btn"
-                        onClick={this.handleClickLeft}
-                      >
-                        <i
-                          className="fa fa-angle-left fa-4x"
-                          aria-hidden="true"
-                        ></i>
-                      </button>
-                    </div>
-                    <div className="col-8 text-center">
-                      <h3 className="display-4 ">
-                        {this.state.month[this.state.monthIndex] +
-                          " " +
-                          this.state.year}
-                      </h3>
-                    </div>
-                    <div className="col-2 text-right">
-                      <button
-                        id="mnth_right"
-                        className="btn"
-                        onClick={this.handleClickRight}
-                      >
-                        <i
-                          className="fa fa-angle-right fa-4x"
-                          aria-hidden="true"
-                        ></i>
-                      </button>
-                    </div>
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <div className="row m-2">
-                  <div className="col-12">
-                    <CalendarDay />
-                  </div>
-                </div>
-              </tr>
-            </tbody>
-          </table>
+      <div>
+        <div className="row m-4">
+          <div className="col-1 text-left">
+            <button
+              id="year_left"
+              className="btn"
+              onClick={this.handleYearClickLeft}
+            >
+              <i class="fa fa-angle-double-left fa-4x" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div className="col-1 text-left">
+            <button
+              id="mnth_left"
+              className="btn"
+              onClick={this.handleMonthClickLeft}
+            >
+              <i className="fa fa-angle-left fa-4x" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div className="col-8 text-center">
+            <h3 className="display-4 ">
+              {this.state.months[this.state.monthIndex] + " " + this.state.year}
+            </h3>
+          </div>
+          <div className="col-1 text-right">
+            <button
+              id="mnth_right"
+              className="btn"
+              onClick={this.handleMonthClickRight}
+            >
+              <i className="fa fa-angle-right fa-4x" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div className="col-1 text-right">
+            <button
+              id="year_right"
+              className="btn"
+              onClick={this.handleYearClickRight}
+            >
+              <i class="fa fa-angle-double-right fa-4x" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div className="row m-4">
+          <div className="col-12">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Pondělí</th>
+                  <th>Úterý</th>
+                  <th>Středa</th>
+                  <th>Čtvrtek</th>
+                  <th>Pátek</th>
+                  <th>Sobota</th>
+                  <th>Neděle</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

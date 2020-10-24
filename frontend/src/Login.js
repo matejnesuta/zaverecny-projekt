@@ -9,8 +9,9 @@ class Login extends Component {
   };
 
   handleChange = (event) => {
+    const { name, value } = event.targe;
     this.setState({
-      [event.target.name]: event.target.value,
+      [name]: value,
     });
   };
 
@@ -115,6 +116,9 @@ class Login extends Component {
                 <div className="form-group">
                   <label className="m-3 font-weight-bold">Email</label>
                   <input
+                    style={{
+                      borderColor: this.state.loginError ? "red" : "black",
+                    }}
                     type="text"
                     name="log_email"
                     id="log_email"
@@ -126,6 +130,9 @@ class Login extends Component {
                 <div className="form-group">
                   <label className="m-3 font-weight-bold">Heslo</label>
                   <input
+                    style={{
+                      borderColor: this.state.loginError ? "red" : "black",
+                    }}
                     type="password"
                     name="log_password"
                     id="log_password"
@@ -163,6 +170,14 @@ class Login extends Component {
               </form>
             </div>
           </div>
+          <hr />
+          <footer>
+            <div class="row">
+              <div class="col-12">
+                <p>&copy; Le epique programué teamé 2020</p>
+              </div>
+            </div>
+          </footer>
         </div>
       </div>
     );

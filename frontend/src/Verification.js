@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-class Registration extends Component {
+class Login extends Component {
   state = {
-    email: "",
-    password1: "",
-    password2: "",
-    loginError: true,
+    key: "",
+    loginError: false,
   };
 
   handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.targe;
     this.setState({
       [name]: value,
     });
@@ -18,11 +16,11 @@ class Registration extends Component {
 
   handleSubmit = (event) => {
     axios
-      .post("http://localhost:8000/dj-rest-auth/registration/", {
-        email: this.state.email,
-        password1: this.state.password1,
-        password2: this.state.password2,
-      })
+      .post(
+        "/auth/registration/verify-email/",
+        { key: this.state.key },
+        { withCredentials: true }
+      )
       .then((response) => {
         console.log(response);
       })
@@ -35,9 +33,11 @@ class Registration extends Component {
   badLogin() {
     if (this.state.loginError === true) {
       return (
-        <div className="col-12">
+        <div className="col-12 p-2">
           <span className="badge badge-pill badge-danger m-1">!</span>
-          <small className="text-danger">Hesla se neshodují.</small>
+          <small className="text-danger">
+            Nepodařilo se ověřit registraci.
+          </small>
         </div>
       );
     }
@@ -111,58 +111,33 @@ class Registration extends Component {
           <div className="row center p-3 m-4">
             <div className="col-12">
               <div className="m-4">
-                <h2>Registrace</h2>
+                <h2>Ověření</h2>
               </div>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                  <label className="m-3 font-weight-bold">Email</label>
+                  <label className="m-3 font-weight-bold">Klíč</label>
                   <input
                     style={{
                       borderColor: this.state.loginError ? "red" : "black",
                     }}
                     type="text"
-                    name="email"
-                    id="email"
-                    placeholder="Enter email"
+                    name="log_email"
+                    id="log_email"
+                    placeholder="Enter key"
                     value={this.state.email}
                     onChange={this.handleChange}
                   ></input>
                 </div>
-                <div className="form-group">
-                  <label className="m-3 font-weight-bold">Heslo</label>
-                  <input
-                    style={{
-                      borderColor: this.state.loginError ? "red" : "black",
-                    }}
-                    type="password"
-                    name="password1"
-                    id="password1"
-                    placeholder="Enter password"
-                    value={this.state.password1}
-                    onChange={this.handleChange}
-                  ></input>
+                <div className="row m-3">
+                  <div className="col-12">
+                    <button
+                      type="submit"
+                      className="btn btn-outline-dark btn-warning"
+                    >
+                      Submit
+                    </button>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label className="m-3 font-weight-bold">Heslo(2)</label>
-                  <input
-                    style={{
-                      borderColor: this.state.loginError ? "red" : "black",
-                    }}
-                    type="password"
-                    name="password2"
-                    id="password2"
-                    placeholder="Enter password again"
-                    value={this.state.password2}
-                    onChange={this.handleChange}
-                  ></input>
-                </div>
-                <div className="row m-3">{this.badLogin()}</div>
-                <button
-                  type="submit"
-                  className="btn btn-outline-dark btn-warning"
-                >
-                  Submit
-                </button>
               </form>
             </div>
           </div>
@@ -180,4 +155,4 @@ class Registration extends Component {
   }
 }
 
-export default Registration;
+export default Login;
