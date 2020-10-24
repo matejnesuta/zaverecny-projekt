@@ -27,12 +27,8 @@ from dj_rest_auth.registration.views import VerifyEmailView
 urlpatterns = [
     path('home', views.home, name='home'),
     path('admin/', admin.site.urls),
-    path(
-        'dj-rest-auth/registration/account-confirm-email/<str:key>/',
-        VerifyEmailView.as_view(),
-    ),
-    path('dj-rest-auth/', include('dj_rest_auth.urls')),
-    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('auth/', include('dj_rest_auth.urls')),
+    path('auth/registration/', include('dj_rest_auth.registration.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
