@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import RedirectView
-from taskboard import views
+from taskboard.views import profile
 from . import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -25,10 +25,9 @@ from dj_rest_auth.registration.views import VerifyEmailView
 
 
 urlpatterns = [
-    path('home', views.home, name='home'),
     path('admin/', admin.site.urls),
-    path('auth/', include('dj_rest_auth.urls')),
-    path('auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('auth/', include('accounts.urls')),
+    path('profiles/', profile)
 ]
 
 urlpatterns += staticfiles_urlpatterns()

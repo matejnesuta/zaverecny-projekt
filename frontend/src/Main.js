@@ -3,11 +3,11 @@ import Calendar from "./Calendar";
 import UpdateLog from "./UpdateLog";
 import woke from "./images/woke.jpg";
 import fanda from "./images/unnamed.jpg";
+import axios from "axios";
 
 class Main extends Component {
   state = {
-    username: ["bongJ", "scoutJ"],
-    content: ["Dutch YungThug bongJ", "OMG scoutJ 1v5 with scout"],
+    logs: [],
     loading: true,
   };
 
@@ -17,6 +17,21 @@ class Main extends Component {
         loading: false,
       });
     }, 1000);
+
+    axios.get("http://localhost:8000/profiles").then((res) => {
+      const users = res.data;
+      const receivedData = users.map((user) => (
+        <UpdateLog
+          key={user.id}
+          name={user.first_name}
+          content={user.last_name}
+          imgUrl={user.profile_pic}
+        />
+      ));
+      this.setState({
+        logs: receivedData,
+      });
+    });
   }
 
   render() {
@@ -96,14 +111,14 @@ class Main extends Component {
                       aria-labelledby="navbarDropdownMenuLink"
                     >
                       <a className="dropdown-item" href="/#">
-                        <i class="fa fa-home" aria-hidden="true"></i> Homepage
+                        <i className="fa fa-home" aria-hidden="true"></i> Homepage
                       </a>
                       <a className="dropdown-item" href="/#">
-                        <i class="fa fa-cog" aria-hidden="true"></i> Edit
+                        <i className="fa fa-cog" aria-hidden="true"></i> Edit
                         Profile
                       </a>
                       <a className="dropdown-item" href="/#">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i> Log
+                        <i className="fa fa-sign-out" aria-hidden="true"></i> Log
                         Out
                       </a>
                     </div>
@@ -117,21 +132,12 @@ class Main extends Component {
               <Calendar />
             </div>
             <div>
-              <UpdateLog
-                imgUrl={woke}
-                name={this.state.username[0]}
-                content={this.state.content[0]}
-              />
-              <UpdateLog
-                imgUrl={fanda}
-                name={this.state.username[1]}
-                content={this.state.content[1]}
-              />
+                {this.state.logs}
             </div>
             <hr />
             <footer>
-              <div class="row">
-                <div class="col-12">
+              <div className="row">
+                <div className="col-12">
                   <p>&copy; Le epique programué teamé 2020</p>
                 </div>
               </div>

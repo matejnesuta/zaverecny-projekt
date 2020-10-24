@@ -1,10 +1,12 @@
-from django.conf.urls import url
-from . import views
-
-app_name = 'accounts'
+from django.urls import path, include, re_path
+from django.views.generic import TemplateView
+from .views import RegisterView, null_view
+from dj_rest_auth.registration.views import VerifyEmailView
 
 urlpatterns = [
-    url(r'^signup', views.signup_view, name="signup"),
-    url(r'^success$', views.success, name="success"),
-    url(r'^logout', views.logout_view, name="logout")
+    path('registration/account-confirm-email/', null_view, name='account_confirm_email'),
+    path('registration/', RegisterView.as_view(), name='rest_register'),
+
+    path('registration/verify-email/', VerifyEmailView.as_view(), name='rest_verify_email'),
+    path('', include('dj_rest_auth.urls')),
 ]
