@@ -30,6 +30,9 @@ Na Windows se může objevit error ohledně toho, že Docker nemá přístup ke 
 
 <h3>Průběh práce</h3> 
 
+<h5>30. 10. 2020</h5>
+<p>Ztratil jsem absolutně pojem o čase. Docker funguje, propojení funguje, verifikace by taky měla (otestuju až se vyspím). Také úspěšně vypisuju na frontend data z databáze. Spoustu času jsem strávil analýzou kódu <a href="https://github.com/jazzband/dj-rest-auth/">dj-rest-auth</a> a sekce issues. 
+
 <h5>07. 10. 2020</h5>
 <p>Front-end a back-end má nyní každý svůj kontejner v Dockeru. Spoustu času mi trvalo vyřešit jejich propojení 
 (React neviděl Django) a i potom mi Django házelo 400 bad request a já zatím nevím proč. Dopoledne dodám návod na instalaci.<br>
