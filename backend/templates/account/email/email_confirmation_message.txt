@@ -1,0 +1,11 @@
+Dobrý den
+
+Založil jste si u naší služby účet, jehož e-mailová adresa není potvrzena. Pro potvrzení klikněte na adresu
+{% if request.is_secure %}https{% else %}http{% endif %}://localhost:3000/verification a zadejte nasledující klíč:
+
+{{ key }}
+
+Pokud jste si žádný účet nezakládal, tuto zprávu prosím ignorujte.
+
+
+Tento e-mail byl vygenerován automaticky.

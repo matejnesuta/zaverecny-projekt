@@ -22,11 +22,10 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from dj_rest_auth.registration.views import VerifyEmailView
 
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('accounts.urls')),
+    path('account/', include('allauth.urls')),
     path('profiles/', profile)
 ]
 
