@@ -140,8 +140,8 @@ class Login extends Component {
           </div>
           <hr />
           <footer>
-            <div class="row">
-              <div class="col-12">
+            <div className="row">
+              <div className="col-12">
                 <p>&copy; Le epique programué teamé 2020</p>
               </div>
             </div>

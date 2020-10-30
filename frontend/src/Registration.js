@@ -19,7 +19,7 @@ class Registration extends Component {
 
   handleSubmit = (event) => {
     axios
-      .post("http://localhost:8000/dj-rest-auth/registration/", {
+      .post("http://localhost:8000/auth/registration/", {
         email: this.state.email,
         password1: this.state.password1,
         password2: this.state.password2,
@@ -114,8 +114,8 @@ class Registration extends Component {
           </div>
           <hr />
           <footer>
-            <div class="row">
-              <div class="col-12">
+            <div className="row">
+              <div className="col-12">
                 <p>&copy; Le epique programué teamé 2020</p>
               </div>
             </div>

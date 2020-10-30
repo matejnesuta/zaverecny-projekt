@@ -15,7 +15,7 @@ class Profile extends Component {
   handleSubmit = (event) => {
     axios
       .post(
-        "localhost:8000/dj-rest-auth/login/",
+        "localhost:8000/auth/login/",
         { email: this.state.email, password: this.state.password },
         { withCredentials: true }
       )
@@ -193,8 +193,8 @@ class Profile extends Component {
             </div>
             <hr />
             <footer>
-              <div class="row">
-                <div class="col-12">
+              <div className="row">
+                <div className="col-12">
                   <p>&copy; Le epique programué teamé 2020</p>
                 </div>
               </div>

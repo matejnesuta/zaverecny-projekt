@@ -4,6 +4,7 @@ import UpdateLog from "./UpdateLog";
 import woke from "./images/woke.jpg";
 import fanda from "./images/unnamed.jpg";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Main extends Component {
   state = {
@@ -131,21 +132,12 @@ class Main extends Component {
             <Calendar />
           </div>
           <div>
-            <UpdateLog
-              imgUrl={woke}
-              name={this.state.username[0]}
-              content={this.state.content[0]}
-            />
-            <UpdateLog
-              imgUrl={fanda}
-              name={this.state.username[1]}
-              content={this.state.content[1]}
-            />
+            {this.state.logs}
           </div>
           <hr />
           <footer>
-            <div class="row">
-              <div class="col-12">
+            <div className="row">
+              <div className="col-12">
                 <p>&copy; Le epique programué teamé 2020</p>
               </div>
             </div>
