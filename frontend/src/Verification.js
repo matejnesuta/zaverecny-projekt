@@ -99,7 +99,7 @@ class Login extends Component {
                 </li>
                 <li className="nav-item active">
                   <a className="nav-link" href="/#">
-                    <i className="fa fa-home fa-2x" aria-hidden="true"></i>
+                    <i className="fa fa-home fa-3x" aria-hidden="true"></i>
                     <span className="sr-only">(current)</span>
                   </a>
                 </li>
@@ -111,7 +111,7 @@ class Login extends Component {
           <div className="row center p-3 m-4">
             <div className="col-12">
               <div className="m-4">
-                <h2>Ověření</h2>
+                <h2 className="display-4">Ověření emailu</h2>
               </div>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
@@ -130,10 +130,7 @@ class Login extends Component {
                 </div>
                 <div className="row m-3">
                   <div className="col-12">
-                    <button
-                      type="submit"
-                      className="btn btn-outline-dark btn-warning"
-                    >
+                    <button type="submit" className="btn btn-primary">
                       Submit
                     </button>
                   </div>
