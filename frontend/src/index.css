@@ -24,7 +24,7 @@ input:focus {
 .logs {
   background-color: #ededed;
   border-radius: 5px;
-  border: black 1px dashed;
+  border: black 1px solid;
   font-size: 0.9em;
 }
 
@@ -54,4 +54,8 @@ ul {
 li {
   flex: 1;
   font-size: 1.1em;
+}
+
+nav {
+  border-bottom: #209cee 10px double;
 }
