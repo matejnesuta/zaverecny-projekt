@@ -1,4 +1,6 @@
 #!/bin/sh
-python manage.py makemigrations
-python manage.py migrate
+cd backend
+python3 manage.py makemigrations
+python3 manage.py migrate
+cd ..
 exec "$@"
