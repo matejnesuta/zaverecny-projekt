@@ -144,7 +144,7 @@ DATABASES = {
         "NAME": "rest_api",
         "USER": "docker",
         "PASSWORD": "docker",
-        "HOST": "localhost",
+        "HOST": "db",
         "PORT": "5432",
     }
 }

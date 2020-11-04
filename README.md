@@ -30,6 +30,9 @@ Na Windows se může objevit error ohledně toho, že Docker nemá přístup ke 
 
 <h3>Průběh práce</h3> 
 
+<h5>04. 11. 2020</h5>
+<p>Databáze má vlastní kontejner. Je potřeba doplnit sekci o instalaci, jelikož instalace samotná se lehce rozšířila.</p>
+
 <h5>30. 10. 2020</h5>
 <p>Ztratil jsem absolutně pojem o čase. Docker funguje, propojení funguje, verifikace by taky měla (otestuju až se vyspím). Také úspěšně vypisuju na frontend data z databáze. Spoustu času jsem strávil analýzou kódu <a href="https://github.com/jazzband/dj-rest-auth/">dj-rest-auth</a> a sekce issues. 
 
