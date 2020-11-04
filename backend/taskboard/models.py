@@ -19,6 +19,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="First name")
     last_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="Last name")
     profile_pic = models.ImageField(upload_to=profile_pic_path, verbose_name="Profile picture", blank=True, null=True)
+    bio = models.CharField(max_length=150, null=True, verbose_name="Bio")
 
     class Meta:
         ordering = ["user__email", "last_name"]
@@ -108,6 +109,19 @@ class Attachment(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    text = models.CharField(max_length=1000, verbose_name="Text", blank=False, null=False)
+    time = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "Comment"
+
+    def __str__(self):
+        return f"{self.author.first_name} {self.author.last_name}, {self.task.title}, {self.text}"
 
 
 class Log(models.Model):
