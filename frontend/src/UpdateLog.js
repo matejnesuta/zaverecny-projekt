@@ -16,7 +16,7 @@ class UpdateLog extends Component {
             />
             {this.props.name}
           </p>
-          <p className="ml-5 logs_body">{this.props.content}</p>
+          <div className="ml-5 m-2 logs_body">{this.props.content}</div>
         </div>
       </div>
     );

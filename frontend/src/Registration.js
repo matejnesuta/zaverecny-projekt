@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 class Registration extends Component {
   state = {
@@ -18,23 +19,25 @@ class Registration extends Component {
   };
 
   handleSubmit = (event) => {
-    axios
-      .post("http://localhost:8000/auth/registration/", {
-        email: this.state.email,
-        password1: this.state.password1,
-        password2: this.state.password2,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    event.preventDefault();
+    if (this.state.password1 === this.state.password2) {
+      axios
+        .post("http://localhost:8000/auth/registration/", {
+          email: this.state.email,
+          password1: this.state.password1,
+          password2: this.state.password2,
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      event.preventDefault();
+    }
   };
 
-  badLogin() {
-    if (this.state.loginError === true) {
+  authError() {
+    if (this.state.registrationError) {
       return (
         <div className="col-12">
           <span className="badge badge-pill badge-danger m-1">!</span>
@@ -65,7 +68,7 @@ class Registration extends Component {
                     }}
                     type="text"
                     name="email"
-                    id="email"
+                    id="reg_email"
                     placeholder="Zadejte email"
                     value={this.state.email}
                     onChange={this.handleChange}
@@ -105,7 +108,7 @@ class Registration extends Component {
                     onChange={this.handleChange}
                   ></input>
                 </div>
-                <div className="row m-3">{this.badLogin()}</div>
+                <div className="row m-3">{this.authError()}</div>
                 <button type="submit" className="btn btn-primary px-3">
                   Odeslat
                 </button>

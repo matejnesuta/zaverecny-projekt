@@ -19,8 +19,8 @@ class Login extends Component {
   handleSubmit = (event) => {
     axios
       .post(
-        "http://localhost:8000/auth/login/",
-        { email: this.state.email, password: this.state.password,},
+        "localhost:8000/auth/login/",
+        { email: this.state.email, password: this.state.password },
         { withCredentials: true }
       )
       .then((response) => {
@@ -32,8 +32,8 @@ class Login extends Component {
     event.preventDefault();
   };
 
-  badLogin() {
-    if (this.state.loginError === true) {
+  authError() {
+    if (this.state.loginError) {
       return (
         <div className="col-12 p-2">
           <span className="badge badge-pill badge-danger m-1">!</span>
@@ -61,7 +61,7 @@ class Login extends Component {
                       borderColor: this.state.loginError ? "red" : "black",
                     }}
                     type="text"
-                    name="email"
+                    name="log_email"
                     id="log_email"
                     placeholder="Zadejte email"
                     value={this.state.email}
@@ -75,13 +75,13 @@ class Login extends Component {
                       borderColor: this.state.loginError ? "red" : "black",
                     }}
                     type="password"
-                    name="password"
+                    name="log_password"
                     id="log_password"
                     placeholder="Zadejte heslo"
                     value={this.state.password}
                     onChange={this.handleChange}
                   ></input>
-                  <div className="row">{this.badLogin()}</div>
+                  <div className="row">{this.authError()}</div>
                 </div>
                 <div className="row m-3">
                   <div className="col-12">

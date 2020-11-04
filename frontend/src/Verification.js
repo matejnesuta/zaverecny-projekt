@@ -30,7 +30,7 @@ class Login extends Component {
     event.preventDefault();
   };
 
-  badLogin() {
+  authError() {
     if (this.state.loginError === true) {
       return (
         <div className="col-12 p-2">
@@ -140,8 +140,8 @@ class Login extends Component {
           </div>
           <hr />
           <footer>
-            <div className="row">
-              <div className="col-12">
+            <div class="row">
+              <div class="col-12">
                 <p>&copy; Le epique programué teamé 2020</p>
               </div>
             </div>
