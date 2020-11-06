@@ -1,0 +1,64 @@
+.center {
+  text-align: center;
+  display: flex;
+}
+
+input {
+  padding: 5px;
+  border-radius: 7px;
+  border-color: #209cee;
+}
+
+textarea {
+  border: #209cee 1px solid;
+  border-radius: 5px;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  background-color: #ededed;
+}
+
+.badge {
+  border-radius: 50%;
+}
+
+.logs {
+  background-color: #ededed;
+  border-radius: 5px;
+  border: black 1px solid;
+  font-size: 0.9em;
+}
+
+.logs_header {
+  font-weight: 500;
+  font-size: 1.1em;
+  border-bottom: gray 1px solid;
+}
+
+.logs_body {
+  font-size: 0.9em;
+}
+
+footer {
+  text-align: center;
+  text-decoration-line: line-through;
+}
+
+th {
+  font-size: 1.1em;
+}
+
+ul {
+  display: flex;
+}
+
+li {
+  flex: 1;
+  font-size: 1.1em;
+}
+
+nav {
+  border-bottom: #209cee 10px double;
+}
