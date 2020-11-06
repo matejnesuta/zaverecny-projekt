@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 
-class Login extends Component {
+class Verification extends Component {
   state = {
     key: "",
-    loginError: false,
+    verificationError: false,
   };
 
   handleChange = (event) => {
-    const { name, value } = event.targe;
+    const { name, value } = event.target;
     this.setState({
       [name]: value,
     });
@@ -18,7 +18,7 @@ class Login extends Component {
   handleSubmit = (event) => {
     axios
       .post(
-        "/auth/registration/verify-email/",
+        "http://localhost:8000/auth/registration/verify-email/",
         { key: this.state.key },
         { withCredentials: true }
       )
@@ -32,7 +32,7 @@ class Login extends Component {
   };
 
   authError() {
-    if (this.state.loginError === true) {
+    if (this.state.verificationError === true) {
       return (
         <div className="col-12 p-2">
           <span className="badge badge-pill badge-danger m-1">!</span>
@@ -62,10 +62,10 @@ class Login extends Component {
                       borderColor: this.state.loginError ? "red" : "black",
                     }}
                     type="text"
-                    name="log_email"
-                    id="log_email"
+                    name="key"
+                    id="ver_key"
                     placeholder="Zadejte klíč"
-                    value={this.state.email}
+                    value={this.state.key}
                     onChange={this.handleChange}
                   ></input>
                 </div>
@@ -93,4 +93,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Verification;
