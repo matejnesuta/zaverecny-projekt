@@ -103,7 +103,10 @@ class Calendar extends Component {
               className="btn"
               onClick={this.handleYearClickRight}
             >
-              <i className="fa fa-angle-double-right fa-4x" aria-hidden="true"></i>
+              <i
+                className="fa fa-angle-double-right fa-4x"
+                aria-hidden="true"
+              ></i>
             </button>
           </div>
         </div>

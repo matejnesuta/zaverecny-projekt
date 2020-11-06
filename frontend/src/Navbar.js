@@ -1,8 +1,62 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import user_icon from "./images/user_icon.jpg";
 
 class Navbar extends Component {
   state = {};
+
+  loggedIn() {
+    if (this.props.isLoggedIn) {
+      return (
+        <li className="nav-item dropdown">
+          <a
+            className="nav-link dropdown-toggle"
+            href="/#"
+            id="navbarDropdownMenuLink"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img
+              src={user_icon}
+              alt="profile_pic"
+              width="50"
+              height="50"
+              className="rounded-circle"
+            />
+          </a>
+          <div
+            className="dropdown-menu"
+            aria-labelledby="navbarDropdownMenuLink"
+          >
+            <Link className="dropdown-item" to="/">
+              <i className="fa fa-home" aria-hidden="true"></i> Hlavní stránka
+            </Link>
+
+            <Link className="dropdown-item" to="/profile">
+              <i className="fa fa-cog" aria-hidden="true"></i> Upravit profil
+            </Link>
+
+            <Link className="dropdown-item" to="/login">
+              <i className="fa fa-sign-out" aria-hidden="true"></i>
+              Odhlásit se
+            </Link>
+          </div>
+        </li>
+      );
+    } else {
+      return (
+        <li className="nav-item active">
+          <Link className="nav-link" style={{ color: "white" }} to="/">
+            <i className="fa fa-home fa-3x" aria-hidden="true"></i>
+            <span className="sr-only">(current)</span>
+          </Link>
+        </li>
+      );
+    }
+  }
+
   render() {
     return (
       <div>
@@ -50,12 +104,7 @@ class Navbar extends Component {
                   Moje motivace
                 </a>
               </li>
-              <li className="nav-item active">
-                <Link className="nav-link" style={{ color: "white" }} to="/">
-                  <i className="fa fa-home fa-3x" aria-hidden="true"></i>
-                  <span className="sr-only">(current)</span>
-                </Link>
-              </li>
+              {this.loggedIn()}
             </ul>
           </div>
         </nav>

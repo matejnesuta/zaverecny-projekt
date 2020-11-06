@@ -46,7 +46,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar isLoggedIn={false} />
         <div className="container">
           <div className="row center p-3 m-4">
             <div className="col-12">
@@ -61,7 +61,7 @@ class Login extends Component {
                       borderColor: this.state.loginError ? "red" : "black",
                     }}
                     type="text"
-                    name="log_email"
+                    name="email"
                     id="log_email"
                     placeholder="Zadejte email"
                     value={this.state.email}
@@ -75,7 +75,7 @@ class Login extends Component {
                       borderColor: this.state.loginError ? "red" : "black",
                     }}
                     type="password"
-                    name="log_password"
+                    name="password"
                     id="log_password"
                     placeholder="Zadejte heslo"
                     value={this.state.password}

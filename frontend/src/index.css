@@ -6,14 +6,17 @@
 input {
   padding: 5px;
   border-radius: 7px;
+  border-color: #209cee;
+}
+
+textarea {
+  border: #209cee 1px solid;
+  border-radius: 5px;
 }
 
 textarea:focus,
 input:focus {
   outline: none;
-}
-
-input:focus {
   background-color: #ededed;
 }
 

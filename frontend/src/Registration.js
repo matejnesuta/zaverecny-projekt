@@ -9,6 +9,7 @@ class Registration extends Component {
     password1: "",
     password2: "",
     registrationError: false,
+    redirect: false,
   };
 
   handleChange = (event) => {
@@ -33,6 +34,9 @@ class Registration extends Component {
           console.log(error);
         });
       event.preventDefault();
+      this.setState({
+        redirect: true,
+      });
     }
   };
 
@@ -48,9 +52,12 @@ class Registration extends Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/verification" />;
+    }
     return (
       <div>
-        <Navbar />
+        <Navbar isLoggedIn={false} />
         <div className="container">
           <div className="row center p-3 m-4">
             <div className="col-12">
@@ -84,7 +91,7 @@ class Registration extends Component {
                     }}
                     type="password"
                     name="password1"
-                    id="password1"
+                    id="reg_password1"
                     placeholder="Zadejte heslo"
                     value={this.state.password1}
                     onChange={this.handleChange}
@@ -102,7 +109,7 @@ class Registration extends Component {
                     }}
                     type="password"
                     name="password2"
-                    id="password2"
+                    id="reg_password2"
                     placeholder="Znovu zadejte heslo"
                     value={this.state.password2}
                     onChange={this.handleChange}

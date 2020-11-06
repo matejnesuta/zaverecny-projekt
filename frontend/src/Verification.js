@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Navbar from "./Navbar";
 import axios from "axios";
 
 class Login extends Component {
@@ -46,67 +47,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <div>
-          <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-            <div
-              className="collapse navbar-collapse"
-              id="navbarSupportedContent"
-            >
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    href="https://github.com/martindzida/zaverecny_projekt"
-                  >
-                    Repositář projektu
-                  </a>
-                </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="/#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Github's
-                  </a>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <a
-                      className="dropdown-item"
-                      href="https://github.com/martindzida"
-                    >
-                      Můj
-                    </a>
-                    <div className="dropdown-divider"></div>
-                    <a
-                      className="dropdown-item"
-                      href="https://github.com/matejnesuta"
-                    >
-                      Matějův
-                    </a>
-                  </div>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link disabled" href="/#">
-                    Moje motivace
-                  </a>
-                </li>
-                <li className="nav-item active">
-                  <a className="nav-link" href="/#">
-                    <i className="fa fa-home fa-3x" aria-hidden="true"></i>
-                    <span className="sr-only">(current)</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
+        <Navbar isLoggedIn={false} />
         <div className="container">
           <div className="row center p-3 m-4">
             <div className="col-12">
@@ -123,7 +64,7 @@ class Login extends Component {
                     type="text"
                     name="log_email"
                     id="log_email"
-                    placeholder="Enter key"
+                    placeholder="Zadejte klíč"
                     value={this.state.email}
                     onChange={this.handleChange}
                   ></input>
