@@ -11,11 +11,12 @@ Tady budu ukládat svůj závěrečný maturitní projekt. Chci s <a href="https
 ```
 git clone https://github.com/matejnesuta/zaverecny-projekt
 cd zaverecny-projekt
-docker-compose up
+docker-compose up --build
 ```
-
-Při prvním spuštění <code>docker-compose up</code> se vytvoří image kontejnerů a poté spustí. Při dalších spuštěních tohoto příkazu se již vytvořené image kontejnerů jen spustí. Kontejnery se dají postavit znovu pomocí příkazů <code>docker-compose build</code>.
-<br>
+Při prvním spuštění projektu bude Djangu chybět superuživatel, ale to se dá velmi jednoduše vyřešit. Stačí zmáčknout klávesovou zkratku <code>CTRL+Z</code> pro přenesení procesu do pozadí (nebo alternativně otevřít 2. terminál). Pak stačí zadat jen příkaz <code>docker exec -it backend python3 backend/manage.py createsuperuser</code>. Pro vrácení výstupu procesu je potřeba zadat příkaz <code>fg</code>. 
+<br><br>
+Při prvním spuštění <code>docker-compose up /code> se vytvoří image kontejnerů a poté spustí. Při dalších spuštěních tohoto příkazu se již vytvořené image kontejnerů jen spustí. Kontejnery se dají postavit znovu pomocí příkazů <code>docker-compose up --build</code>, což je nutné dělat pokaždé, když se v souborech s projektem provede změna.
+<br><br>
 Na Windows se může objevit error ohledně toho, že Docker nemá přístup ke složce s projektem (vyznačuje se hláškou: <code>ERROR: for db  Cannot create container for service db: status code not OK but 500</code>). Jeho řešení se dá najít <a href="https://stackoverflow.com/questions/60754297/docker-compose-failed-to-build-filesharing-has-been-cancelled">zde</a>.</p>
 
 <h3>Testovací repozitáře</h3>
