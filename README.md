@@ -1,5 +1,7 @@
-<h1>Závěrečný projekt</h1>
-Tady budu ukládat svůj závěrečný maturitní projekt. Chci s <a href="https://github.com/martindzida">Martinem Dzidou</a> udělat společnou nástěnku úkolů. Já mám na starosti back-end v Djangu a Martin bude dělat front-end v React.js.
+<h1>Závěrečný projekt - Nástěnka úkolů (Back-end)</h1>
+Toto je společný repozitář pro náš závěrečný maturitní projekt. S <a href="https://github.com/martindzida">Martinem Dzidou</a> děláme něco jako nástěnku úkolů. Já mám na starosti back-end v Djangu (REST API v Django Rest) a kontejnerizaci celé aplikace v Dockeru a Martin má na starost front-end v React.js.
+<br><br>
+Aplikace je rozdělena na 3 Docker kontejnery (front-end, back-end ve formě REST API a databázový server). Pro REST API je použitý framework Django REST a dj-rest-auth (dodatečný balíček pro autentifikaci, na který odkazuje dokumentace Djanga REST). Data jsou pak uložena v PostgreSQL databázi a přes API se tahají na front-end.
 
 <h3>Cíle</h3>
 <p>Cílem tohoto projektu je vytvořit nástěnku úkolů pro více uživatelů, kde můžou mít různí uživatelé různé role a můžou být přiřazováni do různých skupin. Back-end chci vytvořit v Django REST, data ukládat do nějaké SQL databáze a aplikaci jako takovou vyvíjet pro Docker. Bylo by vhodné ukládat k příspěvkům (úkolům) přílohy a externí soubory, zaznamenávat čas a mít možnost provádět řazení a vyhledávání. Dále bych chtěl umožnit autentifikaci uživatelů pomocí E-mailu při registraci/zapomenutí hesla (na e-mail uživatele přijde zpráva s odkazem/kontrolním kódem).</p>
