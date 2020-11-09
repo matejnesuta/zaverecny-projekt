@@ -1,19 +1,40 @@
-from django.http import HttpResponse, JsonResponse
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
+from rest_framework.decorators import permission_classes, api_view
+from rest_framework.permissions import IsAuthenticated
+from accounts.models import User
 from .models import Profile
 from .serializers import ProfileSerializer
 
 
-def profile(request):
-    if request.method == 'GET':
-        profiles = Profile.objects.all()
-        serializer = ProfileSerializer(profiles, many=True)
-        return JsonResponse(serializer.data, safe=False)
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+def get_profile_detail(request, pk):
+    try:
+        profile = Profile.objects.get(pk=pk)
+    except Profile.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == "GET":
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
 
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = ProfileSerializer(data=data)
+
+@api_view(['GET', 'PUT'])
+@permission_classes((IsAuthenticated,))
+def profile(request):
+    try:
+        profile = Profile.objects.get(pk=request.user.pk)
+    except Profile.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == "GET":
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+    elif request.method == "POST":
+        serializer = ProfileSerializer(profile, data=request.data)
+        data = {}
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            data["success"] = "update successful"
+            return Response(data=data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
