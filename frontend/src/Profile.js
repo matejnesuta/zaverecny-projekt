@@ -53,6 +53,7 @@ class Profile extends Component {
     this.setState({
       image: event.target.files[0],
     });
+    console.log(this.state.image);
   };
 
   render() {

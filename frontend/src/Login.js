@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
+import {Redirect} from "react-router-dom";
 import axios from "axios";
 
 class Login extends Component {
@@ -20,17 +21,22 @@ class Login extends Component {
   handleSubmit = (event) => {
     axios
       .post(
-        "localhost:8000/auth/login/",
+        "/auth/login/",
         { email: this.state.email, password: this.state.password },
         { withCredentials: true }
       )
       .then((response) => {
-        console.log(response);
+          this.setState({
+              token: response.data.key,
+          });
       })
       .catch((error) => {
         console.log(error);
       });
     event.preventDefault();
+    this.setState({
+        redirect: true,
+    });
   };
 
   authError() {
@@ -45,6 +51,9 @@ class Login extends Component {
   }
 
   render() {
+      if(this.state.redirect) {
+          return <Redirect to="/"/>;
+      }
     return (
       <div>
         <Navbar isLoggedIn={false} />
