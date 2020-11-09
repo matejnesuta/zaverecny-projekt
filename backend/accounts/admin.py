@@ -13,4 +13,4 @@ class UserAdmin(admin.ModelAdmin):
         model = User
 
 
-#admin.site.register(User, UserAdmin)
+admin.site.register(User, UserAdmin)

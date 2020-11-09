@@ -14,7 +14,7 @@ class Main extends Component {
 
   /*
   Loading data from database with axios.get
-  
+
   componentDidMount() {
     axios.get("http://localhost:8000/profiles").then((res) => {
       const users = res.data;
@@ -31,7 +31,7 @@ class Main extends Component {
       });
     });
   }
-*/
+  */
   render() {
     return (
       <div>
