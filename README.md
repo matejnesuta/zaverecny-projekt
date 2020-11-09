@@ -33,6 +33,9 @@ Na Windows se může objevit error ohledně toho, že Docker nemá přístup ke 
 
 <h3>Průběh práce</h3> 
 
+<h5>09. 11. 2020</h5>
+<p>Vytvořil jsem první end-pointy pro samotnou aplikaci. Konkrétně se jedná a zobrazení a úpravu profilu uživatele (GET, PUT) a zobrazení detailu profilů ostatních uživatelů (GET). Věřím, že psaní dalších end-pointů půjde jako po másle.</p>
+
 <h5>04. 11. 2020</h5>
 <p>Databáze má vlastní kontejner. Je potřeba doplnit sekci o instalaci, jelikož instalace samotná se lehce rozšířila.</p>
 
