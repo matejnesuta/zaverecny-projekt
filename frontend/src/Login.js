@@ -6,6 +6,7 @@ class Login extends Component {
   state = {
     email: "",
     password: "",
+    token: "",
     loginError: false,
   };
 
@@ -54,34 +55,50 @@ class Login extends Component {
                 <h2 className="display-4">Login</h2>
               </div>
               <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <label className="m-3 font-weight-bold">Email</label>
-                  <input
-                    style={{
-                      borderColor: this.state.loginError ? "red" : "black",
-                    }}
-                    type="text"
-                    name="email"
-                    id="log_email"
-                    placeholder="Zadejte email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  ></input>
+                <div className="form-group row">
+                  <div className="col-4">
+                    <label className="col-form-label col-form-label-lg">
+                      Email
+                    </label>
+                  </div>
+                  <div className="col-8">
+                    <input
+                      style={{
+                        borderColor: this.state.loginError ? "red" : "",
+                      }}
+                      type="email"
+                      name="email"
+                      id="log_email"
+                      className="border-primary form-control"
+                      placeholder="Zadejte email"
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                      required
+                    ></input>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label className="m-3 font-weight-bold">Heslo</label>
-                  <input
-                    style={{
-                      borderColor: this.state.loginError ? "red" : "black",
-                    }}
-                    type="password"
-                    name="password"
-                    id="log_password"
-                    placeholder="Zadejte heslo"
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                  ></input>
-                  <div className="row">{this.authError()}</div>
+                <div className="form-group row">
+                  <div className="col-4">
+                    <label className="col-form-label col-form-label-lg">
+                      Heslo
+                    </label>
+                  </div>
+                  <div className="col-8">
+                    <input
+                      style={{
+                        borderColor: this.state.loginError ? "red" : "",
+                      }}
+                      type="password"
+                      name="password"
+                      id="log_password"
+                      className="border-primary form-control"
+                      placeholder="Zadejte heslo"
+                      value={this.state.password}
+                      onChange={this.handleChange}
+                      required
+                    ></input>
+                    <div>{this.authError()}</div>
+                  </div>
                 </div>
                 <div className="row m-3">
                   <div className="col-12">
@@ -109,13 +126,6 @@ class Login extends Component {
             </div>
           </div>
           <hr />
-          <footer>
-            <div className="row">
-              <div className="col-12">
-                <p>&copy; Le epique programué teamé 2020</p>
-              </div>
-            </div>
-          </footer>
         </div>
       </div>
     );

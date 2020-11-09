@@ -9,6 +9,7 @@ class Profile extends Component {
     firstName: "",
     lastName: "",
     comment: "",
+    image: null,
     password1: "",
     password2: "",
     updateError: false,
@@ -48,6 +49,12 @@ class Profile extends Component {
     });
   };
 
+  handleFileSelect = (event) => {
+    this.setState({
+      image: event.target.files[0],
+    });
+  };
+
   render() {
     return (
       <div>
@@ -55,66 +62,123 @@ class Profile extends Component {
         <div className="container">
           <div className="row center p-3 m-4">
             <div className="col-12">
-              <div>
-                <h2 className="display-4 m-4">Nastavení profilu</h2>
+              <div className="m-5">
+                <h2 className="display-4">Nastavení profilu</h2>
               </div>
               <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <label className="m-3 font-weight-bold">Jméno</label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    placeholder="Zadejte jméno"
-                    value={this.state.firstName}
-                    onChange={this.handleChange}
-                  ></input>
+                <div className="form-group row">
+                  <div className="col-4">
+                    <label className="col-form-label col-form-label-lg">
+                      Jméno
+                    </label>
+                  </div>
+                  <div className="col-8">
+                    <input
+                      type="text"
+                      name="firstName"
+                      id="firstName"
+                      className="border-primary form-control"
+                      placeholder="Zadejte jméno"
+                      value={this.state.firstName}
+                      onChange={this.handleChange}
+                    ></input>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label className="m-3 font-weight-bold">Příjmení</label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    placeholder="Zadejte jméno"
-                    value={this.state.lastName}
-                    onChange={this.handleChange}
-                  ></input>
+                <div className="form-group row">
+                  <div className="col-4">
+                    <label className="col-form-label col-form-label-lg">
+                      Příjmení
+                    </label>
+                  </div>
+                  <div className="col-8">
+                    <input
+                      type="text"
+                      name="lastName"
+                      id="lastName"
+                      className="border-primary form-control"
+                      placeholder="Zadejte jméno"
+                      value={this.state.lastName}
+                      onChange={this.handleChange}
+                    ></input>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label className="m-3 font-weight-bold">Popisek</label>
-                  <textarea
-                    type="text"
-                    name="comment"
-                    id="comment"
-                    placeholder="Zadejte popisek"
-                    value={this.state.comment}
-                    onChange={this.handleChange}
-                  ></textarea>
+                <div className="form-group row">
+                  <div className="col-4">
+                    <label className="col-form-label col-form-label-lg">
+                      Profilový obrázek
+                    </label>
+                  </div>
+                  <div className="col-8">
+                    <div className="custom-file">
+                      <input
+                        type="file"
+                        name="image"
+                        id="prof_image"
+                        className="border-primary form-control custom-file-input"
+                        value={this.state.password1}
+                        onChange={this.handleFileSelect}
+                      ></input>
+                      <label className="custom-file-label">
+                        Nahrát obrázek
+                      </label>
+                    </div>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label className="m-3 font-weight-bold">Heslo</label>
-                  <input
-                    type="password"
-                    name="password1"
-                    id="prof_password1"
-                    placeholder="Zadejte heslo"
-                    value={this.state.password1}
-                    onChange={this.handleChange}
-                  ></input>
+                <div className="form-group row">
+                  <div className="col-4">
+                    <label className="col-form-label col-form-label-lg">
+                      Popisek
+                    </label>
+                  </div>
+                  <div className="col-8">
+                    <textarea
+                      type="text"
+                      name="comment"
+                      id="comment"
+                      className="border-primary form-control"
+                      placeholder="Zadejte popisek"
+                      maxLength={300}
+                      rows={4}
+                      value={this.state.comment}
+                      onChange={this.handleChange}
+                    ></textarea>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label className="m-3 font-weight-bold">
-                    Potvrzení hesla
-                  </label>
-                  <input
-                    type="password"
-                    name="password2"
-                    id="prof_password2"
-                    placeholder="Zadejte heslo"
-                    value={this.state.password1}
-                    onChange={this.handleChange}
-                  ></input>
+                <div className="form-group row">
+                  <div className="col-4">
+                    <label className="col-form-label col-form-label-lg">
+                      Heslo
+                    </label>
+                  </div>
+                  <div className="col-8">
+                    <input
+                      type="password"
+                      name="password1"
+                      id="prof_password1"
+                      className="border-primary form-control"
+                      placeholder="Zadejte heslo"
+                      value={this.state.password1}
+                      onChange={this.handleChange}
+                    ></input>
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <div className="col-4">
+                    <label className="col-form-label col-form-label-lg">
+                      Potvrzení hesla
+                    </label>
+                  </div>
+                  <div className="col-8">
+                    <input
+                      type="password"
+                      name="password2"
+                      id="prof_password2"
+                      className="border-primary form-control"
+                      placeholder="Zadejte heslo"
+                      value={this.state.password1}
+                      onChange={this.handleChange}
+                    ></input>
+                  </div>
                 </div>
                 <div className="row m-3">
                   <div className="col-12">
@@ -127,13 +191,6 @@ class Profile extends Component {
             </div>
           </div>
           <hr />
-          <footer>
-            <div className="row">
-              <div className="col-12">
-                <p>&copy; Le epique programué teamé 2020</p>
-              </div>
-            </div>
-          </footer>
         </div>
       </div>
     );

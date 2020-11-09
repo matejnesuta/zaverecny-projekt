@@ -14,7 +14,7 @@ class Main extends Component {
 
   /*
   Loading data from database with axios.get
-
+  
   componentDidMount() {
     axios.get("http://localhost:8000/profiles").then((res) => {
       const users = res.data;
@@ -31,7 +31,7 @@ class Main extends Component {
       });
     });
   }
-  */
+*/
   render() {
     return (
       <div>
@@ -43,13 +43,6 @@ class Main extends Component {
           </div>
           <div>{this.state.logs}</div>
           <hr />
-          <footer>
-            <div className="row">
-              <div className="col-12">
-                <p>&copy; Le epique programué teamé 2020</p>
-              </div>
-            </div>
-          </footer>
         </div>
       </div>
     );

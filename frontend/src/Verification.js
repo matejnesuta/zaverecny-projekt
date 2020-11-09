@@ -18,7 +18,7 @@ class Verification extends Component {
   handleSubmit = (event) => {
     axios
       .post(
-        "http://localhost:8000/auth/registration/verify-email/",
+        "/auth/registration/verify-email/",
         { key: this.state.key },
         { withCredentials: true }
       )
@@ -36,9 +36,7 @@ class Verification extends Component {
       return (
         <div className="col-12 p-2">
           <span className="badge badge-pill badge-danger m-1">!</span>
-          <small className="text-danger">
-            Nepodařilo se ověřit registraci.
-          </small>
+          <small className="text-danger">Nesprávný klíč.</small>
         </div>
       );
     }
@@ -51,28 +49,42 @@ class Verification extends Component {
         <div className="container">
           <div className="row center p-3 m-4">
             <div className="col-12">
-              <div className="m-4">
+              <div className="m-5">
                 <h2 className="display-4">Ověření emailu</h2>
               </div>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                  <label className="m-3 font-weight-bold">Klíč</label>
-                  <input
-                    style={{
-                      borderColor: this.state.loginError ? "red" : "black",
-                    }}
-                    type="text"
-                    name="key"
-                    id="ver_key"
-                    placeholder="Zadejte klíč"
-                    value={this.state.key}
-                    onChange={this.handleChange}
-                  ></input>
+                  <div className="form-row">
+                    <div className="col-2">
+                      <label className="col-form-label col-form-label-lg">
+                        Klíč
+                      </label>
+                    </div>
+                    <div className="col-10">
+                      <input
+                        style={{
+                          borderColor: this.state.verificationError
+                            ? "red"
+                            : "",
+                        }}
+                        type="text"
+                        name="key"
+                        id="ver_key"
+                        className="border-primary form-control form-control-lg"
+                        placeholder="Zadejte klíč"
+                        value={this.state.email}
+                        onChange={this.handleChange}
+                        required
+                      ></input>
+                      <div>{this.authError()}</div>
+                    </div>
+                  </div>
                 </div>
+
                 <div className="row m-3">
                   <div className="col-12">
-                    <button type="submit" className="btn btn-primary">
-                      Submit
+                    <button type="submit" className="btn btn-primary px-3">
+                      Odeslat
                     </button>
                   </div>
                 </div>
@@ -80,13 +92,6 @@ class Verification extends Component {
             </div>
           </div>
           <hr />
-          <footer>
-            <div className="row">
-              <div className="col-12">
-                <p>&copy; Le epique programué teamé 2020</p>
-              </div>
-            </div>
-          </footer>
         </div>
       </div>
     );

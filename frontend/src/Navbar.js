@@ -8,7 +8,7 @@ class Navbar extends Component {
   loggedIn() {
     if (this.props.isLoggedIn) {
       return (
-        <li className="nav-item dropdown">
+        <li className="nav-item dropdown mx-2">
           <a
             className="nav-link dropdown-toggle"
             href="/#"
@@ -21,25 +21,27 @@ class Navbar extends Component {
             <img
               src={user_icon}
               alt="profile_pic"
-              width="50"
-              height="50"
+              width="40"
+              height="40"
               className="rounded-circle"
             />
           </a>
           <div
-            className="dropdown-menu"
+            className="dropdown-menu dropdown-menu-right"
             aria-labelledby="navbarDropdownMenuLink"
           >
             <Link className="dropdown-item" to="/">
-              <i className="fa fa-home" aria-hidden="true"></i> Hlavní stránka
+              <i className="fa fa-home mx-1" aria-hidden="true"></i> Hlavní
+              stránka
             </Link>
 
             <Link className="dropdown-item" to="/profile">
-              <i className="fa fa-cog" aria-hidden="true"></i> Upravit profil
+              <i className="fa fa-cog mx-1" aria-hidden="true"></i> Upravit
+              profil
             </Link>
 
             <Link className="dropdown-item" to="/login">
-              <i className="fa fa-sign-out" aria-hidden="true"></i>
+              <i className="fa fa-sign-out mx-1" aria-hidden="true"></i>
               Odhlásit se
             </Link>
           </div>
@@ -47,9 +49,9 @@ class Navbar extends Component {
       );
     } else {
       return (
-        <li className="nav-item active">
+        <li className="nav-item active mx-2">
           <Link className="nav-link" style={{ color: "white" }} to="/">
-            <i className="fa fa-home fa-3x" aria-hidden="true"></i>
+            <i className="fa fa-home fa-2x" aria-hidden="true"></i>
             <span className="sr-only">(current)</span>
           </Link>
         </li>
@@ -63,7 +65,7 @@ class Navbar extends Component {
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
+              <li className="nav-item mx-2">
                 <a
                   className="nav-link"
                   href="https://github.com/martindzida/zaverecny_projekt"
@@ -71,7 +73,7 @@ class Navbar extends Component {
                   Repositář projektu
                 </a>
               </li>
-              <li className="nav-item dropdown">
+              <li className="nav-item dropdown mx-2">
                 <a
                   className="nav-link dropdown-toggle"
                   href="/#"
@@ -99,10 +101,15 @@ class Navbar extends Component {
                   </a>
                 </div>
               </li>
-              <li className="nav-item">
+              <li className="nav-item mx-2">
                 <a className="nav-link disabled" href="/#">
                   Moje motivace
                 </a>
+              </li>
+              <li className="nav-item mx-2">
+                <Link className="nav-link" to="/registration">
+                  Registrace
+                </Link>
               </li>
               {this.loggedIn()}
             </ul>

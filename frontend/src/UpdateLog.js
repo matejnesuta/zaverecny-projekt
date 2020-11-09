@@ -11,8 +11,8 @@ class UpdateLog extends Component {
               src={this.props.imgUrl}
               alt="profile_pic"
               className="rounded-circle m-2 mr-4"
-              width="50"
-              height="50"
+              width="40"
+              height="40"
             />
             {this.props.name}
           </p>
