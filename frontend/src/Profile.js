@@ -12,18 +12,18 @@ class Profile extends Component {
     image: null,
     password1: "",
     password2: "",
-    updateError: false,
+    error: false,
   };
 
   /*
   componentDidMount() {
-
+   
   }
   */
   handleSubmit = (event) => {
     axios
       .post(
-        "localhost:8000/auth/password/change",
+        "/auth/password/change",
         {
           firstName: this.state.firstName,
           lastName: this.state.lastName,
@@ -50,13 +50,30 @@ class Profile extends Component {
   };
 
   handleFileSelect = (event) => {
-    this.setState({
-      image: event.target.files[0],
+    let ok = false;
+    let type = event.target.files[0].type.split("/");
+    let imageType = type[1];
+    const imageFormats = ["bmp", "gif", "tiff", "jpeg", "png"];
+    imageFormats.forEach((element) => {
+      if (imageType.localeCompare(element) === 0) {
+        ok = true;
+      }
     });
-    console.log(this.state.image);
+    if (ok) {
+      this.setState({
+        image: event.target.files[0],
+      });
+    }
   };
 
   render() {
+    console.log(this.state.image);
+    let imageInputLabel;
+    if (this.state.image == null) {
+      imageInputLabel = "Nahrát obrázek";
+    } else {
+      imageInputLabel = this.state.image.name;
+    }
     return (
       <div>
         <Navbar isLoggedIn={true} />
@@ -120,7 +137,7 @@ class Profile extends Component {
                         onChange={this.handleFileSelect}
                       ></input>
                       <label className="custom-file-label">
-                        Nahrát obrázek
+                        {imageInputLabel}
                       </label>
                     </div>
                   </div>

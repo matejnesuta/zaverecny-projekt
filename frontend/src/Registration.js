@@ -8,7 +8,7 @@ class Registration extends Component {
     email: "",
     password1: "",
     password2: "",
-    registrationError: false,
+    error: false,
     redirect: false,
   };
 
@@ -20,9 +20,9 @@ class Registration extends Component {
   };
 
   handleSubmit = (event) => {
-    if (this.state.password1 === this.state.password2) {
+    if (this.state.password1.localeCompare(this.state.password2) !== 0) {
       axios
-        .post("http://localhost:8000/auth/registration/", {
+        .post("/auth/registration/", {
           email: this.state.email,
           password1: this.state.password1,
           password2: this.state.password2,
@@ -31,30 +31,29 @@ class Registration extends Component {
           console.log(response);
         })
         .catch((error) => {
+          this.setState({
+            error: error,
+          });
           console.log(error);
         });
       event.preventDefault();
-      this.setState({
-        redirect: true,
-      });
     }
+    this.setState({
+      redirect: true,
+    });
   };
-
-  authError() {
-    if (this.state.registrationError) {
-      return (
-        <div className="col-12">
-          <span className="badge badge-pill badge-danger m-1">!</span>
-          <small className="text-danger">Hesla se neshodují.</small>
-        </div>
-      );
-    }
-  }
 
   render() {
     if (this.state.redirect) {
       return <Redirect to="/verification" />;
     }
+    let passwordsComp;
+    if (this.state.password1.localeCompare(this.state.password2) !== 0) {
+      passwordsComp = (
+        <small className="text-danger">Hesla se neshodují.</small>
+      );
+    }
+
     return (
       <div>
         <Navbar isLoggedIn={false} />
@@ -74,7 +73,7 @@ class Registration extends Component {
                   <div className="col-8">
                     <input
                       style={{
-                        borderColor: this.state.registrationError ? "red" : "",
+                        borderColor: this.state.error ? "red" : "",
                       }}
                       type="text"
                       name="email"
@@ -96,7 +95,7 @@ class Registration extends Component {
                   <div className="col-8">
                     <input
                       style={{
-                        borderColor: this.state.registrationError ? "red" : "",
+                        borderColor: this.state.error ? "red" : "",
                       }}
                       type="password"
                       name="password1"
@@ -105,8 +104,13 @@ class Registration extends Component {
                       placeholder="Zadejte heslo"
                       value={this.state.password1}
                       onChange={this.handleChange}
+                      minLength={8}
                       required
                     ></input>
+                    <small className="form-text text-muted">
+                      Heslo musí obsahovat nejméně 8 znaků, alespoň 1 číslo a
+                      alespoň 1 speciální znak.
+                    </small>
                   </div>
                 </div>
                 <div className="form-group row">
@@ -117,9 +121,6 @@ class Registration extends Component {
                   </div>
                   <div className="col-8">
                     <input
-                      style={{
-                        borderColor: this.state.registrationError ? "red" : "",
-                      }}
                       type="password"
                       name="password2"
                       id="reg_password2"
@@ -127,10 +128,11 @@ class Registration extends Component {
                       placeholder="Znovu zadejte heslo"
                       value={this.state.password2}
                       onChange={this.handleChange}
+                      minLength={8}
                       required
                     ></input>
+                    {passwordsComp}
                   </div>
-                  <div>{this.authError()}</div>
                 </div>
                 <div className="row m-3">
                   <div className="col-12">

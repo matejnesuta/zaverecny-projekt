@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import Calendar from "./Calendar";
+import Board from "./Board";
 import UpdateLog from "./UpdateLog";
 import Navbar from "./Navbar";
 import woke from "./images/woke.jpg";
-import user_icon from "./images/user_icon.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -16,7 +15,7 @@ class Main extends Component {
   Loading data from database with axios.get
   
   componentDidMount() {
-    axios.get("http://localhost:8000/profiles").then((res) => {
+    axios.get(/profiles").then((res) => {
       const users = res.data;
       const receivedData = users.map((user) => (
         <UpdateLog
@@ -38,7 +37,7 @@ class Main extends Component {
         <Navbar isLoggedIn={true} />
         <div className="container">
           <div>
-            <Calendar />
+            <Board />
             <UpdateLog imgUrl={woke} name="GodJ" content="hahahhahahah" />
           </div>
           <div>{this.state.logs}</div>

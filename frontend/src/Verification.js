@@ -5,7 +5,7 @@ import axios from "axios";
 class Verification extends Component {
   state = {
     key: "",
-    verificationError: false,
+    error: false,
   };
 
   handleChange = (event) => {
@@ -31,17 +31,6 @@ class Verification extends Component {
     event.preventDefault();
   };
 
-  authError() {
-    if (this.state.verificationError === true) {
-      return (
-        <div className="col-12 p-2">
-          <span className="badge badge-pill badge-danger m-1">!</span>
-          <small className="text-danger">Nesprávný klíč.</small>
-        </div>
-      );
-    }
-  }
-
   render() {
     return (
       <div>
@@ -63,9 +52,7 @@ class Verification extends Component {
                     <div className="col-10">
                       <input
                         style={{
-                          borderColor: this.state.verificationError
-                            ? "red"
-                            : "",
+                          borderColor: this.state.error ? "red" : "",
                         }}
                         type="text"
                         name="key"
@@ -76,7 +63,6 @@ class Verification extends Component {
                         onChange={this.handleChange}
                         required
                       ></input>
-                      <div>{this.authError()}</div>
                     </div>
                   </div>
                 </div>
