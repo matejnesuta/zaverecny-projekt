@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from accounts.models import User
 from datetime import datetime
 from django.core.validators import MinValueValidator
+from constrainedfilefield.fields import ConstrainedFileField, ConstrainedImageField
 
 
 def profile_pic_path(instance, filename):
@@ -18,7 +19,11 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="First name")
     last_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="Last name")
-    profile_pic = models.ImageField(upload_to=profile_pic_path, verbose_name="Profile picture", blank=True, null=True)
+    profile_pic = ConstrainedImageField(upload_to=profile_pic_path,
+                                               verbose_name="Profile picture",
+                                               blank=True,
+                                               null=True,
+                                               max_upload_size=10240)
     bio = models.CharField(max_length=150, null=True, verbose_name="Bio")
 
     class Meta:
@@ -97,7 +102,12 @@ class Attachment(models.Model):
     title = models.CharField(max_length=200,
                              verbose_name="Title")
     last_update = models.DateTimeField(auto_now=True)
-    file = models.FileField(upload_to=attachment_path, null=True, verbose_name="File")
+    file = ConstrainedFileField(upload_to=attachment_path,
+                                       content_types=['image/png',
+                                                      'image/jpg'],
+                                       null=True,
+                                       verbose_name="File",
+                                       max_upload_size=51200)
     TYPE_OF_ATTACHMENT = (
         ('audio', 'Audio'), ('image', 'Image'), ('text', 'Text'), ('video', 'Video'), ('other', 'Other'),)
     type = models.CharField(max_length=5, choices=TYPE_OF_ATTACHMENT, blank=True, default='image',

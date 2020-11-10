@@ -30,11 +30,11 @@ def profile(request):
     if request.method == "GET":
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
-    elif request.method == "POST":
+    elif request.method == "PUT":
         serializer = ProfileSerializer(profile, data=request.data)
         data = {}
         if serializer.is_valid():
             serializer.save()
             data["success"] = "update successful"
-            return Response(data=data)
+            return Response(data=data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

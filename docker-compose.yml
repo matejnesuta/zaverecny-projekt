@@ -1,3 +1,4 @@
+#Tento soubor umožňuje rozjet všechny 3 kontejnery bez toho, aby se do terminálu (nebo cmd) zadávaly dlouhé příkazy.
 version: '3'
 
 services:
@@ -35,6 +36,6 @@ services:
       - "3000:3000"
 
 
-
+#Tohle je důležité, protože bez toho by se po vypnutí databázového kontejneru veškerá data smazala.
 volumes:
   postgres_data:
