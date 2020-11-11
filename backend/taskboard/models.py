@@ -27,7 +27,7 @@ class Profile(models.Model):
                                         verbose_name="Profile picture",
                                         blank=True,
                                         null=True,
-                                        max_upload_size=10240)
+                                        max_upload_size=10485760)
     bio = models.CharField(max_length=150, null=True, verbose_name="Bio")
 
     class Meta:
@@ -125,7 +125,7 @@ class Attachment(models.Model):
                                                ],
                                 null=True,
                                 verbose_name="File",
-                                max_upload_size=51200)
+                                max_upload_size=52428800)
     TYPE_OF_ATTACHMENT = (
         ('audio', 'Audio'), ('image', 'Image'), ('text', 'Text'), ('video', 'Video'), ('other', 'Other'),)
     type = models.CharField(max_length=5, choices=TYPE_OF_ATTACHMENT, blank=True, default='image',
