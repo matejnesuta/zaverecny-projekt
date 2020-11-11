@@ -33,6 +33,10 @@ Na Windows se může objevit error ohledně toho, že Docker nemá přístup ke 
 
 <h3>Průběh práce</h3> 
 
+<h5>10. 11. 2020</h5>
+<p>Všiml jsem si, že jsem nevalidoval soubory u profilových obrázků a u příloh, tak jsem dodělal validaci. Okomentoval jsem částečně kód.</p>
+
+
 <h5>09. 11. 2020</h5>
 <p>Vytvořil jsem první end-pointy pro samotnou aplikaci. Konkrétně se jedná a zobrazení a úpravu profilu uživatele (GET, PUT) a zobrazení detailu profilů ostatních uživatelů (GET). Věřím, že psaní dalších end-pointů půjde jako po másle.</p>
 
