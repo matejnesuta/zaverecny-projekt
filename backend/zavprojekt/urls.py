@@ -4,7 +4,8 @@ from . import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-
+# pod auth/ je autentifikace uživatelů (dj_rest_auth urls). Pod /app jsou pak url mých views (endpointy) z aplikace
+# Taskboard. account/ tu musí být kvůli dj_rest_auth, ale nic z těch urls já sám nepoužívám.
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('accounts.urls')),

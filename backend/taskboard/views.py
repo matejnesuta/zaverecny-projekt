@@ -8,6 +8,7 @@ from .models import Profile
 from .serializers import ProfileSerializer
 
 
+# Endpoint pro zobrazení profilu ostatních uživatelů.
 @api_view(['GET', ])
 @permission_classes((IsAuthenticated,))
 def get_profile_detail(request, pk):
@@ -19,7 +20,7 @@ def get_profile_detail(request, pk):
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
-
+# Endpoint pro získání nebo úpravu vlastního profilu.
 @api_view(['GET', 'PUT'])
 @permission_classes((IsAuthenticated,))
 def profile(request):

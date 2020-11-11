@@ -4,9 +4,11 @@ from django.dispatch import receiver
 from accounts.models import User
 from datetime import datetime
 from django.core.validators import MinValueValidator
+# Tenhle balíček tu mám, abych byl schopný validovat nejen koncovky vložených souborů, ale i jejich kontent.
 from constrainedfilefield.fields import ConstrainedFileField, ConstrainedImageField
 
 
+# Tady mám definované, jak mi Django ukládá profilové obrázky a soubory.
 def profile_pic_path(instance, filename):
     return "profile_pic/" + str(instance.id) + "/" + filename
 
@@ -15,15 +17,17 @@ def attachment_path(instance, filename):
     return "attachment/" + str(instance.id) + "/" + filename
 
 
+# Model profilu, který je navázán vazbou 1:1 na účty. Podle dokumentace je prý nejlepší dávat do User modelu jen pole
+# potřebná pro přihlášení a zbytek takhle navázat.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="First name")
     last_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="Last name")
     profile_pic = ConstrainedImageField(upload_to=profile_pic_path,
-                                               verbose_name="Profile picture",
-                                               blank=True,
-                                               null=True,
-                                               max_upload_size=10240)
+                                        verbose_name="Profile picture",
+                                        blank=True,
+                                        null=True,
+                                        max_upload_size=10240)
     bio = models.CharField(max_length=150, null=True, verbose_name="Bio")
 
     class Meta:
@@ -56,8 +60,8 @@ class Taskboard(models.Model):
         return self.name
 
 
-# jedná se o členskou roli v jednotlivých tabulích. každý člen může být člen více tabulí a v každé mít jinou členskou
-# roli
+# Jedná se o členskou roli v jednotlivých tabulích. každý člen může být člen více tabulí a v každé mít jinou členskou
+# roli.
 class Membership(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     taskboard = models.ForeignKey(Taskboard, on_delete=models.CASCADE)
@@ -74,7 +78,7 @@ class Membership(models.Model):
     def __str__(self):
         return f" {self.profile.last_name}, {self.role}, {self.taskboard.name}"
 
-
+# Model úkolu.
 class Task(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(max_length=50, null=False, blank=False, verbose_name="Title")
@@ -97,17 +101,31 @@ class Task(models.Model):
     def __str__(self):
         return f"{self.title}, {self.taskboard.name}, {self.author.first_name} {self.author.last_name}"
 
-
+# Model přílohy.
 class Attachment(models.Model):
     title = models.CharField(max_length=200,
                              verbose_name="Title")
     last_update = models.DateTimeField(auto_now=True)
     file = ConstrainedFileField(upload_to=attachment_path,
-                                       content_types=['image/png',
-                                                      'image/jpg'],
-                                       null=True,
-                                       verbose_name="File",
-                                       max_upload_size=51200)
+                                content_types=['image/png',
+                                               'image/jpg',
+                                               'image/bmp',
+                                               'image/gif',
+                                               'audio/aac',
+                                               'audio/mpeg',
+                                               'audio/ogg',
+                                               'audio/x-flac',
+                                               'audio/x-wav',
+                                               'video/mp4',
+                                               'video/x-ms-wmv',
+                                               'video/webm',
+                                               'application/pdf',
+                                               'text/plain',
+                                               'application/zip'
+                                               ],
+                                null=True,
+                                verbose_name="File",
+                                max_upload_size=51200)
     TYPE_OF_ATTACHMENT = (
         ('audio', 'Audio'), ('image', 'Image'), ('text', 'Text'), ('video', 'Video'), ('other', 'Other'),)
     type = models.CharField(max_length=5, choices=TYPE_OF_ATTACHMENT, blank=True, default='image',
@@ -121,6 +139,7 @@ class Attachment(models.Model):
         return self.title
 
 
+# Model komentáře.
 class Comment(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
@@ -134,6 +153,7 @@ class Comment(models.Model):
         return f"{self.author.first_name} {self.author.last_name}, {self.task.title}, {self.text}"
 
 
+# Log pro všechny uživatele 1 tabule, že někdo něco přidal.
 class Log(models.Model):
     text = models.CharField(max_length=100, verbose_name="Text", blank=False, null=False)
     time = models.DateTimeField(auto_now=True)
