@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
             email=self.normalize_email(email)
         )
         user_obj.set_password(password)
-        user_obj.active = is_active
+        user_obj.is_active = is_active
         user_obj.verified = is_verified
         user_obj.staff = is_staff
         user_obj.admin = is_admin
@@ -41,7 +41,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=True)  # může se přihlásit do svého účtu
+    is_active = models.BooleanField(default=True)  # může se přihlásit do svého účtu
     verified = models.BooleanField(default=False)  # email tohoto účtu existuje
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
@@ -60,9 +60,6 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    @property
-    def is_active(self):
-        return self.active
 
     @property
     def is_verified(self):

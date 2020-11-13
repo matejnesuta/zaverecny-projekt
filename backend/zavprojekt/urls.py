@@ -10,7 +10,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('accounts.urls')),
     path('account/', include('allauth.urls')),
-    path('app/', include('taskboard.urls'))
+    path('app/', include('taskboard.urls')),
+    path(r'^', include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

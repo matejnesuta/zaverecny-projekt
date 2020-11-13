@@ -26,6 +26,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from dj_rest_auth.registration.app_settings import RegisterSerializer, register_permission_classes
+from django.http import HttpResponse
 
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters('password1', 'password2')
@@ -85,3 +86,7 @@ class RegisterView(CreateAPIView):
 @api_view()
 def null_view(request):
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+def empty_view(request):
+    return HttpResponse('')
