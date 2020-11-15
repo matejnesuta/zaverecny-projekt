@@ -11,6 +11,8 @@ from allauth.account.utils import setup_user_email
 from django.conf import settings
 from rest_framework.exceptions import ValidationError
 from dj_rest_auth.serializers import LoginSerializer
+from dj_rest_auth.serializers import PasswordResetSerializer
+
 
 
 class CustomRegisterSerializer(serializers.Serializer):
@@ -49,3 +51,9 @@ class CustomRegisterSerializer(serializers.Serializer):
         return user
 
 
+class CustomPasswordResetSerializer(PasswordResetSerializer):
+
+    def get_email_options(self):
+        return {
+            'email_template_name': 'password_reset_email.txt'
+        }
