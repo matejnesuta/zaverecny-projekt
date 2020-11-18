@@ -42,6 +42,8 @@ def profile(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Endpoint pro získání všech boardů, ve kterých je uživatel aspoň členem. V podstatě vrací jen jméno a id, ale pro
+# nějakou úvodní obrazovku po přihlášení to stačí.
 @api_view(['GET', ])
 @permission_classes((IsAuthenticated,))
 def get_boards(request):
@@ -51,6 +53,9 @@ def get_boards(request):
         return Response(serializer.data)
 
 
+# Endpoint pro úpravu jména tabule a nebo její smazání. Nejdříve se zkontroluje, zda tabule existuje. Poté jestli má
+# daný uživatel oprávnění k jejím úpravám (k tomu slouží role owner). Nakonec se funkce větví na úpravu a nebo smazání
+# (záleží na typu requestu).
 @api_view(['PUT', 'DELETE'])
 @permission_classes((IsAuthenticated,))
 def board(request, pk):
@@ -81,3 +86,19 @@ def board(request, pk):
         else:
             data["failure"] = "delete failed"
         return Response(data=data)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def create_board(request):
+    if request.method == "POST":
+        board = Taskboard()
+        serializer = TaskboardSerializer(board, data=request.data)
+        data = {}
+        owner = Profile.objects.get(pk=request.user.id)
+        if serializer.is_valid():
+            serializer.save()
+            ownership = Membership(profile=owner, taskboard=Taskboard.objects.get(pk=board.id), role="owner")
+            ownership.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
