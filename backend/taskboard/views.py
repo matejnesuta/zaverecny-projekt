@@ -4,8 +4,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from accounts.models import User
-from .models import Profile, Taskboard, Membership
-from .serializers import ProfileSerializer, TaskboardSerializer, MembershipSerializer
+from .models import Profile, Taskboard, Membership, Task
+from .serializers import ProfileSerializer, TaskboardSerializer, MembershipSerializer, TaskSerializer
 
 
 # Endpoint pro zobrazení profilu ostatních uživatelů.
@@ -102,3 +102,23 @@ def create_board(request):
             ownership.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def get_board_detail(request, pk):
+    if request.method == "GET":
+        try:
+            tasks = Task.objects.filter(taskboard=pk)
+        except Taskboard.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        query = Membership.objects.values("profile").filter(taskboard=pk, profile=request.user.pk)
+
+        if query.count() == 0:
+            data = {}
+            data["failure"] = "you are not allowed to view this content"
+            return Response(data=data, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)

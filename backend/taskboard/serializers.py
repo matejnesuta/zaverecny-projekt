@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile, Taskboard, Membership
+from .models import Profile, Taskboard, Membership, Task
 
 
 # Serializer modelu Profile. Serializovat se dá více způsoby, ale tady mi vyhovoval ModelSerializer, protože stačí
@@ -20,3 +20,9 @@ class MembershipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Membership
         fields = '__all__'
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['id', 'author', 'title', 'description', 'deadline', 'stage']

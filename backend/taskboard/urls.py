@@ -7,5 +7,6 @@ urlpatterns = [
     path('profile/', profile),
     path('board/', get_boards),
     path('board/<int:pk>/', board),
-    path('board/create/', create_board)
+    path('board/create/', create_board),
+    path('board/detail/<int:pk>/', get_board_detail)
 ]
