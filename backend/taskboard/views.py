@@ -51,7 +51,25 @@ def get_boards(request):
         return Response(serializer.data)
 
 
-@api_view(['GET', ])
+@api_view(['PUT', ])
 @permission_classes((IsAuthenticated,))
-def upgrade_board(request, id):
-    pass
+def update_board(request, pk):
+    try:
+        board = Taskboard.objects.get(pk=pk)
+    except Taskboard.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    query = Membership.objects.values("profile").filter(taskboard=board, profile=request.user.pk,
+                                                        role__contains="owner")
+    if query.count() == 0:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+    elif request.method == "PUT":
+        serializer = TaskboardSerializer(board, data=request.data)
+        data = {}
+        if serializer.is_valid():
+            serializer.save()
+            data["success"] = "update successful"
+            return Response(data=data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
