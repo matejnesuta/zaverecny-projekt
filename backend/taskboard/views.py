@@ -51,9 +51,9 @@ def get_boards(request):
         return Response(serializer.data)
 
 
-@api_view(['PUT', ])
+@api_view(['PUT', 'DELETE'])
 @permission_classes((IsAuthenticated,))
-def update_board(request, pk):
+def board(request, pk):
     try:
         board = Taskboard.objects.get(pk=pk)
     except Taskboard.DoesNotExist:
@@ -61,15 +61,23 @@ def update_board(request, pk):
 
     query = Membership.objects.values("profile").filter(taskboard=board, profile=request.user.pk,
                                                         role__contains="owner")
+    data = {}
     if query.count() == 0:
-        return Response(status=status.HTTP_403_FORBIDDEN)
+        data["failure"] = "you are not allowed to alter this"
+        return Response(data=data, status=status.HTTP_403_FORBIDDEN)
 
-
-    elif request.method == "PUT":
+    if request.method == "PUT":
         serializer = TaskboardSerializer(board, data=request.data)
-        data = {}
         if serializer.is_valid():
             serializer.save()
             data["success"] = "update successful"
             return Response(data=data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        operation = board.delete()
+        if operation:
+            data["success"] = "delete successful"
+        else:
+            data["failure"] = "delete failed"
+        return Response(data=data)
