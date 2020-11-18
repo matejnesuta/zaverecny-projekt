@@ -28,7 +28,7 @@ class Profile(models.Model):
                                         blank=True,
                                         null=True,
                                         max_upload_size=10485760)
-    bio = models.CharField(max_length=150, null=True, verbose_name="Bio")
+    bio = models.CharField(max_length=150, null=True, blank=True, verbose_name="Bio")
 
     class Meta:
         ordering = ["user__email", "last_name"]
@@ -78,6 +78,7 @@ class Membership(models.Model):
     def __str__(self):
         return f" {self.profile.last_name}, {self.role}, {self.taskboard.name}"
 
+
 # Model úkolu.
 class Task(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -100,6 +101,7 @@ class Task(models.Model):
 
     def __str__(self):
         return f"{self.title}, {self.taskboard.name}, {self.author.first_name} {self.author.last_name}"
+
 
 # Model přílohy.
 class Attachment(models.Model):

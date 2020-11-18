@@ -4,8 +4,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from accounts.models import User
-from .models import Profile
-from .serializers import ProfileSerializer
+from .models import Profile, Taskboard, Membership
+from .serializers import ProfileSerializer, TaskboardSerializer, MembershipSerializer
 
 
 # Endpoint pro zobrazení profilu ostatních uživatelů.
@@ -19,6 +19,7 @@ def get_profile_detail(request, pk):
     if request.method == "GET":
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
+
 
 # Endpoint pro získání nebo úpravu vlastního profilu.
 @api_view(['GET', 'PUT'])
@@ -39,3 +40,18 @@ def profile(request):
             data["success"] = "update successful"
             return Response(data=data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+def get_boards(request):
+    if request.method == "GET":
+        boards = Taskboard.objects.filter(membership__profile=request.user.pk)
+        serializer = TaskboardSerializer(boards, many=True)
+        return Response(serializer.data)
+
+
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+def upgrade_board(request, id):
+    pass
