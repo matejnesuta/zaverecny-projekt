@@ -90,3 +90,8 @@ def null_view(request):
 
 def empty_view(request):
     return HttpResponse('')
+
+
+@api_view()
+def dummy_view(request):
+    return Response(status=status.HTTP_404_NOT_FOUND)
