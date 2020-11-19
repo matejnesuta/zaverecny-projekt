@@ -160,3 +160,4 @@ class Log(models.Model):
     text = models.CharField(max_length=100, verbose_name="Text", blank=False, null=False)
     time = models.DateTimeField(auto_now=True)
     board = models.ForeignKey(Taskboard, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True)
