@@ -8,5 +8,6 @@ urlpatterns = [
     path('board/', get_boards),
     path('board/<int:pk>/', board),
     path('board/create/', create_board),
-    path('board/detail/<int:pk>/', get_board_detail)
+    path('board/detail/<int:pk>/', get_board_detail),
+    path('log/<int:pk>/', get_log)
 ]

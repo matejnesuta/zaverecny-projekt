@@ -4,8 +4,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from accounts.models import User
-from .models import Profile, Taskboard, Membership, Task
-from .serializers import ProfileSerializer, TaskboardSerializer, MembershipSerializer, TaskSerializer
+from .models import Profile, Taskboard, Membership, Task, Log
+from .serializers import *
 
 
 # Endpoint pro zobrazení profilu ostatních uživatelů.
@@ -121,4 +121,21 @@ def get_board_detail(request, pk):
             return Response(data=data, status=status.HTTP_403_FORBIDDEN)
 
         serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def get_log(request, pk):
+    if request.method == "GET":
+
+        query = Membership.objects.values("profile").filter(taskboard=pk, profile=request.user.pk)
+
+        if query.count() == 0:
+            data = {}
+            data["failure"] = "you are not allowed to view this content"
+            return Response(data=data, status=status.HTTP_403_FORBIDDEN)
+
+        log = Log.objects.filter(board=pk)
+        serializer = LogSerializer(log, many=True)
         return Response(serializer.data)

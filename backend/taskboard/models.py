@@ -161,3 +161,11 @@ class Log(models.Model):
     time = models.DateTimeField(auto_now=True)
     board = models.ForeignKey(Taskboard, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        verbose_name_plural = "Log"
+
+    def __str__(self):
+        return f"{self.board}, {self.task.title}, {self.profile}, {self.comment}, {self.text}"
