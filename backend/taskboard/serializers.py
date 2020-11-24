@@ -25,7 +25,7 @@ class MembershipSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['id', 'author', 'title', 'description', 'deadline', 'stage']
+        fields = ['id', 'author', 'title', 'description', 'deadline', 'stage', 'taskboard']
 
 
 class LogSerializer(serializers.ModelSerializer):

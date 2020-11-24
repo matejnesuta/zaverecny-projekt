@@ -139,3 +139,30 @@ def get_log(request, pk):
         log = Log.objects.filter(board=pk)
         serializer = LogSerializer(log, many=True)
         return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def create_task(request):
+    if request.method == "POST":
+        author = Profile.objects.get(pk=request.user.pk)
+
+        query = Membership.objects.values("profile").filter(taskboard=request.data.get("taskboard"),
+                                                            profile=request.user.pk)
+
+        if query.count() == 0:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        task = Task()
+        request.data["author"] = author.id
+        serializer = TaskSerializer(task, data=request.data)
+        data = {}
+
+        if serializer.is_valid():
+            serializer.save()
+            log = Log(text=f"{author.first_name} {author.last_name} právě přidal úkol: {serializer.data['title']}",
+                      board=Taskboard.objects.get(pk=serializer.data["taskboard"]),
+                      task=Task.objects.get(id=serializer.data['id']),
+                      profile=author)
+            log.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
