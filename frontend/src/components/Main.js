@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Board from "./Board";
 import UpdateLog from "./UpdateLog";
+import LogComment from "./LogComment";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import woke from "../images/woke.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -39,9 +41,11 @@ class Main extends Component {
           <div>
             <Board />
             <UpdateLog imgUrl={woke} name="GodJ" content="hahahhahahah" />
+            <LogComment imgUrl={woke} name="ScoutJ" content="xdxdxdxdddxd" />
           </div>
           <div>{this.state.logs}</div>
           <hr />
+          <Footer />
         </div>
       </div>
     );

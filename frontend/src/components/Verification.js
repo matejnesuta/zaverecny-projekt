@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import SubmitButton from "./SubmitButton";
 import axios from "axios";
 
 class Verification extends Component {
@@ -67,14 +68,7 @@ class Verification extends Component {
                     </div>
                   </div>
                 </div>
-
-                <div className="row m-3">
-                  <div className="col-12">
-                    <button type="submit" className="btn btn-primary px-3">
-                      Odeslat
-                    </button>
-                  </div>
-                </div>
+                <SubmitButton />
               </form>
             </div>
           </div>

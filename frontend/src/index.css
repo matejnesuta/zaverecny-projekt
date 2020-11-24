@@ -23,19 +23,15 @@ input:focus {
 }
 
 .logs {
-  background-color: #ededed;
   border-radius: 5px;
-  border: black 1px solid;
-  font-size: 0.9em;
 }
 
 .logs_header {
   font-weight: 500;
-  font-size: 1.1em;
   border-bottom: gray 1px solid;
 }
 
-.logs_body {
+.logs_footer {
   font-size: 0.9em;
 }
 
@@ -44,13 +40,28 @@ footer {
   text-decoration-line: line-through;
 }
 
-th {
-  font-size: 1.1em;
-}
-
 nav {
   display: flex;
+  color: white;
+  background-color: #323232;
   font-size: 1.3em;
   font-weight: 500;
-  border-bottom: #209cee 10px double;
+  border-bottom: #209cee 5px solid;
+}
+
+nav li a {
+  color: white;
+}
+
+nav li a:hover {
+  color: #209cee;
+}
+
+.dark {
+  color: white;
+  background-color: #2a2a2a;
+}
+
+nav li .dropdown {
+  font-weight: 600;
 }

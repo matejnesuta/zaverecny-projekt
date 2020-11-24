@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import SubmitButton from "./SubmitButton";
 import { Link } from "react-router-dom";
 import user_icon from "../images/user_icon.jpg";
 import axios from "axios";
@@ -51,13 +52,15 @@ class Profile extends Component {
     //NAHRÁVÁNÍ OBRÁZKU JE PROZATÍM NEFUNKČNÍ
 
     //Ověření formátu souboru - zamezení proti nahrávání špatných formátů souborů (např. docx, pdf) jako profilový obrázek
-    let imageFormatOk = false;
+    let imageFormatOk = true;
+    let file = event.target.files[0];
     //Získání informace o formátu souboru, který byl nahrán
-    let format = event.target.files[0].type.split("/");
+    let format = file.type.split("/");
     //Poznámka: metoda .split() vrací pole, jež obsahuje jednotlivé části stringu a jelikož je formát souboru pokaždé částí za "/", do imageType se ukládá type[1]
     let imageFormat = format[1];
+    console.log(file, imageFormat);
     //Povolené obrázkové formáty
-    const imageFormats = ["bmp", "gif", "tiff", "jpeg", "png"];
+    /*const imageFormats = ["bmp", "gif", "tiff", "jpeg", "png"];
     imageFormats.forEach((element) => {
       //Porovnávání formátu nahraného souboru s povolenými formáty a následné uložení nahraného obrázku do this.state.image, pokud je v povoleném formátu
       if (imageFormat.localeCompare(element) === 0) {
@@ -68,7 +71,7 @@ class Profile extends Component {
       this.setState({
         image: event.target.files[0],
       });
-    }
+    }*/
   };
 
   render() {
@@ -134,8 +137,6 @@ class Profile extends Component {
                     ></input>
                   </div>
                 </div>
-                {/*
-                NEFUNGUJE :c
                 <div className="form-group row">
                   <div className="col-4">
                     <label className="col-form-label col-form-label-lg">
@@ -157,7 +158,7 @@ class Profile extends Component {
                       </label>
                     </div>
                   </div>
-                </div>*/}
+                </div>
                 <div className="form-group row">
                   <div className="col-4">
                     <label className="col-form-label col-form-label-lg">
@@ -214,13 +215,7 @@ class Profile extends Component {
                     ></input>
                   </div>
                 </div>
-                <div className="row m-3">
-                  <div className="col-12">
-                    <button type="submit" className="btn btn-primary px-3">
-                      Odeslat
-                    </button>
-                  </div>
-                </div>
+                <SubmitButton />
               </form>
             </div>
           </div>

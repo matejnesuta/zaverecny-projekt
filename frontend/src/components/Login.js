@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import SubmitButton from "./SubmitButton";
 import { Redirect, Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { getToken } from "../redux/actions/tokenAction";
 import axios from "axios";
 
 class Login extends Component {
@@ -21,24 +24,7 @@ class Login extends Component {
   };
 
   handleSubmit = (event) => {
-    axios
-      .post(
-        "/auth/login/",
-        { email: this.state.email, password: this.state.password },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        this.setState({
-          token: response.data.key,
-        });
-        console.log(response);
-      })
-      .catch((error) => {
-        this.setState({
-          error: error,
-        });
-        console.log(error);
-      });
+    this.props.getToken();
     event.preventDefault();
     this.setState({
       redirect: true,
@@ -49,6 +35,19 @@ class Login extends Component {
     if (this.state.redirect) {
       return <Redirect to="/groups" />;
     }
+
+    let invalidEmail = "";
+    let invalidPassword = "";
+    if (this.state.email === "") {
+      invalidEmail = (
+        <small className="text-danger">Email nemůže být prázdný.</small>
+      );
+    }
+    if (this.state.password === "") {
+      invalidPassword = (
+        <small className="text-danger">Heslo nemůže být prázdné.</small>
+      );
+    }
     return (
       <div>
         <Navbar isLoggedIn={false} />
@@ -56,7 +55,7 @@ class Login extends Component {
           <div className="row center p-3 m-4">
             <div className="col-12">
               <div className="m-4">
-                <h2 className="display-4">Login</h2>
+                <h2 className="display-4">Přihlášení</h2>
               </div>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group row">
@@ -65,7 +64,7 @@ class Login extends Component {
                       Email
                     </label>
                   </div>
-                  <div className="col-8">
+                  <div className="col-5">
                     <input
                       type="email"
                       name="email"
@@ -74,9 +73,9 @@ class Login extends Component {
                       placeholder="Zadejte email"
                       value={this.state.email}
                       onChange={this.handleChange}
-                      required
                     ></input>
                   </div>
+                  <div className="col-3">{invalidEmail}</div>
                 </div>
                 <div className="form-group row">
                   <div className="col-4">
@@ -84,7 +83,7 @@ class Login extends Component {
                       Heslo
                     </label>
                   </div>
-                  <div className="col-8">
+                  <div className="col-5">
                     <input
                       type="password"
                       name="password"
@@ -93,17 +92,11 @@ class Login extends Component {
                       placeholder="Zadejte heslo"
                       value={this.state.password}
                       onChange={this.handleChange}
-                      required
                     ></input>
                   </div>
+                  <div className="col-3">{invalidPassword}</div>
                 </div>
-                <div className="row m-3">
-                  <div className="col-12">
-                    <button type="submit" className="btn btn-primary px-3">
-                      Odeslat
-                    </button>
-                  </div>
-                </div>
+                <SubmitButton />
                 <div className="row m-3">
                   <div className="col-12">
                     <button type="submit" className="btn btn-danger m-1">
@@ -130,4 +123,8 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  tokens: state.tokens.token,
+});
+
+export default connect(mapStateToProps, getToken)(Login);
