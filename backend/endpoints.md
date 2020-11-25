@@ -61,15 +61,15 @@ Pro jejich používání musí být uživatel přihlášen.
       - last_name
       - bio
       - profile_pic
-
+      <br>
   Endpoint pro zobrazení cizích profilů.
   
   
 - /auth/profile/detail/ (GET, PUT)
-      - first_name (Not NULL, string)
-      - last_name  (Not NULL, string)
-      - bio (string, maximální délka 150 znaků)
-      - profile_pic (obrázek, maximální velikost 10 MB)
+  - first_name (Not NULL, string)
+  - last_name  (Not NULL, string)
+  - bio (string, maximální délka 150 znaků)
+  - profile_pic (obrázek, maximální velikost 10 MB)
    
    - Návratové hodnoty:
       - id
@@ -77,7 +77,7 @@ Pro jejich používání musí být uživatel přihlášen.
       - last_name
       - bio
       - profile_pic
-      
+      <br>
    Endpoint pro zobrazení a nebo úpravu vlastního profilu.
 
 
@@ -85,16 +85,19 @@ Pro jejich používání musí být uživatel přihlášen.
    - Návratové hodnoty:
       - id
       - name
+      <br>
    Endpoint pro získání všech boardů, ve kterých je uživatel aspoň členem.
    
 - /auth/board/<int:id>/ (PUT, DELETE)
     - name (pokud je zavolán PUT requestem)
+    <br>
     Endpoint pro smazání a nebo úpravu jména tabule. Pokud uživatel tabuli nevlastní (nemá roli owner), nemůže ji upravit a ani smazat.
 
 - /auth/board/create/ (POST)
     - Návratové hodnoty:
       - id
       - name
+    <br>
     Endpoint pro vytvoření nové tabule. Uživatel, který tabuli takto vytvoří, se zároveň automaticky stane jejím vlastníkem.
     
 - /auth/board/detail/<int:id>/ (GET)
@@ -106,6 +109,7 @@ Pro jejich používání musí být uživatel přihlášen.
         - deadline
         - stage
         - taskboard
+          <br>
    Endpoint pro zobrazení všech úkolů dané tabule. Uživatel, který na tabuli není aspoň členem, dostane místo dat 403 FORBIDDEN.
    
 
@@ -117,6 +121,7 @@ Pro jejich používání musí být uživatel přihlášen.
         - task
         - profile
         - comment
+        <br>
     Endpoint pro zobrazení logu tabule. Uživatel, který na tabuli není aspoň členem, dostane místo dat 403 FORBIDDEN.
     
 - /auth/task/create/ (POST)
@@ -133,4 +138,5 @@ Pro jejich používání musí být uživatel přihlášen.
         - deadline
         - stage
         - taskboard
+        <br>
     Endpoint pro vytvoření příspěvku. Příspěvky může uživatel vytvářet jen tam, kde je členem.
