@@ -125,11 +125,11 @@ Pro jejich používání musí být uživatel přihlášen.
     Endpoint pro zobrazení logu tabule. Uživatel, který na tabuli není aspoň členem, dostane místo dat 403 FORBIDDEN.
     
 - /auth/task/create/ (POST)
-    - title 
-    - description
-    - deadline
-    - stage
-    - taskboard
+    - title (Not NULL, string, max 50 znaků)
+    - description (string)
+    - deadline (čas ve formátu %Y-%m-%d %H:%M:%S)
+    - stage (ENUM('not_started', 'in_progress', 'on_hold', 'almost_finished', 'done'))
+    - taskboard (int, id tabule)
     - Návratové hodnoty:
         - id
         - author
