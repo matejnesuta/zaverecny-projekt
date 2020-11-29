@@ -182,7 +182,7 @@ def task(request, pk):
                                        profile=request.user.pk).count()
     if request.method == "PATCH":
         if Task.objects.filter(author=request.user.id, id=pk).count() != 0:
-            serializer = TaskSerializer(task, data=request.data, partial=True, allow_empty=False)
+            serializer = UpdateTaskSerializer(task, data=request.data, partial=True)
         elif membership != 0:
             serializer = StageSerializer(task, data=request.data, partial=True, )
         else:

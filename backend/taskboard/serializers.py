@@ -38,3 +38,9 @@ class StageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ['stage']
+
+
+class UpdateTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['title', 'description', 'deadline', 'stage', ]
