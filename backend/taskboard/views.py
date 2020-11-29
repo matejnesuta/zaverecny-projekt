@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from accounts.models import User
 from .models import Profile, Taskboard, Membership, Task, Log
 from .serializers import *
+from django.db.models import Q
 
 
 # Endpoint pro zobrazení profilu ostatních uživatelů.
@@ -166,3 +167,39 @@ def create_task(request):
             log.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PATCH', 'DELETE'])
+@permission_classes((IsAuthenticated,))
+def task(request, pk):
+    try:
+        task = Task.objects.get(pk=pk)
+    except Task.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    data = {}
+    membership = Membership.objects.filter((Q(role__contains='owner') | Q(role__contains='moderator')),
+                                       taskboard=Task.objects.values("taskboard").get(id=pk)["taskboard"],
+                                       profile=request.user.pk).count()
+    if request.method == "PATCH":
+        if Task.objects.filter(author=request.user.id, id=pk).count() != 0:
+            serializer = TaskSerializer(task, data=request.data, partial=True, allow_empty=False)
+        elif membership != 0:
+            serializer = StageSerializer(task, data=request.data, partial=True, )
+        else:
+            return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
+
+        if serializer.is_valid():
+            serializer.save()
+            data["success"] = "update successful"
+            return Response(data=data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        if membership != 0 or Task.objects.filter(author=request.user.id, id=pk).count() != 0:
+            operation = task.delete()
+            if operation:
+                data["success"] = "delete successful"
+            else:
+                data["failure"] = "delete failed"
+            return Response(data=data)
+        return Response(status=status.HTTP_403_FORBIDDEN)

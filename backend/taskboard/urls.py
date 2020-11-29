@@ -10,5 +10,6 @@ urlpatterns = [
     path('board/create/', create_board),
     path('board/detail/<int:pk>/', get_board_detail),
     path('log/<int:pk>/', get_log),
-    path('task/create/', create_task)
+    path('task/create/', create_task),
+    path('task/<int:pk>/', task)
 ]

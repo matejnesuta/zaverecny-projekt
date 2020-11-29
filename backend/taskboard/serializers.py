@@ -32,3 +32,9 @@ class LogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
         exclude = ['id']
+
+
+class StageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['stage']
