@@ -11,5 +11,6 @@ urlpatterns = [
     path('board/detail/<int:pk>/', get_board_detail),
     path('log/<int:pk>/', get_log),
     path('task/create/', create_task),
-    path('task/<int:pk>/', task)
+    path('task/<int:pk>/', task),
+    path('task/attachment/', add_attachment)
 ]

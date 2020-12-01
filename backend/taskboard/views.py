@@ -178,8 +178,8 @@ def task(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
     data = {}
     membership = Membership.objects.filter((Q(role__contains='owner') | Q(role__contains='moderator')),
-                                       taskboard=Task.objects.values("taskboard").get(id=pk)["taskboard"],
-                                       profile=request.user.pk).count()
+                                           taskboard=Task.objects.values("taskboard").get(id=pk)["taskboard"],
+                                           profile=request.user.pk).count()
     if request.method == "PATCH":
         if Task.objects.filter(author=request.user.id, id=pk).count() != 0:
             serializer = UpdateTaskSerializer(task, data=request.data, partial=True)
@@ -203,3 +203,32 @@ def task(request, pk):
                 data["failure"] = "delete failed"
             return Response(data=data)
         return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def add_attachment(request):
+    data = {}
+    try:
+        membership = Membership.objects.filter(
+            taskboard=Task.objects.values("taskboard").get(id=request.data["task"])["taskboard"],
+            profile=request.user.pk).count()
+    except KeyError:
+        data["failure"] = "id field not found"
+        return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+    except ValueError:
+        data["failure"] = "field id must contain an integer"
+        return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+    except Task.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if membership == 0:
+        data["failure"] = "you are not allowed to POST to this board"
+        return Response(status=status.HTTP_403_FORBIDDEN)
+
+    attachment = Attachment()
+    serializer = AttachmentSerializer(attachment, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
