@@ -181,8 +181,12 @@ def task(request, pk):
                                            taskboard=Task.objects.values("taskboard").get(id=pk)["taskboard"],
                                            profile=request.user.pk).count()
     if request.method == "GET":
-        serializer = TaskSerializer(task)
-        return Response(serializer.data)
+        if Membership.objects.filter(taskboard=Task.objects.values("taskboard").get(id=pk)["taskboard"],
+                                     profile=request.user.pk).count():
+            serializer = TaskSerializer(task)
+            return Response(serializer.data)
+        data["failure"] = "you are not allowed to view this"
+        return Response()
     if request.method == "PATCH":
         if Task.objects.filter(author=request.user.id, id=pk).count() != 0:
             serializer = UpdateTaskSerializer(task, data=request.data, partial=True)
