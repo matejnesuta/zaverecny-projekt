@@ -169,7 +169,7 @@ def create_task(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['PATCH', 'DELETE'])
+@api_view(['PATCH', 'DELETE', 'GET'])
 @permission_classes((IsAuthenticated,))
 def task(request, pk):
     try:
@@ -180,6 +180,9 @@ def task(request, pk):
     membership = Membership.objects.filter((Q(role__contains='owner') | Q(role__contains='moderator')),
                                            taskboard=Task.objects.values("taskboard").get(id=pk)["taskboard"],
                                            profile=request.user.pk).count()
+    if request.method == "GET":
+        serializer = TaskSerializer(task)
+        return Response(serializer.data)
     if request.method == "PATCH":
         if Task.objects.filter(author=request.user.id, id=pk).count() != 0:
             serializer = UpdateTaskSerializer(task, data=request.data, partial=True)
