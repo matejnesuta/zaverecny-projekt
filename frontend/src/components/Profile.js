@@ -95,130 +95,131 @@ class Profile extends Component {
       <div>
         <Navbar isLoggedIn={true} />
         <div className="container">
-          <div className="row center p-3 m-4">
+          <div className="row center p-3 m-5">
             <div className="col-12">
-              <div className="m-5">
-                <h2 className="display-4">Nastavení profilu</h2>
-              </div>
-              <form onSubmit={this.handleSubmit}>
-                <div className="form-group row">
-                  <div className="col-4">
-                    <label className="col-form-label col-form-label-lg">
-                      Jméno
-                    </label>
-                  </div>
-                  <div className="col-8">
-                    <input
-                      type="text"
-                      name="firstName"
-                      id="firstName"
-                      className="border-primary form-control"
-                      placeholder="Zadejte jméno"
-                      value={this.state.firstName}
-                      onChange={this.handleChange}
-                    ></input>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="col-4">
-                    <label className="col-form-label col-form-label-lg">
-                      Příjmení
-                    </label>
-                  </div>
-                  <div className="col-8">
-                    <input
-                      type="text"
-                      name="lastName"
-                      id="lastName"
-                      className="border-primary form-control"
-                      placeholder="Zadejte jméno"
-                      value={this.state.lastName}
-                      onChange={this.handleChange}
-                    ></input>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="col-4">
-                    <label className="col-form-label col-form-label-lg">
-                      Profilový obrázek
-                    </label>
-                  </div>
-                  <div className="col-8">
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        name="image"
-                        id="prof_image"
-                        className="border-primary form-control custom-file-input"
-                        value={this.state.image}
-                        onChange={this.handleFileSelect}
-                      ></input>
-                      <label className="custom-file-label">
-                        {imageInputLabel}
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="col-4">
-                    <label className="col-form-label col-form-label-lg">
-                      Popisek
-                    </label>
-                  </div>
-                  <div className="col-8">
-                    <textarea
-                      type="text"
-                      name="comment"
-                      id="comment"
-                      className="border-primary form-control"
-                      placeholder="Zadejte popisek"
-                      maxLength={300}
-                      rows={4}
-                      value={this.state.comment}
-                      onChange={this.handleChange}
-                    ></textarea>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="col-4">
-                    <label className="col-form-label col-form-label-lg">
-                      Heslo
-                    </label>
-                  </div>
-                  <div className="col-8">
-                    <input
-                      type="password"
-                      name="password1"
-                      id="prof_password1"
-                      className="border-primary form-control"
-                      placeholder="Zadejte heslo"
-                      value={this.state.password1}
-                      onChange={this.handleChange}
-                    ></input>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="col-4">
-                    <label className="col-form-label col-form-label-lg">
-                      Potvrzení hesla
-                    </label>
-                  </div>
-                  <div className="col-8">
-                    <input
-                      type="password"
-                      name="password2"
-                      id="prof_password2"
-                      className="border-primary form-control"
-                      placeholder="Zadejte heslo"
-                      value={this.state.password2}
-                      onChange={this.handleChange}
-                    ></input>
-                  </div>
-                </div>
-                <SubmitButton />
-              </form>
+              <h2 className="display-4">Nastavení profilu</h2>
             </div>
           </div>
+          <div className="card center p-5 m-5 bg-dark border-primary text-light">
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group row">
+                <div className="col-4">
+                  <label className="col-form-label col-form-label-lg">
+                    Jméno
+                  </label>
+                </div>
+                <div className="col-8">
+                  <input
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    className="border-primary form-control"
+                    placeholder="Zadejte jméno"
+                    value={this.state.firstName}
+                    onChange={this.handleChange}
+                  ></input>
+                </div>
+              </div>
+              <div className="form-group row">
+                <div className="col-4">
+                  <label className="col-form-label col-form-label-lg">
+                    Příjmení
+                  </label>
+                </div>
+                <div className="col-8">
+                  <input
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    className="border-primary form-control"
+                    placeholder="Zadejte jméno"
+                    value={this.state.lastName}
+                    onChange={this.handleChange}
+                  ></input>
+                </div>
+              </div>
+              <div className="form-group row">
+                <div className="col-4">
+                  <label className="col-form-label col-form-label-lg">
+                    Profilový obrázek
+                  </label>
+                </div>
+                <div className="col-8">
+                  <div className="custom-file">
+                    <input
+                      type="file"
+                      name="image"
+                      id="prof_image"
+                      className="border-primary form-control custom-file-input"
+                      value={this.state.image}
+                      onChange={this.handleFileSelect}
+                    ></input>
+                    <label className="custom-file-label">
+                      {imageInputLabel}
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="form-group row">
+                <div className="col-4">
+                  <label className="col-form-label col-form-label-lg">
+                    Popisek
+                  </label>
+                </div>
+                <div className="col-8">
+                  <textarea
+                    type="text"
+                    name="comment"
+                    id="comment"
+                    className="border-primary form-control"
+                    placeholder="Zadejte popisek"
+                    maxLength={300}
+                    rows={4}
+                    value={this.state.comment}
+                    onChange={this.handleChange}
+                  ></textarea>
+                </div>
+              </div>
+              <div className="form-group row">
+                <div className="col-4">
+                  <label className="col-form-label col-form-label-lg">
+                    Heslo
+                  </label>
+                </div>
+                <div className="col-8">
+                  <input
+                    type="password"
+                    name="password1"
+                    id="prof_password1"
+                    className="border-primary form-control"
+                    placeholder="Zadejte heslo"
+                    value={this.state.password1}
+                    onChange={this.handleChange}
+                  ></input>
+                </div>
+              </div>
+              <div className="form-group row">
+                <div className="col-4">
+                  <label className="col-form-label col-form-label-lg">
+                    Potvrzení hesla
+                  </label>
+                </div>
+                <div className="col-8">
+                  <input
+                    type="password"
+                    name="password2"
+                    id="prof_password2"
+                    className="border-primary form-control"
+                    placeholder="Zadejte heslo"
+                    value={this.state.password2}
+                    onChange={this.handleChange}
+                  ></input>
+                </div>
+              </div>
+              <SubmitButton />
+            </form>
+          </div>
+
           <hr />
           <Footer />
         </div>

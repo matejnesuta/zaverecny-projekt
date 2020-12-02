@@ -22,17 +22,27 @@ input:focus {
   border-radius: 50%;
 }
 
+.comments {
+  border-radius: 5px;
+  border-left: #209cee 5px solid;
+}
+
 .logs {
   border-radius: 5px;
 }
 
-.logs_header {
+.logs-header {
   font-weight: 500;
   border-bottom: gray 1px solid;
 }
 
-.logs_footer {
+.logs-footer {
   font-size: 0.9em;
+}
+
+.group-name {
+  font-size: 1.2em;
+  font-weight: 500;
 }
 
 footer {
@@ -43,7 +53,7 @@ footer {
 nav {
   display: flex;
   color: white;
-  background-color: #323232;
+  background-color: #3b3b3b;
   font-size: 1.3em;
   font-weight: 500;
   border-bottom: #209cee 5px solid;

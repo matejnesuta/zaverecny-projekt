@@ -5,8 +5,8 @@ class LogComment extends Component {
   render() {
     return (
       <div className="row justify-content-end m-1">
-        <div className="col-11 logs bg-dark text-white">
-          <div className="logs_header">
+        <div className="col-11 comments bg-dark text-white">
+          <div className="logs-header">
             <img
               src={this.props.imgUrl}
               alt="profile_pic"

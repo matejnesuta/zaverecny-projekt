@@ -7,9 +7,9 @@ class UpdateLog extends Component {
 
   render() {
     return (
-      <div className="row m-1 logs bg-dark text-white border-light">
+      <div className="row logs m-1 bg-dark text-white border-light">
         <div className="col-12">
-          <div className="logs_header">
+          <div className="logs-header">
             <img
               src={this.props.imgUrl}
               alt="profile_pic"
@@ -23,7 +23,7 @@ class UpdateLog extends Component {
           <div className="ml-5">{this.props.content}</div>
         </div>
         <br />
-        <div className="logs_footer ml-auto p-1 text-muted">
+        <div className="logs-footer ml-auto p-1 text-muted">
           13.11 2020
           <button
             className="btn btn-sm text-light ml-2 mb-1"

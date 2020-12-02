@@ -1,8 +1,33 @@
+import axios from "axios";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import user_icon from "../images/user_icon.jpg";
 
 class Navbar extends Component {
+  handleLogout = () => {
+    /*axios
+    .post(
+      "/auth/logout/",
+      //{ token },
+      { withCredentials: true }
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .then((data) =>
+      dispatch({
+        type: GET_TOKEN,
+        payload: data,
+      })
+    )
+    .catch((error) => {
+      this.setState({
+        error: error,
+      });
+      console.log(error);
+    });*/
+  };
+
   loggedIn() {
     if (this.props.isLoggedIn) {
       return (
@@ -38,7 +63,11 @@ class Navbar extends Component {
               profil
             </Link>
 
-            <Link className="dropdown-item" to="/login">
+            <Link
+              className="dropdown-item"
+              to="/login"
+              onClick={this.handleLogout}
+            >
               <i className="fa fa-sign-out mx-1" aria-hidden="true"></i>
               Odhlásit se
             </Link>
@@ -59,7 +88,7 @@ class Navbar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-md">
+      <nav className="navbar navbar-expand-md sticky-top">
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item mx-2">

@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
     case GET_USER:
       return {
         ...state,
-        token: action.payload,
+        name: action.payload,
       };
     default:
       return state;

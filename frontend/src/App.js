@@ -18,9 +18,11 @@ function App() {
           <Route path="/registration" component={Registration} />
           <Route path="/verification" component={Verification} />
           <Route path="/profile" component={Profile} />
-          <Route path="/groups" component={Groups} />
+          <Route path="/groups" exact component={Groups} />
+          <Route path="/groups/:id" component={Main} />
           <Route path="/passwordreset" component={PasswordReset} />
-          <Route exact path="/" component={Main} />
+          <Route path="/" exact component={Main} />
+          <Route path="/" render={() => <h1>404</h1>} />
         </Switch>
       </div>
     </Router>
