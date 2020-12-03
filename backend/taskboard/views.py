@@ -186,7 +186,8 @@ def task(request, pk):
             serializer = TaskSerializer(task)
             return Response(serializer.data)
         data["failure"] = "you are not allowed to view this"
-        return Response()
+        return Response(data=data, status=status.HTTP_403_FORBIDDEN)
+
     if request.method == "PATCH":
         if Task.objects.filter(author=request.user.id, id=pk).count() != 0:
             serializer = UpdateTaskSerializer(task, data=request.data, partial=True)
@@ -239,3 +240,46 @@ def add_attachment(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PATCH', 'DELETE', 'GET'])
+@permission_classes((IsAuthenticated,))
+def attachment(request, pk):
+    try:
+        attachment = Attachment.objects.get(pk=pk)
+    except Attachment.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    data = {}
+    ownership = Task.objects.values("id").filter(attachment=pk, author=request.user.pk).count()
+    membership = Membership.objects.filter((Q(role__contains='owner') | Q(role__contains='moderator')),
+                                           taskboard=Task.objects.values("taskboard").get(attachment=pk)["taskboard"],
+                                           profile=request.user.pk).count()
+
+    if request.method == "GET":
+        if Membership.objects.filter(taskboard=Task.objects.values("taskboard").get(attachment=pk)["taskboard"],
+                                     profile=request.user.pk).count():
+            serializer = AttachmentSerializer(attachment)
+            return Response(serializer.data)
+        data["failure"] = "you are not allowed to view this"
+        return Response(data=data, status=status.HTTP_403_FORBIDDEN)
+
+    if request.method == "PATCH":
+        if ownership == 0:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        serializer = UpdateAttachmentSerializer(attachment, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            data["success"] = "update successful"
+            return Response(data=data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == "DELETE":
+        if membership != 0 or ownership != 0:
+            operation = attachment.delete()
+            if operation:
+                data["success"] = "delete successful"
+            else:
+                data["failure"] = "delete failed"
+            return Response(data=data)
+        return Response(status=status.HTTP_403_FORBIDDEN)

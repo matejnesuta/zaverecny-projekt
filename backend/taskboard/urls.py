@@ -12,5 +12,6 @@ urlpatterns = [
     path('log/<int:pk>/', get_log),
     path('task/create/', create_task),
     path('task/<int:pk>/', task),
-    path('task/attachment/', add_attachment)
+    path('task/attachment/', add_attachment),
+    path('task/attachment/<int:pk>/', attachment)
 ]
