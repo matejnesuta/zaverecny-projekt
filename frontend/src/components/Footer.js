@@ -3,9 +3,9 @@ import React from "react";
 export default function Footer() {
   return (
     <footer>
-      <div className="row center p-3">
+      <div className="row center p-5 mt-2">
         <div className="col-12">
-          <p>Le epique programuè clique</p>
+          <p className="lead">Le epique programuè clique</p>
         </div>
       </div>
     </footer>

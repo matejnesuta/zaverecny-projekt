@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import SubmitButton from "./SubmitButton";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link, Redirect, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
-import { getToken } from "../redux/actions/tokenAction";
+import { getToken } from "../redux/actions/actions";
 import axios from "axios";
 
 class Login extends Component {
@@ -24,7 +24,28 @@ class Login extends Component {
   };
 
   handleSubmit = (event) => {
-    this.props.getToken();
+    /*axios
+    .post(
+      "/auth/login/",
+      { email: this.state.email, password: this.state.password },
+      { withCredentials: true }
+    )
+    .then((response) => {
+      console.log(response);
+    })
+    .then((data) =>
+      this.setState({
+        token: data.key
+      })
+    )
+    .catch((error) => {
+      this.setState({
+        error: error,
+      });
+      console.log(error); */
+    fetch("https://jsonplaceholder.typicode.com/users/2")
+      .then((response) => response.json())
+      .then((data) => this.props.getToken(data.name));
     event.preventDefault();
     this.setState({
       redirect: true,
@@ -33,7 +54,7 @@ class Login extends Component {
 
   render() {
     if (this.state.redirect) {
-      //this.props.history.push("/");
+      return <Redirect to="/groups" />;
     }
     let invalidEmail = "";
     let invalidPassword = "";
@@ -53,7 +74,7 @@ class Login extends Component {
         <div className="container">
           <div className="row center p-3 m-5">
             <div className="col-12">
-              <h2 className="display-4">Přihlášení</h2>
+              <h1>Přihlášení</h1>
             </div>
           </div>
           <div className="card center p-5 m-5 bg-dark border-primary text-light">
@@ -110,20 +131,17 @@ class Login extends Component {
                 </div>
               </div>
               <div className="p-3">
-                <Link to="/passwordreset">Zapomněli jste heslo?</Link>
+                <Link to="/passwordreset" style={{ color: "white" }}>
+                  Zapomněli jste heslo?
+                </Link>
               </div>
             </form>
           </div>
-          <hr />
-          <Footer />
         </div>
+        <Footer />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  tokens: state.tokens.token,
-});
-
-export default connect(mapStateToProps, getToken)(Login);
+export default connect(null, { getToken })(Login);

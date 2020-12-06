@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import SubmitButton from "./SubmitButton";
 import axios from "axios";
 
 class PasswordReset extends Component {
@@ -37,7 +38,7 @@ class PasswordReset extends Component {
           <div className="row center p-3 m-4">
             <div className="col-12">
               <div className="m-5">
-                <h2 className="display-4">Resetování hesla</h2>
+                <h1>Resetování hesla</h1>
               </div>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
@@ -61,20 +62,12 @@ class PasswordReset extends Component {
                     </div>
                   </div>
                 </div>
-
-                <div className="row m-3">
-                  <div className="col-12">
-                    <button type="submit" className="btn btn-primary px-3">
-                      Odeslat
-                    </button>
-                  </div>
-                </div>
+                <SubmitButton />
               </form>
             </div>
           </div>
-          <hr />
-          <Footer />
         </div>
+        <Footer />
       </div>
     );
   }

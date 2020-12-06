@@ -2,18 +2,14 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-class UserPage extends Component {
+class Task extends Component {
   state = {};
-
-  // Nahrání údajů o uživateli (jméno, příjmení, obrázek, popisek atd.)
-  //componentDidMount() {}
-
   render() {
     return (
       <div>
         <Navbar isLoggedIn={true} />
         <div className="container">
-          <h1>#Uživatel</h1>
+          <h1>Hahahah</h1>
         </div>
         <Footer />
       </div>
@@ -21,4 +17,4 @@ class UserPage extends Component {
   }
 }
 
-export default UserPage;
+export default Task;

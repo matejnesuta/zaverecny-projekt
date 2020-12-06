@@ -16,7 +16,7 @@ class Board extends Component {
       "Listopad",
       "Prosinec",
     ],
-    monthIndex: 10,
+    monthIndex: 11,
     year: 2020,
   };
 
@@ -89,7 +89,7 @@ class Board extends Component {
   render() {
     return (
       <div>
-        <div className="row m-4">
+        <div className="row p-3 m-3">
           <div className="col-1 text-left">
             <button
               id="year_left"
@@ -99,6 +99,7 @@ class Board extends Component {
               <i
                 className="fa fa-angle-double-left fa-4x"
                 aria-hidden="true"
+                style={{ color: "white" }}
               ></i>
             </button>
           </div>
@@ -108,7 +109,11 @@ class Board extends Component {
               className="btn"
               onClick={this.handleMonthDecrement}
             >
-              <i className="fa fa-angle-left fa-4x" aria-hidden="true"></i>
+              <i
+                className="fa fa-angle-left fa-4x"
+                aria-hidden="true"
+                style={{ color: "white" }}
+              ></i>
             </button>
           </div>
           <div className="col-8 text-center">
@@ -122,7 +127,11 @@ class Board extends Component {
               className="btn"
               onClick={this.handleMonthIncrement}
             >
-              <i className="fa fa-angle-right fa-4x" aria-hidden="true"></i>
+              <i
+                className="fa fa-angle-right fa-4x"
+                aria-hidden="true"
+                style={{ color: "white" }}
+              ></i>
             </button>
           </div>
           <div className="col-1 text-right">
@@ -134,6 +143,7 @@ class Board extends Component {
               <i
                 className="fa fa-angle-double-right fa-4x"
                 aria-hidden="true"
+                style={{ color: "white" }}
               ></i>
             </button>
           </div>

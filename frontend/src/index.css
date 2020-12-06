@@ -3,6 +3,15 @@
   display: flex;
 }
 
+#root {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.container {
+  border-bottom: #209cee 1px solid;
+}
+
 input {
   border-radius: 7px;
 }
@@ -15,7 +24,7 @@ textarea {
 textarea:focus,
 input:focus {
   outline: none;
-  background-color: #ededed;
+  background-color: white;
 }
 
 .badge {
@@ -33,7 +42,7 @@ input:focus {
 
 .logs-header {
   font-weight: 500;
-  border-bottom: gray 1px solid;
+  border-bottom: white 1px solid;
 }
 
 .logs-footer {
@@ -48,6 +57,8 @@ input:focus {
 footer {
   text-align: center;
   text-decoration-line: line-through;
+  background-color: #3b3b3b;
+  border-top: white thin so;
 }
 
 nav {

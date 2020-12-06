@@ -6,16 +6,14 @@ class Group extends Component {
 
   render() {
     return (
-      <div className="col-3 btn btn-squared-default border-primary m-3 px-2 py-4 bg-dark">
-        <Link
-          className=""
-          to={`/groups/${this.props.name}`}
-          style={{ color: "white" }}
-        >
+      <div
+        className="col-3 btn btn-squared-default m-2 px-2 py-5 bg-dark"
+        style={{ border: "#209cee 1px solid" }}
+      >
+        <Link to={`/groups/${this.props.id}`} style={{ color: "white" }}>
           <i className="fa fa-group fa-5x"></i>
           <br />
           <div className="mt-3 group-name">{this.props.name}</div>
-          <br />
         </Link>
       </div>
     );

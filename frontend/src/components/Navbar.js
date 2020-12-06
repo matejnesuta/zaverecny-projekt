@@ -53,16 +53,14 @@ class Navbar extends Component {
             className="dropdown-menu dropdown-menu-right"
             aria-labelledby="navbarDropdownMenuLink"
           >
-            <Link className="dropdown-item" to="/">
+            <Link className="dropdown-item" to="/groups">
               <i className="fa fa-home mx-1" aria-hidden="true"></i> Hlavní
               stránka
             </Link>
-
             <Link className="dropdown-item" to="/profile">
               <i className="fa fa-cog mx-1" aria-hidden="true"></i> Upravit
               profil
             </Link>
-
             <Link
               className="dropdown-item"
               to="/login"
@@ -77,7 +75,7 @@ class Navbar extends Component {
     } else {
       return (
         <li className="nav-item active mx-2">
-          <Link className="nav-link" to="/login">
+          <Link className="nav-link" to="/login" style={{ color: "white" }}>
             <i className="fa fa-home fa-2x" aria-hidden="true"></i>
             <span className="sr-only">(current)</span>
           </Link>
@@ -119,8 +117,6 @@ class Navbar extends Component {
                   <i className="fa fa-github fa-2x mr-2" aria-hidden="true"></i>
                   Můj
                 </a>
-                <div className="dropdown-divider"></div>
-
                 <a
                   className="dropdown-item"
                   href="https://github.com/matejnesuta"

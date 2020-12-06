@@ -40,9 +40,11 @@ class Verification extends Component {
         <div className="container">
           <div className="row center p-3 m-4">
             <div className="col-12">
-              <div className="m-5">
-                <h2 className="display-4">Ověření emailu</h2>
-              </div>
+              <h1>Ověření emailu</h1>
+            </div>
+          </div>
+          <div className="row center p-3 m-4">
+            <div className="col-12">
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                   <div className="form-row">
@@ -53,9 +55,6 @@ class Verification extends Component {
                     </div>
                     <div className="col-10">
                       <input
-                        style={{
-                          borderColor: this.state.error ? "red" : "",
-                        }}
                         type="text"
                         name="key"
                         id="ver_key"
@@ -72,9 +71,8 @@ class Verification extends Component {
               </form>
             </div>
           </div>
-          <hr />
-          <Footer />
         </div>
+        <Footer />
       </div>
     );
   }

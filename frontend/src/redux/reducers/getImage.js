@@ -1,15 +1,15 @@
-import { GET_USER } from "../actions/types";
+import { GET_IMAGE } from "../actions/types";
 
 const initialState = {
-  users: {},
+  image: {},
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case GET_USER:
+    case GET_IMAGE:
       return {
         ...state,
-        user: action.payload,
+        image: action.payload,
       };
     default:
       return state;

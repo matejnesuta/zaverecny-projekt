@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import SubmitButton from "./SubmitButton";
+import RegModal from "./RegModal";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 
@@ -11,6 +12,7 @@ class Registration extends Component {
     password1: "",
     password2: "",
     error: false,
+    modal: false,
     redirect: false,
   };
 
@@ -41,7 +43,8 @@ class Registration extends Component {
       event.preventDefault();
     }
     this.setState({
-      redirect: true,
+      //redirect: true,
+      modal: true,
     });
   };
 
@@ -63,7 +66,7 @@ class Registration extends Component {
         <div className="container">
           <div className="row center p-3 m-5">
             <div className="col-12">
-              <h2 className="display-4">Registrace</h2>
+              <h1>Registrace</h1>
             </div>
           </div>
           <div className="card center p-5 m-5 bg-dark border-primary text-light">
@@ -108,7 +111,7 @@ class Registration extends Component {
                     value={this.state.password1}
                     onChange={this.handleChange}
                   ></input>
-                  <small className="form-text text-muted">
+                  <small className="form-text">
                     Heslo musí obsahovat nejméně 8 znaků, alespoň 1 číslo a
                     alespoň 1 speciální znak.
                   </small>
@@ -136,10 +139,8 @@ class Registration extends Component {
               <SubmitButton />
             </form>
           </div>
-
-          <hr />
-          <Footer />
         </div>
+        <Footer />
       </div>
     );
   }

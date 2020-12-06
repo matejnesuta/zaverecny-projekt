@@ -1,13 +1,12 @@
-import { GET_TOKEN, GET_USER } from "../actions/types";
+import { GET_TOKEN } from "../actions/types";
 
 const initialState = {
-  tokens: [],
+  token: "",
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_TOKEN:
-      console.log("cojetypíčo");
       return {
         ...state,
         token: action.payload,

@@ -3,6 +3,8 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import SubmitButton from "./SubmitButton";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { getImage } from "../redux/actions/actions";
 import user_icon from "../images/user_icon.jpg";
 import axios from "axios";
 
@@ -11,7 +13,7 @@ class Profile extends Component {
     firstName: "",
     lastName: "",
     comment: "",
-    image: null,
+    image: undefined,
     password1: "",
     password2: "",
     error: false,
@@ -59,6 +61,11 @@ class Profile extends Component {
     //Poznámka: metoda .split() vrací pole, jež obsahuje jednotlivé části stringu a jelikož je formát souboru pokaždé částí za "/", do imageType se ukládá type[1]
     let imageFormat = format[1];
     console.log(file, imageFormat);
+    let fileRead = FileReader;
+    //DODĚLEJ TO, BLBEČKU https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
+    console.log(fileRead);
+    //OBJEKT FILE SE DÁ BEZ PROBLÉMŮ NAHRÁT DO /redux/store, avšak je uložen jako (asi?) prázdný objekt, tudíž budu muset obrázek ukládat nějak jinak
+    this.props.getImage(file);
     //Povolené obrázkové formáty
     /*const imageFormats = ["bmp", "gif", "tiff", "jpeg", "png"];
     imageFormats.forEach((element) => {
@@ -77,7 +84,7 @@ class Profile extends Component {
   render() {
     //Nastavení labelu při nahrání obrázku
     let imageInputLabel;
-    if (this.state.image === null) {
+    if (this.state.image === undefined) {
       imageInputLabel = "Nahrát obrázek";
     } else if (this.state.image === "") {
       imageInputLabel = "Nepodporovaný formát souboru";
@@ -97,7 +104,7 @@ class Profile extends Component {
         <div className="container">
           <div className="row center p-3 m-5">
             <div className="col-12">
-              <h2 className="display-4">Nastavení profilu</h2>
+              <h1>Nastavení profilu</h1>
             </div>
           </div>
           <div className="card center p-5 m-5 bg-dark border-primary text-light">
@@ -219,13 +226,11 @@ class Profile extends Component {
               <SubmitButton />
             </form>
           </div>
-
-          <hr />
-          <Footer />
         </div>
+        <Footer />
       </div>
     );
   }
 }
 
-export default Profile;
+export default connect(null, { getImage })(Profile);
