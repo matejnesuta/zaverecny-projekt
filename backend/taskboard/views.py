@@ -285,17 +285,25 @@ def attachment(request, pk):
         return Response(status=status.HTTP_403_FORBIDDEN)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes((IsAuthenticated,))
 def comments(request, pk):
     try:
         task = Task.objects.get(pk=pk)
     except Task.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
     if Membership.objects.filter(taskboard=Task.objects.values("taskboard").get(id=pk)["taskboard"],
                                  profile=request.user.pk).count():
-        comments = Comment.objects.filter(task=task)
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
+        if request.method == 'GET':
+            comments = Comment.objects.filter(task=task)
+            serializer = CommentSerializer(comments, many=True)
+            return Response(serializer.data)
+        else:
+            comment = Comment()
+            serializer = PostCommentSerializer(comment, data=request.data)
+            if serializer.is_valid():
+                serializer.validated_data["author"] = Profile.objects.get(id=request.user.pk)
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_403_FORBIDDEN)
