@@ -307,3 +307,27 @@ def comments(request, pk):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['DELETE'])
+@permission_classes((IsAuthenticated,))
+def delete_comment(request, pk):
+    try:
+        comment = Comment.objects.get(pk=pk)
+    except Comment.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    ownership = Task.objects.values("id").filter(comment=pk, author=request.user.pk).count()
+    membership = Membership.objects.filter((Q(role__contains='owner') | Q(role__contains='moderator')),
+                                           taskboard=Task.objects.values("taskboard").get(comment=pk)["taskboard"],
+                                           profile=request.user.pk).count()
+
+    if ownership != 0 or membership != 0:
+        data = {}
+        operation = comment.delete()
+        if operation:
+            data["success"] = "delete successful"
+        else:
+            data["failure"] = "delete failed"
+        return Response(data=data)
+    return Response(status=status.HTTP_403_FORBIDDEN)
