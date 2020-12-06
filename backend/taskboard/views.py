@@ -4,7 +4,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from accounts.models import User
-from .models import Profile, Taskboard, Membership, Task, Log
+from .models import Profile, Taskboard, Membership, Task, Log, Comment
 from .serializers import *
 from django.db.models import Q
 
@@ -283,3 +283,19 @@ def attachment(request, pk):
                 data["failure"] = "delete failed"
             return Response(data=data)
         return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def comments(request, pk):
+    try:
+        task = Task.objects.get(pk=pk)
+    except Task.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if Membership.objects.filter(taskboard=Task.objects.values("taskboard").get(id=pk)["taskboard"],
+                                 profile=request.user.pk).count():
+        comments = Comment.objects.filter(task=task)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+    return Response(status=status.HTTP_403_FORBIDDEN)

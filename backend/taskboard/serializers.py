@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile, Taskboard, Membership, Task, Log, Attachment
+from .models import Profile, Taskboard, Membership, Task, Log, Attachment, Comment
 
 
 # Serializer modelu Profile. Serializovat se dá více způsoby, ale tady mi vyhovoval ModelSerializer, protože stačí
@@ -55,4 +55,10 @@ class AttachmentSerializer(serializers.ModelSerializer):
 class UpdateAttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attachment
-        fields = ['title', 'file', 'type']
+        fields = '__all__'
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        exclude = ['task']
