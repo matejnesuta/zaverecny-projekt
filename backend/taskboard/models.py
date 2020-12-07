@@ -1,9 +1,11 @@
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from accounts.models import User
 from datetime import datetime
 from django.core.validators import MinValueValidator
+import os
+
 # Tenhle balíček tu mám, abych byl schopný validovat nejen koncovky vložených souborů, ale i jejich kontent.
 from constrainedfilefield.fields import ConstrainedFileField, ConstrainedImageField
 
@@ -47,6 +49,24 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+@receiver(pre_save, sender=Profile)
+def delete_old_file(sender, instance, **kwargs):
+    # on creation, signal callback won't be triggered
+    if instance._state.adding and not instance.pk:
+        return False
+
+    try:
+        old_file = sender.objects.values("profile_pic").get(pk=instance.pk)["profile_pic"]
+    except sender.DoesNotExist:
+        return False
+
+    # comparing the new file with the old one
+    file = instance.profile_pic
+    if not old_file == file:
+        if os.path.isfile(old_file):
+            os.remove(old_file)
 
 
 class Taskboard(models.Model):
@@ -110,7 +130,7 @@ class Attachment(models.Model):
     last_update = models.DateTimeField(auto_now=True)
     file = ConstrainedFileField(upload_to=attachment_path,
                                 content_types=['image/png',
-                                               'image/jpg',
+                                               'image/jpeg',
                                                'image/bmp',
                                                'image/gif',
                                                'audio/aac',
@@ -139,6 +159,11 @@ class Attachment(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@receiver(post_delete, sender=Attachment)
+def attachment_delete(sender, instance, **kwargs):
+    instance.file.delete(False)
 
 
 # Model komentáře.
