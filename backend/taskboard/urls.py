@@ -15,5 +15,6 @@ urlpatterns = [
     path('task/attachment/', add_attachment),
     path('task/attachment/<int:pk>/', attachment),
     path('task/comments/<int:pk>/', comments),
-    path('task/comments/delete/<int:pk>/', delete_comment)
+    path('task/comments/delete/<int:pk>/', delete_comment),
+    path('task/users/<int:pk>/', get_users)
 ]

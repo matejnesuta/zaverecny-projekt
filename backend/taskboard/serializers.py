@@ -68,3 +68,8 @@ class PostCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['task', 'text']
+
+
+class BoardProfilesSerializer(ProfileSerializer):
+    class Meta(ProfileSerializer.Meta):
+        fields = ["membership"]

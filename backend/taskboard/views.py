@@ -54,6 +54,21 @@ def get_boards(request):
         return Response(serializer.data)
 
 
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+def get_users(request, pk):
+    try:
+        board = Taskboard.objects.get(pk=pk)
+    except Taskboard.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if Membership.objects.values("profile").filter(taskboard=board, profile=request.user.pk).count() != 0:
+        profiles = Profile.objects.filter(membership__taskboard=pk)
+        serializer = BoardProfilesSerializer(profiles, many=True)
+        return Response(serializer.data)
+    return Response(status=status.HTTP_403_FORBIDDEN)
+
+
 # Endpoint pro úpravu jména tabule a nebo její smazání. Nejdříve se zkontroluje, zda tabule existuje. Poté jestli má
 # daný uživatel oprávnění k jejím úpravám (k tomu slouží role owner). Nakonec se funkce větví na úpravu a nebo smazání
 # (záleží na typu requestu).
