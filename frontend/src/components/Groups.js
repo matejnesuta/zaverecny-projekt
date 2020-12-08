@@ -81,13 +81,15 @@ class Groups extends Component {
           className="card center m-5 px-5 py-3 bg-dark border-primary text-light"
         >
           <div className="ml-auto">
-            <button className="btn" onClick={this.handleCloseForm}>
-              <i
-                className="fa fa-times fa-2x"
-                aria-hidden="true"
-                style={{ color: "white" }}
-              ></i>
-            </button>
+            <a href="/#">
+              <button className="btn" onClick={this.handleCloseForm}>
+                <i
+                  className="fa fa-times fa-2x"
+                  aria-hidden="true"
+                  style={{ color: "white" }}
+                ></i>
+              </button>
+            </a>
           </div>
           <div className="row center p-2 mb-5">
             <div className="col-12">
