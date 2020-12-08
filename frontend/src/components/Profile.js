@@ -5,7 +5,6 @@ import SubmitButton from "./SubmitButton";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getImage } from "../redux/actions/actions";
-import user_icon from "../images/user_icon.jpg";
 import axios from "axios";
 
 class Profile extends Component {
@@ -13,7 +12,8 @@ class Profile extends Component {
     firstName: "",
     lastName: "",
     comment: "",
-    image: undefined,
+    imageSrc: null,
+    imageName: "Nahrát obrázek",
     password1: "",
     password2: "",
     error: false,
@@ -51,46 +51,34 @@ class Profile extends Component {
   };
 
   handleFileSelect = (event) => {
-    //NAHRÁVÁNÍ OBRÁZKU JE PROZATÍM NEFUNKČNÍ
+    event.preventDefault();
+    const file = event.target.files[0];
 
-    //Ověření formátu souboru - zamezení proti nahrávání špatných formátů souborů (např. docx, pdf) jako profilový obrázek
-    let imageFormatOk = true;
-    let file = event.target.files[0];
-    //Získání informace o formátu souboru, který byl nahrán
-    let format = file.type.split("/");
-    //Poznámka: metoda .split() vrací pole, jež obsahuje jednotlivé části stringu a jelikož je formát souboru pokaždé částí za "/", do imageType se ukládá type[1]
-    let imageFormat = format[1];
-    console.log(file, imageFormat);
-    let fileRead = FileReader;
-    //DODĚLEJ TO, BLBEČKU https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
-    console.log(fileRead);
-    //OBJEKT FILE SE DÁ BEZ PROBLÉMŮ NAHRÁT DO /redux/store, avšak je uložen jako (asi?) prázdný objekt, tudíž budu muset obrázek ukládat nějak jinak
-    this.props.getImage(file);
-    //Povolené obrázkové formáty
-    /*const imageFormats = ["bmp", "gif", "tiff", "jpeg", "png"];
-    imageFormats.forEach((element) => {
-      //Porovnávání formátu nahraného souboru s povolenými formáty a následné uložení nahraného obrázku do this.state.image, pokud je v povoleném formátu
-      if (imageFormat.localeCompare(element) === 0) {
-        imageFormatOk = true;
-      }
+    //Metoda nahrávání souboru jako lokální url
+
+    /*const localImageUrl = window.URL.createObjectURL(file);
+    this.setState({
+      imageSrc: localImageUrl,
+      imageName: file.name,
     });
-    if (imageFormatOk) {
+    this.props.getImage(localImageUrl);
+    */
+
+    //Metoda nahráváí souboru jako base64 string(oof)
+
+    const reader = new FileReader();
+    reader.onload = () => {
       this.setState({
-        image: event.target.files[0],
+        imgSrc: reader.result,
       });
-    }*/
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
   render() {
-    //Nastavení labelu při nahrání obrázku
-    let imageInputLabel;
-    if (this.state.image === undefined) {
-      imageInputLabel = "Nahrát obrázek";
-    } else if (this.state.image === "") {
-      imageInputLabel = "Nepodporovaný formát souboru";
-    } else {
-      imageInputLabel = this.state.image.name;
-    }
     //Kontrola, jestli jsou obě zadaná hesla stejná
     let passwordsComp;
     if (this.state.password1.localeCompare(this.state.password2) !== 0) {
@@ -157,12 +145,12 @@ class Profile extends Component {
                       type="file"
                       name="image"
                       id="prof_image"
+                      accept={["image/png", "image/jpg"]}
                       className="border-primary form-control custom-file-input"
-                      value={this.state.image}
                       onChange={this.handleFileSelect}
                     ></input>
                     <label className="custom-file-label">
-                      {imageInputLabel}
+                      {this.state.imageName}
                     </label>
                   </div>
                 </div>
@@ -223,8 +211,11 @@ class Profile extends Component {
                   ></input>
                 </div>
               </div>
-              <SubmitButton />
+              <SubmitButton text="Odeslat" />
             </form>
+          </div>
+          <div>
+            <img src={this.state.imgSrc} alt="cojetypíčo" />
           </div>
         </div>
         <Footer />

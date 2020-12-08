@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import Group from "./Group";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { connect } from "react-redux";
+import SubmitButton from "./SubmitButton";
+import { connect, useStore } from "react-redux";
 import { getUser } from "../redux/actions/actions";
 import axios from "axios";
 
@@ -17,6 +18,11 @@ class Groups extends Component {
       <Group key={5} id={5} name="5" />,
       <Group key={6} id={6} name="6" />,
     ],
+    createGroup: false,
+    name: "",
+    icon: "",
+    comment: "",
+    search: "",
   };
 
   //Načtení skupin uživatele
@@ -36,7 +42,161 @@ class Groups extends Component {
       .then((data) => this.props.getUser(data));
   }
 
+  handleOpenForm = () => {
+    this.setState({
+      createGroup: true,
+    });
+  };
+
+  handleCloseForm = () => {
+    this.setState({
+      createGroup: false,
+    });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    //to be continued...
+  };
+
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  addedUsers() {
+    let users = [];
+    return users;
+  }
+
   render() {
+    let iconType = "fa fa-" + this.state.icon + " fa-4x";
+    let newGroupForm;
+    if (this.state.createGroup) {
+      newGroupForm = (
+        <div
+          id="createGroup"
+          className="card center m-5 px-5 py-3 bg-dark border-primary text-light"
+        >
+          <div className="ml-auto">
+            <button className="btn" onClick={this.handleCloseForm}>
+              <i
+                className="fa fa-times fa-2x"
+                aria-hidden="true"
+                style={{ color: "white" }}
+              ></i>
+            </button>
+          </div>
+          <div className="row center p-2 mb-5">
+            <div className="col-12">
+              <h3>Nová skupina</h3>
+            </div>
+          </div>
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group row">
+              <div className="col-4">
+                <label className="col-form-label col-form-label-lg">
+                  Název
+                </label>
+              </div>
+              <div className="col-8">
+                <input
+                  type="text"
+                  name="name"
+                  id="group_name"
+                  className="border-primary form-control"
+                  placeholder="Zadejte název"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                ></input>
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-4">
+                <label className="col-form-label col-form-label-lg">
+                  Ikona
+                </label>
+              </div>
+              <div className="col-6">
+                <select
+                  className="form-control"
+                  name="icon"
+                  id="group_icon"
+                  value={this.state.icon}
+                  onChange={this.handleChange}
+                >
+                  <option value="" disabled defaultValue>
+                    Vyberte ikonu
+                  </option>
+                  <option value="grav">Cosmonaut</option>
+                  <option value="wpexplorer">Telescope</option>
+                  <option value="camera-retro">Camera</option>
+                  <option value="code">Code</option>
+                  <option value="diamond">Diamond</option>
+                </select>
+              </div>
+              <div className="col-2">
+                <i className={iconType} aria-hidden="true"></i>
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-4">
+                <label className="col-form-label col-form-label-lg">
+                  Popisek
+                </label>
+              </div>
+              <div className="col-8">
+                <textarea
+                  type="text"
+                  name="comment"
+                  id="comment"
+                  className="border-primary form-control"
+                  placeholder="Zadejte popisek"
+                  maxLength={300}
+                  rows={4}
+                  value={this.state.comment}
+                  onChange={this.handleChange}
+                ></textarea>
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-4">
+                <label className="col-form-label col-form-label-lg">
+                  Přidat uživatele
+                </label>
+              </div>
+              <div className="col-4 input-group">
+                <input
+                  type="text"
+                  name="search"
+                  id="group_search"
+                  className="border-primary form-control"
+                  placeholder="Zadejte jméno uživatele"
+                  value={this.state.search}
+                  onChange={this.handleChange}
+                ></input>
+                <span>
+                  <button
+                    className="btn"
+                    style={{ backgroundColor: "#209cee" }}
+                  >
+                    <i
+                      className="fa fa-search"
+                      aria-hidden="true"
+                      style={{ color: "white" }}
+                    ></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <SubmitButton text="Potvrdit" />
+          </form>
+        </div>
+      );
+    }
+
     return (
       <div>
         <Navbar isLoggedIn={true} />
@@ -53,17 +213,25 @@ class Groups extends Component {
           </div>
           <div className="row center p-3 m-4">
             <div className="col-12">
-              <button className="btn btn-success p-2">
-                <i className="fa fa-plus m-1" aria-hidden="true"></i> Vytvořit
-                skupinu
-              </button>
+              <a href="#createGroup">
+                <button
+                  className="btn btn-success p-2"
+                  onClick={this.handleOpenForm}
+                >
+                  <i className="fa fa-plus m-1" aria-hidden="true"></i> Vytvořit
+                  skupinu
+                </button>
+              </a>
             </div>
           </div>
+          {newGroupForm}
         </div>
         <Footer />
       </div>
     );
   }
 }
+//https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/index.html
+//https://www.digitalocean.com/community/tutorials/how-to-implement-smooth-scrolling-in-react
 
 export default connect(null, { getUser })(Groups);

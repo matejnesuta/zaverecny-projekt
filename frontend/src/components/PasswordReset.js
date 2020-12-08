@@ -62,7 +62,7 @@ class PasswordReset extends Component {
                     </div>
                   </div>
                 </div>
-                <SubmitButton />
+                <SubmitButton text="Odeslat" />
               </form>
             </div>
           </div>

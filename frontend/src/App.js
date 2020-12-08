@@ -10,6 +10,7 @@ import Groups from "./components/Groups";
 import Task from "./components/Task";
 import UserPage from "./components/UserPage";
 import PasswordReset from "./components/PasswordReset";
+import Page404 from "./components/Page404";
 
 function App() {
   return (
@@ -25,8 +26,7 @@ function App() {
           <Route path="/logs/:id" component={Task} />
           <Route path="/users/:id" component={UserPage} />
           <Route path="/passwordreset" component={PasswordReset} />
-          <Route path="/" exact component={Main} />
-          <Route path="/" render={() => <h1>404</h1>} />
+          <Route path="/" component={Page404} />
         </Switch>
       </div>
     </Router>

@@ -117,7 +117,7 @@ class Login extends Component {
                 </div>
                 <div className="col-3">{invalidPassword}</div>
               </div>
-              <SubmitButton />
+              <SubmitButton text="Odeslat" />
               <div className="row m-3">
                 <div className="col-12">
                   <button type="submit" className="btn btn-danger m-1">

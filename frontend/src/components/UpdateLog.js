@@ -14,7 +14,7 @@ class UpdateLog extends Component {
           <Link to={`/users/${this.props.id}`} style={{ color: "white" }}>
             <div className="logs-header">
               <img
-                src={this.props.imgUrl}
+                src={this.props.imgSrc}
                 alt="profile_pic"
                 className="rounded-circle m-2 mr-4"
                 width="40"

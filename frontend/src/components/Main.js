@@ -11,16 +11,16 @@ import axios from "axios";
 class Main extends Component {
   state = {
     logs: [
-      <UpdateLog key={1} id={1} imgUrl={woke} name="Prokop" content="GG" />,
-      <UpdateLog key={5} id={5} imgUrl={woke} name="Buben" content="WP" />,
-      <UpdateLog key={7} id={7} imgUrl={woke} name="Lukáš" content="GLHF" />,
+      <UpdateLog key={1} id={1} imgSrc={woke} name="Prokop" content="GG" />,
+      <UpdateLog key={5} id={5} imgSrc={woke} name="Buben" content="WP" />,
+      <UpdateLog key={7} id={7} imgSrc={woke} name="Lukáš" content="GLHF" />,
     ],
     comments: [
       <LogComment
         key={1}
         id={1}
         parentId={1}
-        imgUrl={woke}
+        imgSrc={woke}
         name="Šustr"
         content="LOL"
       />,
@@ -28,7 +28,7 @@ class Main extends Component {
         key={2}
         id={2}
         parentId={1}
-        imgUrl={woke}
+        imgSrc={woke}
         name="Honza"
         content="XD"
       />,
@@ -36,7 +36,7 @@ class Main extends Component {
         key={3}
         id={3}
         parentId={1}
-        imgUrl={woke}
+        imgSrc={woke}
         name="Brambor"
         content="MonkaS"
       />,
@@ -44,7 +44,7 @@ class Main extends Component {
         key={4}
         id={4}
         parentId={5}
-        imgUrl={woke}
+        imgSrc={woke}
         name="Šustr"
         content="LOL"
       />,
@@ -52,7 +52,7 @@ class Main extends Component {
         key={5}
         id={5}
         parentId={7}
-        imgUrl={woke}
+        imgSrc={woke}
         name="Honza"
         content="XD"
       />,
@@ -60,7 +60,7 @@ class Main extends Component {
         key={6}
         id={6}
         parentId={7}
-        imgUrl={woke}
+        imgSrc={woke}
         name="Brambor"
         content="MonkaS"
       />,
@@ -119,6 +119,7 @@ class Main extends Component {
   }
 
   render() {
+    console.log(this.state.logs);
     return (
       <div>
         <Navbar isLoggedIn={true} />
