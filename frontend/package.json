@@ -2,7 +2,8 @@
   "name": "zaverecny_projekt",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://backend:8000/",
+  "proxy": "http://backend:8000",
+  "secure": false,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",

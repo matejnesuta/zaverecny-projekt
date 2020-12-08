@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import SubmitButton from "./SubmitButton";
 import { connect, useStore } from "react-redux";
 import { getUser } from "../redux/actions/actions";
+import store from "../redux/store";
 import axios from "axios";
 
 class Groups extends Component {
@@ -27,7 +28,7 @@ class Groups extends Component {
 
   //Načtení skupin uživatele
   componentDidMount() {
-    /*axios.get("/app/board/").then((res) => {
+    axios.get("/app/board/").then((res) => {
       const groups = res.data;
       //Uložení pole komponentů Group do this.state.groups
       const receivedData = groups.map((group) => (
@@ -36,10 +37,17 @@ class Groups extends Component {
       this.setState({
         logs: receivedData,
       });
-    });*/
-    fetch("https://jsonplaceholder.typicode.com/users/2")
-      .then((response) => response.json())
-      .then((data) => this.props.getUser(data));
+    });
+    console.log(store.getState().token.token);
+    axios.get("/app/profile/", {headers: {
+        token: store.getState().token.token
+        }
+        }).then((res) => {
+        this.props.getUser(res.data);
+    })
+    // fetch("https://jsonplaceholder.typicode.com/users/2")
+    //   .then((response) => response.json())
+    //   .then((data) => this.props.getUser(data));
   }
 
   handleOpenForm = () => {
