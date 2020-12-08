@@ -39,6 +39,15 @@ class Profile(models.Model):
     def __str__(self):
         return f" {self.user.email}, {self.last_name}"
 
+    def save(self, *args, **kwargs):
+        try:
+            this = Profile.objects.get(id=self.id)
+            if this.profile_pic != self.profile_pic:
+                this.profile_pic.delete()
+        except:
+            pass
+        super(Profile, self).save(*args, **kwargs)
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -49,24 +58,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-
-
-@receiver(pre_save, sender=Profile)
-def delete_old_file(sender, instance, **kwargs):
-    # on creation, signal callback won't be triggered
-    if instance._state.adding and not instance.pk:
-        return False
-
-    try:
-        old_file = sender.objects.values("profile_pic").get(pk=instance.pk)["profile_pic"]
-    except sender.DoesNotExist:
-        return False
-
-    # comparing the new file with the old one
-    file = instance.profile_pic
-    if not old_file == file:
-        if os.path.isfile(old_file):
-            os.remove(old_file)
 
 
 class Taskboard(models.Model):
