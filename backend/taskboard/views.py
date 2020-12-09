@@ -53,7 +53,7 @@ def get_boards(request):
         serializer = TaskboardSerializer(boards, many=True)
         return Response(serializer.data)
 
-
+# Endpoint, který vrátí profily členů jedné tabule seřazené podle rolí.
 @api_view(['GET', ])
 @permission_classes((IsAuthenticated,))
 def get_users(request, pk):
@@ -103,7 +103,8 @@ def board(request, pk):
             data["failure"] = "delete failed"
         return Response(data=data)
 
-
+    
+# Vytvoření tabule. Uživatel, který tabuli vytvořil, se stane jejím vlastníkem.
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def create_board(request):
@@ -120,6 +121,7 @@ def create_board(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Vrácení detailů boardu, tj. všechny úkoly, které jsou na scrumboardu.  
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def get_board_detail(request, pk):
@@ -157,6 +159,7 @@ def get_log(request, pk):
         return Response(serializer.data)
 
 
+# Vytvoření úkolu a zapsání události do logu.
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def create_task(request):
