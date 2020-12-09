@@ -38,7 +38,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return f" {self.user.email}, {self.last_name}"
-
+# Přepsal jsem save metodu. Při úpravě a nebo odstranění profilového obrázku zůstavaly staré soubory ve složkách Djanga. Teď už ne 
     def save(self, *args, **kwargs):
         try:
             this = Profile.objects.get(id=self.id)
@@ -151,7 +151,8 @@ class Attachment(models.Model):
     def __str__(self):
         return self.title
 
-
+# Funkce pro mazání souborů. Při vymazání přílohy se mi smazal odkaz na soubor, ale soubor zůstal ve složce Djanga dál. Teď se maže. Je to elegantnější řešení,
+# než to mazat manuálně.
 @receiver(post_delete, sender=Attachment)
 def attachment_delete(sender, instance, **kwargs):
     instance.file.delete(False)
