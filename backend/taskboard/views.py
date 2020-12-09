@@ -63,7 +63,7 @@ def get_users(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if Membership.objects.values("profile").filter(taskboard=board, profile=request.user.pk).count() != 0:
-        profiles = Profile.objects.filter(membership__taskboard=pk)
+        profiles = Membership.objects.filter(taskboard=pk).order_by("-role")
         serializer = BoardProfilesSerializer(profiles, many=True)
         return Response(serializer.data)
     return Response(status=status.HTTP_403_FORBIDDEN)
