@@ -7,6 +7,7 @@ from accounts.models import User
 from .models import Profile, Taskboard, Membership, Task, Log, Comment
 from .serializers import *
 from django.db.models import Q
+from functools import reduce
 
 
 # Endpoint pro zobrazení profilu ostatních uživatelů.
@@ -53,6 +54,7 @@ def get_boards(request):
         serializer = TaskboardSerializer(boards, many=True)
         return Response(serializer.data)
 
+
 # Endpoint, který vrátí profily členů jedné tabule seřazené podle rolí.
 @api_view(['GET', ])
 @permission_classes((IsAuthenticated,))
@@ -67,6 +69,12 @@ def get_users(request, pk):
         serializer = BoardProfilesSerializer(profiles, many=True)
         return Response(serializer.data)
     return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+def search_for_users(request):
+    pass
 
 
 # Endpoint pro úpravu jména tabule a nebo její smazání. Nejdříve se zkontroluje, zda tabule existuje. Poté jestli má
@@ -103,7 +111,7 @@ def board(request, pk):
             data["failure"] = "delete failed"
         return Response(data=data)
 
-    
+
 # Vytvoření tabule. Uživatel, který tabuli vytvořil, se stane jejím vlastníkem.
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
@@ -349,3 +357,22 @@ def delete_comment(request, pk):
             data["failure"] = "delete failed"
         return Response(data=data)
     return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['DELETE'])
+@permission_classes((IsAuthenticated,))
+def invite(request, id):
+    query = Membership.objects.values("profile").filter((Q(role__contains='owner') | Q(role__contains='moderator')),
+                                                        taskboard=id, profile=request.user.pk)
+    data = {}
+    if query.count == 0:
+        data["failure"] = "You are not allowed to do this!"
+        return Response(data=data, status=status.HTTP_403_FORBIDDEN)
+
+    membership = Membership()
+    serializer = MembershipSerializer(membership, data=request.data)
+    if serializer.is_valid():
+        serializer.validated_data["taskboard"] = Taskboard.objects.get(id=id)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

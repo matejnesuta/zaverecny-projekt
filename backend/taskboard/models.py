@@ -37,8 +37,10 @@ class Profile(models.Model):
         verbose_name_plural = "Profile"
 
     def __str__(self):
-        return f" {self.user.email}, {self.last_name}"
-# Přepsal jsem save metodu. Při úpravě a nebo odstranění profilového obrázku zůstavaly staré soubory ve složkách Djanga. Teď už ne 
+        return f" {self.user.email},{self.first_name} {self.last_name}"
+
+# Přepsal jsem save metodu. Při úpravě a nebo odstranění profilového obrázku zůstavaly staré soubory ve složkách
+    # Djanga. Teď už ne
     def save(self, *args, **kwargs):
         try:
             this = Profile.objects.get(id=self.id)
