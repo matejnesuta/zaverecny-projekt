@@ -359,7 +359,7 @@ def delete_comment(request, pk):
     return Response(status=status.HTTP_403_FORBIDDEN)
 
 
-@api_view(['DELETE'])
+@api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def invite(request, id):
     query = Membership.objects.values("profile").filter((Q(role__contains='owner') | Q(role__contains='moderator')),
