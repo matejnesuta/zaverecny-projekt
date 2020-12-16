@@ -19,7 +19,8 @@ Při prvním spuštění projektu bude Djangu chybět superuživatel, ale to se 
 <br><br>
 Při prvním spuštění <code>docker-compose up</code> se vytvoří image kontejnerů a poté spustí. Při dalších spuštěních tohoto příkazu se již vytvořené image kontejnerů jen spustí. Kontejnery se dají postavit znovu pomocí příkazů <code>docker-compose up --build</code>, což je nutné dělat pokaždé, když se v souborech s projektem provede změna.
 <br><br>
-Na Windows se může objevit error ohledně toho, že Docker nemá přístup ke složce s projektem (vyznačuje se hláškou: <code>ERROR: for db  Cannot create container for service db: status code not OK but 500</code>). Jeho řešení se dá najít <a href="https://stackoverflow.com/questions/60754297/docker-compose-failed-to-build-filesharing-has-been-cancelled">zde</a>.</p>
+Na Windows se může objevit error ohledně toho, že Docker nemá přístup ke složce s projektem (vyznačuje se hláškou: <code>ERROR: for db  Cannot create container for service db: status code not OK but 500</code>). Jeho řešení se dá najít <a href="https://stackoverflow.com/questions/60754297/docker-compose-failed-to-build-filesharing-has-been-cancelled">zde</a>.<br><br>
+Pokud narazíte na error <code>standard_init_linux.go:219: exec user process caused: no such file or directory</code>, je třeba udělat <a href="https://futurestud.io/tutorials/how-to-fix-exec-user-process-caused-no-such-file-or-directory-in-docker">toto</a>.</p>
 
 <h3>Testovací repozitáře</h3>
 

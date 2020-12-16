@@ -71,12 +71,6 @@ def get_users(request, pk):
     return Response(status=status.HTTP_403_FORBIDDEN)
 
 
-@api_view(['GET', ])
-@permission_classes((IsAuthenticated,))
-def search_for_users(request):
-    pass
-
-
 # Endpoint pro úpravu jména tabule a nebo její smazání. Nejdříve se zkontroluje, zda tabule existuje. Poté jestli má
 # daný uživatel oprávnění k jejím úpravám (k tomu slouží role owner). Nakonec se funkce větví na úpravu a nebo smazání
 # (záleží na typu requestu).
@@ -376,3 +370,9 @@ def invite(request, id):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+def search_for_users(request):
+    return Response(status=status.HTTP_404_NOT_FOUND)
