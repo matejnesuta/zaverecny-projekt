@@ -372,6 +372,31 @@ def invite(request, id):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['DELETE'])
+@permission_classes((IsAuthenticated,))
+def remove_user(request):
+    data = {}
+    try:
+        membership = Membership.objects.get(
+            taskboard=request.data["taskboard"],
+            profile=request.data["profile"])
+    except (KeyError, ValueError) as e:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    except Membership.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    role = Membership.objects.get(profile=request.user.pk, taskboard=membership.taskboard).role
+    if (role == "moderator" and membership.role == "member") or role == "owner":
+        operation = membership.delete()
+        print("yaaaaaay")
+        if operation:
+            data["success"] = "delete successful"
+        else:
+            data["failure"] = "delete failed"
+        return Response(data=data)
+    return Response(status=status.HTTP_403_FORBIDDEN)
+
+
 @api_view(['GET', ])
 @permission_classes((IsAuthenticated,))
 def search_for_users(request):
