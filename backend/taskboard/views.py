@@ -36,11 +36,9 @@ def profile(request):
         return Response(serializer.data)
     elif request.method == "PUT":
         serializer = ProfileSerializer(profile, data=request.data)
-        data = {}
         if serializer.is_valid():
             serializer.save()
-            data["success"] = "update successful"
-            return Response(data=data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -367,6 +365,7 @@ def invite(request, id):
     serializer = MembershipSerializer(membership, data=request.data)
     if serializer.is_valid():
         serializer.validated_data["taskboard"] = Taskboard.objects.get(id=id)
+        serializer.validated_data["role"] = "member"
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -388,7 +387,6 @@ def remove_user(request):
     role = Membership.objects.get(profile=request.user.pk, taskboard=membership.taskboard).role
     if (role == "moderator" and membership.role == "member") or role == "owner":
         operation = membership.delete()
-        print("yaaaaaay")
         if operation:
             data["success"] = "delete successful"
         else:

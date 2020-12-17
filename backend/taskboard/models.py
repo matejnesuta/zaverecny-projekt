@@ -82,7 +82,7 @@ class Membership(models.Model):
                                      ('moderator', 'Moderator'),
                                      ('owner', 'Owner'),
                                      ),
-                            blank=False, max_length=10)
+                            blank=False, max_length=10, default='member')
 
     class Meta:
         ordering = ["profile__last_name"]
