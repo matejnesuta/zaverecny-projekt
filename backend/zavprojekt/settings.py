@@ -80,7 +80,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
-
+    "django-elasticsearch-dsl"
 ]
 
 SITE_ID = 1
@@ -158,6 +158,12 @@ DATABASES = {
         "HOST": "db",
         "PORT": "5432",
     }
+}
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'localhost:9200'
+    },
 }
 
 # Password validation
