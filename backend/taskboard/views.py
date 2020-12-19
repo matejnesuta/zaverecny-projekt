@@ -371,9 +371,11 @@ def invite(request, id):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['DELETE'])
+@api_view(['DELETE', 'PATCH'])
 @permission_classes((IsAuthenticated,))
-def remove_user(request):
+def role(request):
+    if request.data["profile"] == str(request.user.pk):
+        return Response(status=status.HTTP_403_FORBIDDEN)
     data = {}
     try:
         membership = Membership.objects.get(
@@ -385,14 +387,28 @@ def remove_user(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     role = Membership.objects.get(profile=request.user.pk, taskboard=membership.taskboard).role
-    if (role == "moderator" and membership.role == "member") or role == "owner":
-        operation = membership.delete()
-        if operation:
-            data["success"] = "delete successful"
-        else:
-            data["failure"] = "delete failed"
-        return Response(data=data)
-    return Response(status=status.HTTP_403_FORBIDDEN)
+    if request.method == "DELETE":
+        if (role == "moderator" and membership.role == "member") or role == "owner":
+            operation = membership.delete()
+            if operation:
+                data["success"] = "delete successful"
+            else:
+                data["failure"] = "delete failed"
+            return Response(data=data)
+        return Response(status=status.HTTP_403_FORBIDDEN)
+    else:
+        if role == "owner":
+            serializer = MembershipSerializer(membership, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                if membership.role == "owner":
+                    row = Membership.objects.get(profile=request.user.pk, taskboard=membership.taskboard)
+                    row.role = "moderator"
+                    row.save()
+                data["success"] = "update successful"
+                return Response(data=data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['GET', ])

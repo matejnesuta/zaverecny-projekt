@@ -76,10 +76,3 @@ class BoardProfilesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Membership
         fields = ['role', 'profile']
-        # depth = 1
-
-
-class UpdateMembershipSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Membership
-        fields = ['role']
