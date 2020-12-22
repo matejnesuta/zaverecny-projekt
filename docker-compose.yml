@@ -41,8 +41,8 @@ services:
     container_name: backend
     build: backend
     command: python3 manage.py runserver 0.0.0.0:8000
-#    volumes:
-#      - .:/backend
+    volumes:
+      - ./backend:/backend
     ports:
       - "8000:8000"
     depends_on:

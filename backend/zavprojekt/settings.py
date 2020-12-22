@@ -80,7 +80,8 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
-    "django-elasticsearch-dsl"
+    "django_elasticsearch_dsl",
+    "django_elasticsearch_dsl_drf"
 ]
 
 SITE_ID = 1
