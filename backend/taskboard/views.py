@@ -8,6 +8,7 @@ from .models import Profile, Taskboard, Membership, Task, Log, Comment
 from .serializers import *
 from django.db.models import Q
 from functools import reduce
+from .documents import ProfileDocument
 
 
 # Endpoint pro zobrazení profilu ostatních uživatelů.
@@ -414,4 +415,7 @@ def role(request):
 @api_view(['GET', ])
 @permission_classes((IsAuthenticated,))
 def search_for_users(request):
+    s = ProfileDocument.search().query("match", first_name="franta")
+    qs = s.to_queryset()
+    print(qs)
     return Response(status=status.HTTP_404_NOT_FOUND)
