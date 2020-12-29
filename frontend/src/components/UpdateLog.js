@@ -4,11 +4,9 @@ import { Link } from "react-router-dom";
 class UpdateLog extends Component {
   state = {};
 
-  handleClick = () => {};
-
   render() {
     return (
-      <div className="row logs m-1 mt-3 bg-dark text-white border-light">
+      <div className="row logs m-1 mt-2 bg-dark text-white border-light">
         <div className="col-12">
           {/*Důležité! Matěj musí přidat id assignmentu nebo tak něco*/}
           <Link to={`/users/${this.props.id}`} style={{ color: "white" }}>
@@ -29,14 +27,8 @@ class UpdateLog extends Component {
           </Link>
         </div>
         <br />
-        <div className="logs-footer ml-auto p-1 text-muted">
-          13.11 2020
-          <button
-            className="btn btn-sm text-light ml-2 mb-1"
-            onClick={this.handleClick}
-          >
-            Odpovědět <i className="fa fa-reply" aria-hidden="true"></i>
-          </button>
+        <div className="logs-footer ml-auto px-2 p-1 text-muted">
+          {this.props.timestamp}
         </div>
       </div>
     );

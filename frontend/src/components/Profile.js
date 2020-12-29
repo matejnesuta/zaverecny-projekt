@@ -2,32 +2,39 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import SubmitButton from "./SubmitButton";
+import ProfModal from "./modals/ProfModal";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getImage } from "../redux/actions/actions";
+import { getUser } from "../redux/actions/actions";
+import store from "../redux/store";
+import user_icon from "../images/user_icon.jpg";
 import axios from "axios";
 
 class Profile extends Component {
   state = {
-    firstName: "",
-    lastName: "",
-    comment: "",
+    firstName: store.getState().user.user.firstName,
+    lastName: store.getState().user.user.lastName,
+    bio: "",
     imageSrc: null,
     imageName: "Nahrát obrázek",
     password1: "",
     password2: "",
-    error: false,
+    modal: false,
+    uploadInfo: "Max. velikost souboru: 10MB",
+    error: "",
   };
 
   handleSubmit = (event) => {
-    if (this.state.password1.localeCompare(this.state.password2) !== 0) {
+    event.preventDefault();
+    /*if (this.state.password1.localeCompare(this.state.password2) === 0 && (this.state.firstName !== "" || this.state.lastName !== "")) {
       axios
-        .post(
+        .patch(
           "/auth/password/change",
           {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            comment: this.state.comment,
+            bio: this.state.bio,
             new_password1: this.state.password1,
             new_password2: this.state.password2,
           },
@@ -39,8 +46,24 @@ class Profile extends Component {
         .catch((error) => {
           console.log(error);
         });
-      event.preventDefault();
-    }
+      this.setState({
+        modal: true,
+      });
+    }*/
+    this.setState({
+      modal: true,
+    });
+    const userObj = {
+      id: store.getState().user.user.id,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      imageSrc: this.state.imageSrc === null ? user_icon : this.state.imageSrc,
+      bio: this.state.bio,
+      password1: this.state.password1,
+      password2: this.state.password2,
+    };
+    this.props.getUser(userObj);
+    console.log(store.getState());
   };
 
   handleChange = (event) => {
@@ -53,28 +76,47 @@ class Profile extends Component {
   handleFileSelect = (event) => {
     event.preventDefault();
     const file = event.target.files[0];
+    const fileType = event.target.files[0].type;
+    const maxFileSize = 10485760;
+    const requiredTypes = ["image/png", "image/jpeg", "image/gif"];
+    let correctType = false;
+    console.log(file);
+
+    //MAXIMÁLNÍ VELIKOST OBRÁZKU - 10MB
+    //Ověřování formátu souboru, protože parametr accept u inputu se dá jaksi obejít
+    requiredTypes.forEach((type) => {
+      if (fileType === type) {
+        correctType = true;
+      }
+    });
 
     //Metoda nahrávání souboru jako lokální url
-
-    /*const localImageUrl = window.URL.createObjectURL(file);
-    this.setState({
-      imageSrc: localImageUrl,
-      imageName: file.name,
-    });
-    this.props.getImage(localImageUrl);
-    */
-
-    //Metoda nahráváí souboru jako base64 string(oof)
-
-    const reader = new FileReader();
-    reader.onload = () => {
+    if (correctType && file.size < maxFileSize) {
+      /*const localImageUrl = window.URL.createObjectURL(file);
       this.setState({
-        imgSrc: reader.result,
+        imageSrc: localImageUrl,
+        imageName: file.name,
       });
-    };
+      this.props.getImage(localImageUrl);*/
 
-    if (file) {
-      reader.readAsDataURL(file);
+      //Metoda nahrávání souboru jako base64 string(oof)
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.setState({
+          imageSrc: reader.result,
+          imageName: file.name,
+        });
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    } else {
+      this.setState({
+        //false místo null (asi)
+        imageSrc: null,
+      });
     }
   };
 
@@ -86,8 +128,82 @@ class Profile extends Component {
         <small className="text-danger">Hesla se neshodují.</small>
       );
     }
+
+    let image;
+    if (this.state.imageSrc !== null) {
+      image = (
+        <img
+          src={this.state.imageSrc}
+          alt="profile_image"
+          id="profile-img-thumbnail"
+          width={100}
+          height={100}
+          className="rounded-circle"
+        />
+      );
+    }
+    let imageForm;
+    if (this.state.imageSrc === null) {
+      imageForm = (
+        <div className="form-group row">
+          <div className="col-4">
+            <label className="col-form-label col-form-label-lg">
+              Profilový obrázek
+            </label>
+          </div>
+          <div className="col-8">
+            <div className="custom-file">
+              <input
+                type="file"
+                name="image"
+                id="prof_image"
+                accept={["image/png", "image/jpeg", "image/gif"]}
+                className="border-primary form-control custom-file-input"
+                onChange={this.handleFileSelect}
+              ></input>
+              <label className="custom-file-label">
+                {this.state.imageName}
+              </label>
+            </div>
+          </div>
+        </div>
+      );
+    } else {
+      imageForm = (
+        <div className="form-group row">
+          <div className="col-4">
+            <label className="col-form-label col-form-label-lg">
+              Profilový obrázek
+            </label>
+          </div>
+          <div className="col-5">
+            <div className="custom-file">
+              <input
+                type="file"
+                name="image"
+                id="prof_image"
+                accept={["image/png", "image/jpeg", "image/gif"]}
+                className="border-primary form-control custom-file-input"
+                onChange={this.handleFileSelect}
+              ></input>
+              <label className="custom-file-label">
+                {this.state.imageName}
+              </label>
+            </div>
+          </div>
+          <div className="col-3">{image}</div>
+        </div>
+      );
+    }
+
     return (
       <div>
+        <ProfModal
+          show={this.state.modal}
+          onHide={() => {
+            this.setState({ modal: false });
+          }}
+        />
         <Navbar isLoggedIn={true} />
         <div className="container">
           <div className="row center p-3 m-5">
@@ -95,7 +211,7 @@ class Profile extends Component {
               <h1>Nastavení profilu</h1>
             </div>
           </div>
-          <div className="card center p-5 m-5 bg-dark border-primary text-light">
+          <div className="card center p-5 m-5 bg-dark border-primary text-white">
             <form onSubmit={this.handleSubmit}>
               <div className="form-group row">
                 <div className="col-4">
@@ -133,28 +249,7 @@ class Profile extends Component {
                   ></input>
                 </div>
               </div>
-              <div className="form-group row">
-                <div className="col-4">
-                  <label className="col-form-label col-form-label-lg">
-                    Profilový obrázek
-                  </label>
-                </div>
-                <div className="col-8">
-                  <div className="custom-file">
-                    <input
-                      type="file"
-                      name="image"
-                      id="prof_image"
-                      accept={["image/png", "image/jpg"]}
-                      className="border-primary form-control custom-file-input"
-                      onChange={this.handleFileSelect}
-                    ></input>
-                    <label className="custom-file-label">
-                      {this.state.imageName}
-                    </label>
-                  </div>
-                </div>
-              </div>
+              {imageForm}
               <div className="form-group row">
                 <div className="col-4">
                   <label className="col-form-label col-form-label-lg">
@@ -164,13 +259,13 @@ class Profile extends Component {
                 <div className="col-8">
                   <textarea
                     type="text"
-                    name="comment"
-                    id="comment"
+                    name="bio"
+                    id="bio"
                     className="border-primary form-control"
                     placeholder="Zadejte popisek"
-                    maxLength={300}
-                    rows={4}
-                    value={this.state.comment}
+                    maxLength={150}
+                    rows={2}
+                    value={this.state.bio}
                     onChange={this.handleChange}
                   ></textarea>
                 </div>
@@ -205,17 +300,14 @@ class Profile extends Component {
                     name="password2"
                     id="prof_password2"
                     className="border-primary form-control"
-                    placeholder="Zadejte heslo"
+                    placeholder="Zadejte znovu heslo"
                     value={this.state.password2}
                     onChange={this.handleChange}
                   ></input>
                 </div>
               </div>
-              <SubmitButton text="Odeslat" />
+              <SubmitButton text="Uložit" />
             </form>
-          </div>
-          <div>
-            <img src={this.state.imgSrc} alt="cojetypíčo" />
           </div>
         </div>
         <Footer />
@@ -224,4 +316,4 @@ class Profile extends Component {
   }
 }
 
-export default connect(null, { getImage })(Profile);
+export default connect(null, { getUser })(Profile);

@@ -4,14 +4,14 @@ import Footer from "./Footer";
 import SubmitButton from "./SubmitButton";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import RegModal from "./Modals";
+import RegModal from "./modals/RegModal";
 
 class Registration extends Component {
   state = {
     email: "",
     password1: "",
     password2: "",
-    error: false,
+    error: "",
     modal: false,
     redirect: false,
   };
@@ -24,6 +24,7 @@ class Registration extends Component {
   };
 
   handleSubmit = (event) => {
+    event.preventDefault();
     if (this.state.password1.localeCompare(this.state.password2) !== 0) {
       axios
         .post("/auth/registration/", {
@@ -40,7 +41,6 @@ class Registration extends Component {
           });
           console.log(error);
         });
-      event.preventDefault();
     }
     this.setState({
       //redirect: true,
@@ -60,6 +60,13 @@ class Registration extends Component {
       );
     }
 
+    let borderColour = "";
+    if (this.state.error !== "") {
+      borderColour = "border-danger form-control";
+    } else {
+      borderColour = "border-primary form-control";
+    }
+
     return (
       <div>
         <RegModal show={this.state.modal} />
@@ -70,66 +77,41 @@ class Registration extends Component {
               <h1>Registrace</h1>
             </div>
           </div>
-          <div className="card center p-5 m-5 bg-dark border-primary text-light">
+          <div className="card center p-5 m-5 bg-dark border-primary text-white">
             <form onSubmit={this.handleSubmit}>
-              <div className="form-group row">
-                <div className="col-4">
-                  <label className="col-form-label col-form-label-lg">
-                    Email
-                  </label>
-                </div>
-                <div className="col-8">
+              <div className="form-group row justify-content-center">
+                <div className="col-6">
                   <input
-                    style={{
-                      borderColor: this.state.error ? "red" : "",
-                    }}
                     type="text"
                     name="email"
                     id="reg_email"
-                    className="border-primary form-control"
+                    className={borderColour}
                     placeholder="Zadejte email"
                     value={this.state.email}
                     onChange={this.handleChange}
                   ></input>
                 </div>
               </div>
-              <div className="form-group row">
-                <div className="col-4">
-                  <label className="col-form-label col-form-label-lg">
-                    Heslo
-                  </label>
-                </div>
-                <div className="col-8">
+              <div className="form-group row justify-content-center">
+                <div className="col-6">
                   <input
-                    style={{
-                      borderColor: this.state.error ? "red" : "",
-                    }}
                     type="password"
                     name="password1"
                     id="reg_password1"
-                    className="border-primary form-control"
+                    className={borderColour}
                     placeholder="Zadejte heslo"
                     value={this.state.password1}
                     onChange={this.handleChange}
                   ></input>
-                  <small className="form-text">
-                    Heslo musí obsahovat nejméně 8 znaků, alespoň 1 číslo a
-                    alespoň 1 speciální znak.
-                  </small>
                 </div>
               </div>
-              <div className="form-group row">
-                <div className="col-4">
-                  <label className="col-form-label col-form-label-lg">
-                    Potvrzení hesla
-                  </label>
-                </div>
-                <div className="col-8">
+              <div className="form-group row justify-content-center">
+                <div className="col-6">
                   <input
                     type="password"
                     name="password2"
                     id="reg_password2"
-                    className="border-primary form-control"
+                    className={borderColour}
                     placeholder="Znovu zadejte heslo"
                     value={this.state.password2}
                     onChange={this.handleChange}
@@ -137,6 +119,15 @@ class Registration extends Component {
                   {passwordsComp}
                 </div>
               </div>
+              <div className="form-group row justify-content-center">
+                <div className="col-4">
+                  <small className="form-text">
+                    Heslo musí obsahovat nejméně 8 znaků, alespoň 1 číslo a
+                    alespoň 1 speciální znak.
+                  </small>
+                </div>
+              </div>
+
               <SubmitButton text="Odeslat" />
             </form>
           </div>

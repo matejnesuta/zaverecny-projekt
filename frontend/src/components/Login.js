@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import SubmitButton from "./SubmitButton";
-import { Link, Redirect, RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 import { getToken } from "../redux/actions/actions";
 import axios from "axios";
@@ -13,7 +13,6 @@ class Login extends Component {
     password: "",
     token: "",
     error: "",
-    redirect: false,
   };
 
   handleChange = (event) => {
@@ -24,46 +23,38 @@ class Login extends Component {
   };
 
   handleSubmit = (event) => {
-      event.preventDefault();
-      axios
-    .post(
-      "/auth/login/",
-      { email: this.state.email, password: this.state.password },
-      { withCredentials: true }
-    )
-    .then((response) => {
-      this.props.getToken(response.data.key)
-    })
-    .catch((error) => {
-      this.setState({
-        error: error,
+    event.preventDefault();
+    axios
+      .post(
+        "/auth/login/",
+        { email: this.state.email, password: this.state.password },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        this.props.getToken(response.data.key);
+      })
+      .catch((error) => {
+        this.setState({
+          error: error,
+        });
+        console.log(error);
+        // fetch("https://jsonplaceholder.typicode.com/users/2")
+        //   .then((response) => response.json())
+        //   .then((data) => this.props.getToken(data.name));
+        // event.preventDefault();
+        // this.setState({
+        //   redirect: true,
+        // });
       });
-      console.log(error);
-    // fetch("https://jsonplaceholder.typicode.com/users/2")
-    //   .then((response) => response.json())
-    //   .then((data) => this.props.getToken(data.name));
-    // event.preventDefault();
-    // this.setState({
-    //   redirect: true,
-    // });
-  });
+    this.props.history.push("./groups");
   };
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect to="/groups" />;
-    }
-    let invalidEmail = "";
-    let invalidPassword = "";
-    if (this.state.email === "") {
-      invalidEmail = (
-        <small className="text-danger">Email nemůže být prázdný.</small>
-      );
-    }
-    if (this.state.password === "") {
-      invalidPassword = (
-        <small className="text-danger">Heslo nemůže být prázdné.</small>
-      );
+    let borderColour = "";
+    if (this.state.error !== "") {
+      borderColour = "border-danger form-control";
+    } else {
+      borderColour = "border-primary form-control";
     }
     return (
       <div>
@@ -74,45 +65,33 @@ class Login extends Component {
               <h1>Přihlášení</h1>
             </div>
           </div>
-          <div className="card center p-5 m-5 bg-dark border-primary text-light">
+          <div className="card center p-5 m-5 bg-dark border-primary text-white">
             <form onSubmit={this.handleSubmit}>
-              <div className="form-group row">
-                <div className="col-4">
-                  <label className="col-form-label col-form-label-lg">
-                    Email
-                  </label>
-                </div>
+              <div className="form-group row justify-content-center">
                 <div className="col-5">
                   <input
                     type="email"
                     name="email"
                     id="log_email"
-                    className="border-primary form-control"
+                    className={borderColour}
                     placeholder="Zadejte email"
                     value={this.state.email}
                     onChange={this.handleChange}
                   ></input>
                 </div>
-                <div className="col-3">{invalidEmail}</div>
               </div>
-              <div className="form-group row">
-                <div className="col-4">
-                  <label className="col-form-label col-form-label-lg">
-                    Heslo
-                  </label>
-                </div>
+              <div className="form-group row justify-content-center">
                 <div className="col-5">
                   <input
                     type="password"
                     name="password"
                     id="log_password"
-                    className="border-primary form-control"
+                    className={borderColour}
                     placeholder="Zadejte heslo"
                     value={this.state.password}
                     onChange={this.handleChange}
                   ></input>
                 </div>
-                <div className="col-3">{invalidPassword}</div>
               </div>
               <SubmitButton text="Odeslat" />
               <div className="row m-3">

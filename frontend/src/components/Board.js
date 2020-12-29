@@ -18,9 +18,11 @@ class Board extends Component {
     ],
     monthIndex: 11,
     year: 2020,
+    tasks: this.props.tasks,
+    sortedTasks: [],
   };
 
-  //metoda pro změnu roku dozadu
+  //Metoda pro změnu roku dozadu
   handleYearDecrement = () => {
     if (this.state.year > 2010) {
       this.setState({
@@ -29,7 +31,7 @@ class Board extends Component {
     }
   };
 
-  //metoda pro změnu roku dopředu
+  //Metoda pro změnu roku dopředu
   handleYearIncrement = () => {
     let cur_date = new Date();
     let cur_month = cur_date.getMonth();
@@ -45,7 +47,7 @@ class Board extends Component {
     }
   };
 
-  //metoda pro změnu měsíce dozadu
+  //Metoda pro změnu měsíce dozadu
   handleMonthDecrement = () => {
     if (this.state.monthIndex === 0 && this.state.year > 2010) {
       this.setState({
@@ -63,6 +65,7 @@ class Board extends Component {
 
   //metoda pro změnu měsíce dopředu
   handleMonthIncrement = () => {
+    //Práce s aktuálním datem
     let cur_date = new Date();
     let cur_month = cur_date.getMonth();
     let max_year = cur_date.getFullYear();
@@ -87,6 +90,28 @@ class Board extends Component {
   };
 
   render() {
+    let boardRows = [];
+    const stages = [
+      "not_started",
+      "in_progress",
+      "on_hold",
+      "almost_finished",
+      "done",
+    ];
+    const tasks = [...this.props.tasks];
+    const sortedTasks = stages.map((stage) =>
+      tasks.filter((task) => task.stage === stage)
+    );
+    //Zjištení počtu prvků největšího pole
+    let arraysLength = 0;
+    sortedTasks.map((arr) => {
+      if (arr.length > arraysLength) {
+        arraysLength = arr.length;
+      }
+    });
+    //Seřazení dat (tasků) do řádků, které následně pošlu do komponentu BoardTable
+    for (let i = 0; i > arraysLength; i++) {}
+
     return (
       <div>
         <div className="row p-3 m-3">
@@ -97,7 +122,7 @@ class Board extends Component {
               onClick={this.handleYearDecrement}
             >
               <i
-                className="fa fa-angle-double-left fa-4x"
+                className="fa fa-angle-double-left fa-3x"
                 aria-hidden="true"
                 style={{ color: "white" }}
               ></i>
@@ -110,7 +135,7 @@ class Board extends Component {
               onClick={this.handleMonthDecrement}
             >
               <i
-                className="fa fa-angle-left fa-4x"
+                className="fa fa-angle-left fa-3x"
                 aria-hidden="true"
                 style={{ color: "white" }}
               ></i>
@@ -128,7 +153,7 @@ class Board extends Component {
               onClick={this.handleMonthIncrement}
             >
               <i
-                className="fa fa-angle-right fa-4x"
+                className="fa fa-angle-right fa-3x"
                 aria-hidden="true"
                 style={{ color: "white" }}
               ></i>
@@ -141,17 +166,34 @@ class Board extends Component {
               onClick={this.handleYearIncrement}
             >
               <i
-                className="fa fa-angle-double-right fa-4x"
+                className="fa fa-angle-double-right fa-3x"
                 aria-hidden="true"
                 style={{ color: "white" }}
               ></i>
             </button>
           </div>
         </div>
-        <div className="row m-4">
+        <div className="row mx-1 my-5">
           <div className="col-12">
             <table className="table">
-              <tbody></tbody>
+              <thead>
+                <tr scope="row">
+                  <th className="bg-info">Neodstartováno</th>
+                  <th className="bg-danger">V průběhu</th>
+                  <th className="bg-warning">Pozastaveno</th>
+                  <th className="bg-primary">Dokončuje se</th>
+                  <th className="bg-success">Hotovo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="bg-info">Neodstartováno</td>
+                  <td className="bg-danger">V průběhu</td>
+                  <td className="bg-warning">Pozastaveno</td>
+                  <td className="bg-primary">Dokončuje se</td>
+                  <td className="bg-success">Hotovo</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

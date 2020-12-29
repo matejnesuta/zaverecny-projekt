@@ -3,16 +3,12 @@
 }
 
 #root {
-  background-color: #2a2a2a;
+  background-color: #161616;
   color: white;
 }
 
 .container {
   border-bottom: #209cee 1px solid;
-}
-
-input {
-  border-radius: 7px;
 }
 
 textarea {
@@ -41,7 +37,7 @@ input:focus {
 
 .logs-header {
   font-weight: 500;
-  border-bottom: white 1px solid;
+  border-bottom: #209cee 1px solid;
 }
 
 .logs-footer {
@@ -55,18 +51,15 @@ input:focus {
 
 footer {
   text-align: center;
-  text-decoration-line: line-through;
-  background-color: #3b3b3b;
-  border-top: white thin so;
+  background-color: #2a2a2a;
 }
 
-nav {
-  display: flex;
+.navbar {
   color: white;
-  background-color: #3b3b3b;
+  background-color: #2a2a2a;
   font-size: 1.3em;
   font-weight: 500;
-  border-bottom: #209cee 5px solid;
+  border-bottom: #209cee 4px solid;
 }
 
 nav li a {
@@ -92,4 +85,87 @@ nav li .dropdown {
 
 .fa-trash:hover {
   color: #ff3232;
+}
+
+.fa-user-times {
+  color: #161616;
+}
+
+.fa-user-times:hover {
+  color: #ff3232;
+}
+
+.fa-pencil-square-o {
+  color: white;
+}
+
+.fa-pencil-square-o:hover {
+  color: #209cee;
+}
+
+.fa-wrench {
+  color: #161616;
+}
+
+.fa-ellipsis-v {
+  color: white;
+}
+
+.fa-ellipsis-v:hover {
+  color: #209cee;
+}
+
+.modal-header {
+  text-align: center;
+  color: white;
+  background-color: #209cee;
+}
+
+.modal-body {
+  text-align: center;
+  color: white;
+  background-color: #2a2a2a;
+}
+
+.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+#sidebar {
+  color: white;
+  background-color: #2a2a2a;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.sidebar-header {
+  text-align: center;
+  border-bottom: #209cee 1px solid;
+}
+
+.sidebar-body {
+  text-align: left;
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
+.filebar {
+  color: white;
+  background-color: #202020;
+  border: #209cee 1px solid;
+  border-radius: 4px;
+}
+
+h1 {
+  font-size: 3em !important;
+  font-weight: 700 !important;
+}
+
+tr {
+  text-align: center;
+}
+
+html {
+  background-color: #2a2a2a;
 }
