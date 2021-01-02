@@ -15,7 +15,7 @@ git clone https://github.com/matejnesuta/zaverecny-projekt
 cd zaverecny-projekt
 docker-compose up --build
 ```
-Při prvním spuštění projektu bude Djangu chybět superuživatel, ale to se dá velmi jednoduše vyřešit. Stačí zmáčknout klávesovou zkratku <code>CTRL+Z</code> pro přenesení procesu do pozadí (nebo alternativně otevřít 2. terminál). Pak stačí zadat jen příkaz <code>docker exec -it backend python3 backend/manage.py createsuperuser</code>. Pro vrácení výstupu procesu je potřeba zadat příkaz <code>fg</code>. 
+Při prvním spuštění projektu bude Djangu chybět superuživatel, ale to se dá velmi jednoduše vyřešit. Stačí zmáčknout klávesovou zkratku <code>CTRL+Z</code> pro přenesení procesu do pozadí (nebo alternativně otevřít 2. terminál). Pak stačí zadat jen příkaz <code>docker exec -it backend python3 manage.py createsuperuser</code> a <code>docker exec -it backend python3 manage.py search_index --rebuild</code>. Pro vrácení výstupu procesu je potřeba zadat příkaz <code>fg</code>. 
 <br><br>
 Při prvním spuštění <code>docker-compose up</code> se vytvoří image kontejnerů a poté spustí. Při dalších spuštěních tohoto příkazu se již vytvořené image kontejnerů jen spustí. Kontejnery se dají postavit znovu pomocí příkazů <code>docker-compose up --build</code>, což je nutné dělat pokaždé, když se v souborech s projektem provede změna.
 <br><br>
