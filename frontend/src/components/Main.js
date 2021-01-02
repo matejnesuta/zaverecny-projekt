@@ -55,7 +55,7 @@ class Main extends Component {
         id: 1,
         author: "Franta Brambor",
         title: "Velký špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "Hahahaha",
         deadline: "",
         stage: "in_progress",
@@ -64,6 +64,7 @@ class Main extends Component {
         id: 2,
         author: "Franta Brambor",
         title: "Hodně špatný",
+        created: "2020-12-29 22:00:00",
         description: "SADGE",
         deadline: "",
         stage: "done",
@@ -72,7 +73,7 @@ class Main extends Component {
         id: 3,
         author: "Franta Brambor",
         title: "Mega špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "RAGEY",
         deadline: "",
         stage: "in_progress",
@@ -81,7 +82,7 @@ class Main extends Component {
         id: 4,
         author: "Franta Brambor",
         title: "Velký špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "Hahahaha",
         deadline: "",
         stage: "done",
@@ -90,7 +91,7 @@ class Main extends Component {
         id: 5,
         author: "Franta Brambor",
         title: "Hodně špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "SADGE",
         deadline: "",
         stage: "almost_finished",
@@ -99,7 +100,7 @@ class Main extends Component {
         id: 6,
         author: "Franta Brambor",
         title: "Mega špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "RAGEY",
         deadline: "",
         stage: "in_progress",
@@ -108,7 +109,7 @@ class Main extends Component {
         id: 7,
         author: "Franta Brambor",
         title: "Velký špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "Hahahaha",
         deadline: "",
         stage: "in_progress",
@@ -117,7 +118,7 @@ class Main extends Component {
         id: 8,
         author: "Franta Brambor",
         title: "Hodně špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "SADGE",
         deadline: "",
         stage: "on_hold",
@@ -126,7 +127,7 @@ class Main extends Component {
         id: 9,
         author: "Franta Brambor",
         title: "Mega špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "RAGEY",
         deadline: "",
         stage: "in_progress",
@@ -135,7 +136,7 @@ class Main extends Component {
         id: 10,
         author: "Franta Brambor",
         title: "Velký špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "Hahahaha",
         deadline: "",
         stage: "done",
@@ -144,7 +145,7 @@ class Main extends Component {
         id: 11,
         author: "Franta Brambor",
         title: "Hodně špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "SADGE",
         deadline: "",
         stage: "in_progress",
@@ -153,7 +154,7 @@ class Main extends Component {
         id: 12,
         author: "Franta Brambor",
         title: "Mega špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "RAGEY",
         deadline: "",
         stage: "done",
@@ -162,7 +163,7 @@ class Main extends Component {
         id: 13,
         author: "Franta Brambor",
         title: "Velký špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "Hahahaha",
         deadline: "",
         stage: "in_progress",
@@ -171,7 +172,7 @@ class Main extends Component {
         id: 14,
         author: "Franta Brambor",
         title: "Hodně špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "SADGE",
         deadline: "",
         stage: "done",
@@ -180,7 +181,7 @@ class Main extends Component {
         id: 15,
         author: "Franta Brambor",
         title: "Mega špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "RAGEY",
         deadline: "",
         stage: "on_hold",
@@ -189,7 +190,7 @@ class Main extends Component {
         id: 16,
         author: "Franta Brambor",
         title: "Velký špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "Hahahaha",
         deadline: "",
         stage: "done",
@@ -198,7 +199,7 @@ class Main extends Component {
         id: 17,
         author: "Franta Brambor",
         title: "Hodně špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "SADGE",
         deadline: "",
         stage: "almost_finished",
@@ -207,7 +208,7 @@ class Main extends Component {
         id: 18,
         author: "Franta Brambor",
         title: "Mega špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "RAGEY",
         deadline: "",
         stage: "in_progress",
@@ -216,7 +217,7 @@ class Main extends Component {
         id: 19,
         author: "Franta Brambor",
         title: "Velký špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "Hahahaha",
         deadline: "",
         stage: "in_progress",
@@ -225,7 +226,7 @@ class Main extends Component {
         id: 20,
         author: "Franta Brambor",
         title: "Hodně špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "SADGE",
         deadline: "",
         stage: "on_hold",
@@ -234,7 +235,7 @@ class Main extends Component {
         id: 21,
         author: "Franta Brambor",
         title: "Mega špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "RAGEY",
         deadline: "",
         stage: "almost_finished",
@@ -243,7 +244,7 @@ class Main extends Component {
         id: 22,
         author: "Franta Brambor",
         title: "Velký špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "Hahahaha",
         deadline: "",
         stage: "done",
@@ -252,7 +253,7 @@ class Main extends Component {
         id: 23,
         author: "Franta Brambor",
         title: "Hodně špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "SADGE",
         deadline: "",
         stage: "done",
@@ -261,7 +262,7 @@ class Main extends Component {
         id: 24,
         author: "Franta Brambor",
         title: "Mega špatný",
-        created: "2020-12-29",
+        created: "2020-12-29 22:00:00",
         description: "RAGEY",
         deadline: "",
         stage: "not_started",
@@ -596,17 +597,18 @@ class Main extends Component {
 
     let addTask;
     let cur_date = new Date();
-    let min_deadline;
+    let min_date_deadline;
     let month = cur_date.getMonth() + 1;
     let day = cur_date.getDate();
     let year = cur_date.getFullYear();
+
     if (month.length < 2) {
       month = "0" + month;
     }
     if (day.length < 2) {
       day = "0" + day;
     }
-    min_deadline = [year, month, day].join("-");
+    min_date_deadline = [year, month, day].join("-");
 
     let infoColour;
     if (this.state.fileUploadInfo === "Max. velikost souboru: 10MB") {
@@ -617,7 +619,7 @@ class Main extends Component {
 
     if (this.state.addTask) {
       addTask = (
-        <div className="card center m-5 px-3 py-3 bg-dark border-primary text-white">
+        <div className="card center m-5 p-3 bg-dark border-primary text-white">
           <div className="ml-auto">
             <button className="btn mb-4" onClick={this.handleCloseAddTaskForm}>
               <i
@@ -642,20 +644,6 @@ class Main extends Component {
               </div>
             </div>
             <div className="form-group row justify-content-center">
-              <div className="col-10">
-                <textarea
-                  type="text"
-                  name="taskComment"
-                  className="border-primary form-control"
-                  placeholder="Zadejte popisek úkolu"
-                  maxLength={300}
-                  rows={4}
-                  value={this.state.taskComment}
-                  onChange={this.handleChange}
-                ></textarea>
-              </div>
-            </div>
-            <div className="form-group row justify-content-center">
               <div className="col-2">
                 <label className="col-form-label col-form-label-lg">
                   Termín
@@ -667,6 +655,7 @@ class Main extends Component {
                   name="taskDeadlineDate"
                   className="border-primary form-control"
                   value={this.state.taskDeadlineDate}
+                  min={min_date_deadline}
                   onChange={this.handleChange}
                 ></input>
               </div>
@@ -676,9 +665,22 @@ class Main extends Component {
                   name="taskDeadlineTime"
                   className="border-primary form-control"
                   value={this.state.taskDeadlineTime}
-                  min={min_deadline}
                   onChange={this.handleChange}
                 ></input>
+              </div>
+            </div>
+            <div className="form-group row justify-content-center">
+              <div className="col-10">
+                <textarea
+                  type="text"
+                  name="taskComment"
+                  className="border-primary form-control"
+                  placeholder="Zadejte popisek úkolu"
+                  maxLength={300}
+                  rows={4}
+                  value={this.state.taskComment}
+                  onChange={this.handleChange}
+                ></textarea>
               </div>
             </div>
             <div className="form-group row justify-content-center">

@@ -162,8 +162,35 @@ h1 {
   font-weight: 700 !important;
 }
 
+h2 {
+  font-size: 2.5em !important;
+  font-weight: 700 !important;
+}
+
 tr {
   text-align: center;
+}
+
+.task-name {
+  font-size: 0.9em;
+}
+
+.task-body {
+  font-size: 0.8em;
+}
+
+.task-card {
+  color: white;
+  background-color: #2a2a2a;
+  border-left: #209cee 4px solid;
+  border-radius: 4px;
+}
+
+.user-card {
+  color: white;
+  background-color: #2a2a2a;
+  border-top: #209cee 3px solid;
+  border-radius: 4px;
 }
 
 html {

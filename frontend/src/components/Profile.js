@@ -113,10 +113,18 @@ class Profile extends Component {
         reader.readAsDataURL(file);
       }
     } else {
-      this.setState({
-        //false místo null (asi)
-        imageSrc: null,
-      });
+      if (file.size > maxFileSize) {
+        this.setState({
+          imageSrc: false,
+          uploadInfo: "Soubor přesahuje limit 10MB",
+        });
+      }
+      if (!correctType) {
+        this.setState({
+          imageSrc: false,
+          uploadInfo: "Nesprávný formát souboru",
+        });
+      }
     }
   };
 
@@ -127,6 +135,13 @@ class Profile extends Component {
       passwordsComp = (
         <small className="text-danger">Hesla se neshodují.</small>
       );
+    }
+
+    let infoColour;
+    if (this.state.uploadInfo === "Max. velikost souboru: 10MB") {
+      infoColour = "form-text";
+    } else {
+      infoColour = "form-text text-danger";
     }
 
     let image;
@@ -143,7 +158,7 @@ class Profile extends Component {
       );
     }
     let imageForm;
-    if (this.state.imageSrc === null) {
+    if (this.state.imageSrc === null || this.state.imageSrc === false) {
       imageForm = (
         <div className="form-group row">
           <div className="col-4">
@@ -165,6 +180,7 @@ class Profile extends Component {
                 {this.state.imageName}
               </label>
             </div>
+            <small className={infoColour}>{this.state.uploadInfo}</small>
           </div>
         </div>
       );

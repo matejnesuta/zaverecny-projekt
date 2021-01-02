@@ -24,21 +24,21 @@ class UserPage extends Component {
                 <img
                   src={store.getState().user.user.imageSrc}
                   alt="nefunguje to xd"
-                  width={100}
-                  height={100}
+                  width={120}
+                  height={120}
                   className="rounded-circle"
                 />
               </div>
               <div className="col-8">
-                <h1>
+                <h2>
                   {store.getState().user.user.firstName}{" "}
                   {store.getState().user.user.lastName}
-                </h1>
+                </h2>
               </div>
             </div>
             <div className="row center p-3 m-2">
               <div className="col-12">
-                <div className="border-primary text-white">
+                <div className="border-primary p-4 user-card">
                   <p>{store.getState().user.user.comment}</p>
                 </div>
               </div>

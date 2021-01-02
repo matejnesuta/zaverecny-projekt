@@ -32,7 +32,7 @@ function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/groups" exact component={Groups} />
           <Route path="/groups/:id" component={Main} />
-          <Route path="/logs/:id" exact component={Task} />
+          <Route path="/tasks/:id" exact component={Task} />
           <Route path="/users/:id" exact component={UserPage} />
           <Route path="/passwordreset" component={PasswordReset} />
           <Route path="/" exact component={Homepage} />

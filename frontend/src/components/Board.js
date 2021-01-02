@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import BoardTable from "./BoardTable";
 
 class Board extends Component {
   state = {
@@ -90,7 +91,6 @@ class Board extends Component {
   };
 
   render() {
-    let boardRows = [];
     const stages = [
       "not_started",
       "in_progress",
@@ -102,15 +102,22 @@ class Board extends Component {
     const sortedTasks = stages.map((stage) =>
       tasks.filter((task) => task.stage === stage)
     );
+    let sortedRows = [];
     //Zjištení počtu prvků největšího pole
     let arraysLength = 0;
-    sortedTasks.map((arr) => {
+    sortedTasks.forEach((arr) => {
       if (arr.length > arraysLength) {
         arraysLength = arr.length;
       }
     });
     //Seřazení dat (tasků) do řádků, které následně pošlu do komponentu BoardTable
-    for (let i = 0; i > arraysLength; i++) {}
+    for (let i = 0; i < arraysLength; i++) {
+      let sortedRow = [];
+      sortedTasks.map((task) => {
+        sortedRow.push(task[i]);
+      });
+      sortedRows.push(sortedRow);
+    }
 
     return (
       <div>
@@ -173,11 +180,11 @@ class Board extends Component {
             </button>
           </div>
         </div>
-        <div className="row mx-1 my-5">
+        <div className="row mx-1 p-1 my-5">
           <div className="col-12">
-            <table className="table">
+            <table className="table table-dark table-bordered">
               <thead>
-                <tr scope="row">
+                <tr>
                   <th className="bg-info">Neodstartováno</th>
                   <th className="bg-danger">V průběhu</th>
                   <th className="bg-warning">Pozastaveno</th>
@@ -186,13 +193,7 @@ class Board extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="bg-info">Neodstartováno</td>
-                  <td className="bg-danger">V průběhu</td>
-                  <td className="bg-warning">Pozastaveno</td>
-                  <td className="bg-primary">Dokončuje se</td>
-                  <td className="bg-success">Hotovo</td>
-                </tr>
+                <BoardTable data={sortedRows} year={2020} month={12} />
               </tbody>
             </table>
           </div>
