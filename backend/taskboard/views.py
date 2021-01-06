@@ -418,4 +418,4 @@ def search_for_users(request):
     s = ProfileDocument.search().query("match", first_name="franta")
     qs = s.to_queryset()
     print(qs)
-    return Response(status=status.HTTP_404_NOT_FOUND)
+    return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
