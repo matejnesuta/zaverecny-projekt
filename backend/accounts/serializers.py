@@ -12,7 +12,7 @@ from django.conf import settings
 from rest_framework.exceptions import ValidationError
 from dj_rest_auth.serializers import LoginSerializer
 from dj_rest_auth.serializers import PasswordResetSerializer
-
+from django.utils.translation import gettext as _
 
 
 class CustomRegisterSerializer(serializers.Serializer):
