@@ -53,7 +53,7 @@ Hlavní endpointy
 ---------------------------
 Pro jejich používání musí být uživatel přihlášen.
 
-- /auth/profile/detail/<int:id>/ (GET)
+- /app/profile/detail/<int:id>/ (GET)
     
    - Návratové hodnoty:
       - id
@@ -65,7 +65,7 @@ Pro jejich používání musí být uživatel přihlášen.
   Endpoint pro zobrazení cizích profilů.
   
   
-- /auth/profile/detail/ (GET, PUT)
+- /app/profile/detail/ (GET, PUT)
   - first_name (Not NULL, string)
   - last_name  (Not NULL, string)
   - bio (string, maximální délka 150 znaků)
@@ -81,26 +81,26 @@ Pro jejich používání musí být uživatel přihlášen.
    Endpoint pro zobrazení a nebo úpravu vlastního profilu.
 
 
-- /auth/board/ (GET)
+- /app/board/ (GET)
    - Návratové hodnoty:
       - id
       - name
       <br>
    Endpoint pro získání všech boardů, ve kterých je uživatel aspoň členem.
    
-- /auth/board/<int:id>/ (PUT, DELETE)
+- /app/board/<int:id>/ (PUT, DELETE)
     - name (pokud je zavolán PUT requestem)
     <br>
     Endpoint pro smazání a nebo úpravu jména tabule. Pokud uživatel tabuli nevlastní (nemá roli owner), nemůže ji upravit a ani smazat.
 
-- /auth/board/create/ (POST)
+- /app/board/create/ (POST)
     - Návratové hodnoty:
       - id
       - name
     <br>
     Endpoint pro vytvoření nové tabule. Uživatel, který tabuli takto vytvoří, se zároveň automaticky stane jejím vlastníkem.
     
-- /auth/board/detail/<int:id>/ (GET)
+- /app/board/detail/<int:id>/ (GET)
     - Návratové hodnoty:
         - id
         - author
@@ -111,9 +111,19 @@ Pro jejich používání musí být uživatel přihlášen.
         - taskboard
           <br>
    Endpoint pro zobrazení všech úkolů dané tabule. Uživatel, který na tabuli není aspoň členem, dostane místo dat 403 FORBIDDEN.
-   
 
-- /auth/log/<int:id_tabule>/ (GET)
+- /app/board/users/<int:id_tabule>/ (GET)
+<br>
+Endpoint, který zobrazí všechny uživatele jedné tabule. Uživatelé jsou seřazeni podle rolí.
+    - Návratové hodnoty:
+        - first_name
+        - last_name
+        - bio
+        - profile_pic
+        - role
+  
+
+- /app/log/<int:id_tabule>/ (GET)
     - Návratové hodnoty:
         - text
         - time
@@ -124,10 +134,10 @@ Pro jejich používání musí být uživatel přihlášen.
         <br>
     Endpoint pro zobrazení logu tabule. Uživatel, který na tabuli není aspoň členem, dostane místo dat 403 FORBIDDEN.
     
-- /auth/task/create/ (POST)
+- /app/task/create/ (POST)
     - title (Not NULL, string, max 50 znaků)
     - description (string)
-    - deadline (čas ve formátu %Y-%m-%d %H:%M:%S)
+    - deadline (čas ve formátu %Y-%m-%d %H:%M:%S, nesmí být časový údaj minulosti)
     - stage (ENUM('not_started', 'in_progress', 'on_hold', 'almost_finished', 'done'))
     - taskboard (int, id tabule)
     - Návratové hodnoty:
@@ -140,3 +150,84 @@ Pro jejich používání musí být uživatel přihlášen.
         - taskboard
         <br>
     Endpoint pro vytvoření příspěvku. Příspěvky může uživatel vytvářet jen tam, kde je členem.
+
+- /app/task/<int:id>/ (PATCH, DELETE, GET)
+    - title (Not NULL, string, max 50 znaků)
+    - description (string)
+    - deadline (čas ve formátu %Y-%m-%d %H:%M:%S, nesmí být časový údaj minulosti)
+    - stage (ENUM('not_started', 'in_progress', 'on_hold', 'almost_finished', 'done'))  
+    - Návratové hodnoty:
+        - id
+        - author
+        - title 
+        - description
+        - deadline
+        - stage
+        - taskboard
+        <br>
+    Endpoint pro zobrazení, upravení a nebo smazání určitého příspěvku. 
+    Příspěvky může uživatel vytvářet jen tam, kde je členem. Argumenty v těle requestu jsou potřebné jen při použití metody PATCH.
+    Příspěvky může mazat autor, moderátor a vlastník tabule. 
+    
+- /app/task/attachment/ (POST)
+    - title (Not NULL, string, max 200 znaků)
+    - file (soubor, maximální velikost 50 MB)
+    - type (ENUM('audio', 'image', 'text', 'video', 'other'))
+    - task (int, id příspěvku)
+    - Návratové hodnoty:
+        - id
+        - title 
+        - last_update
+        - file
+        - type
+        - task
+        <br>
+    Endpoint pro vytvoření přílohy. Přílohu může uživatel vytvářet jen tam, kde je členem.    
+
+ - /app/task/attachment/<int:id_prilohy>/ (PATCH, GET, DELETE)
+    - title (Not NULL, string, max 200 znaků)
+    - file (soubor, maximální velikost 50 MB)
+    - type (ENUM('audio', 'image', 'text', 'video', 'other'))
+    - task (int, id příspěvku)
+    - Návratové hodnoty:
+        - id
+        - title 
+        - last_update
+        - file
+        - type
+        - task
+        <br>      
+    Endpoint pro zobrazení, upravení a nebo smazání přílohy. 
+    Přílohy může uživatel vytvářet jen tam, kde je členem. Argumenty v těle requestu jsou potřebné jen při použití metody PATCH.
+    Přílohy může mazat autor, moderátor a vlastník tabule.  
+    
+- /app/task/comments/<int:id_prispevku>/ (GET, POST)
+    - text (Not NULL, string, max 1000 znaků)
+    - Návratové hodnoty:
+        - id
+        - text
+        - timestamp
+        - task
+        <br>
+    Endpoint pro zobrazení všech komentářů u příspěvku a nebo pro napsání komentáře u příspěvku.
+    
+- /app/task/comments/delete/<int:id_komentare/ (GET, POST)
+        <br>
+        Endpoint pro smazání komentáře. Komentáře může smazat autor, moderátor a vlastník skupiny.
+
+- /app/users/invite/ (POST)
+    - profile (int, id profilu)
+    - taskboard (int, id tabule)
+    <br>
+    Do tabule můžou nové uživatele přidávat pouze moderátoři a vlastníky. Takto přidaný uživatel automaticky získá roli člena.
+
+- /app/board/manage-user/ (PATCH, DELETE)
+    - profile (int, id profilu)
+    - taskboard (int, id tabule)
+    - role (ENUM('member', 'moderator', 'owner'))
+    <br>
+    Při volání metody DELETE se nemusí specifikovat role, jelikož není důležitá. Tato metoda umí buď:
+        - Smazat uživatelovu roli (vyhodit uživatele z tabule). To můžou jak moderátoři, tak vlastníci. Moderátoři můžou vyhodit pryč jen obyčejné uživatele.
+        - Změnit něčí uživatelskou roli z člena na moderátora. To může jen vlastník.
+        - Předat někomu vlastnictví. To starého vlastníka o vlastnictví připraví a stane se moderátorem.
+    

@@ -320,8 +320,10 @@ def comments(request, pk):
         else:
             comment = Comment()
             serializer = PostCommentSerializer(comment, data=request.data)
+
             if serializer.is_valid():
                 serializer.validated_data["author"] = Profile.objects.get(id=request.user.pk)
+                serializer.validated_data["task"] = Task.objects.get(id=pk)
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -354,22 +356,25 @@ def delete_comment(request, pk):
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
-def invite(request, id):
+def invite(request):
     query = Membership.objects.values("profile").filter((Q(role__contains='owner') | Q(role__contains='moderator')),
-                                                        taskboard=id, profile=request.user.pk)
+                                                        taskboard=request.data["taskboard"], profile=request.user.pk)
     data = {}
-    if query.count == 0:
+    if query.count() == 0:
         data["failure"] = "You are not allowed to do this!"
         return Response(data=data, status=status.HTTP_403_FORBIDDEN)
 
     membership = Membership()
     serializer = MembershipSerializer(membership, data=request.data)
-    if serializer.is_valid():
-        serializer.validated_data["taskboard"] = Taskboard.objects.get(id=id)
-        serializer.validated_data["role"] = "member"
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if Membership.objects.filter(taskboard=request.data["taskboard"], profile=request.data["profile"]).count() == 0:
+        if serializer.is_valid():
+            serializer.validated_data["role"] = "member"
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    data["failure"] = "The user is already a member!"
+    return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['DELETE', 'PATCH'])

@@ -18,5 +18,5 @@ urlpatterns = [
     path('task/comments/<int:pk>/', comments),
     path('task/comments/delete/<int:pk>/', delete_comment),
     path('users/search/', search_for_users),
-    path('users/invite/<int:id>/', invite),
+    path('users/invite/', invite),
 ]
