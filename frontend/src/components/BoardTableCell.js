@@ -16,6 +16,24 @@ class BoardTableCell extends Component {
   }
 
   render() {
+    let cur_date = new Date();
+    let min_date_deadline;
+    let month = cur_date.getMonth() + 1;
+    let day = cur_date.getDate();
+    let year = cur_date.getFullYear();
+    let deadline_date;
+    let deadline_date_separated;
+    let i = 0;
+    let afterDeadline;
+
+    if (month.length < 2) {
+      month = "0" + month;
+    }
+    if (day.length < 2) {
+      day = "0" + day;
+    }
+    min_date_deadline = [year, month, day].join("-");
+
     return this.props.data !== undefined ? (
       <td>
         <div className="task-name">

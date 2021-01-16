@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class FileBar extends Component {
   state = {
@@ -67,26 +68,28 @@ class FileBar extends Component {
     }
   }
 
-  handleRemoveFile = () => {
-    this.props.handleRemove(this.props.id);
-  };
-
   render() {
     let iconType = "fa fa-" + this.state.icon + " pt-2 mr-5";
     return (
-      <div className="row p-1 mx-1 my-2 center justify-content-center filebar">
-        <div className="col-1">
-          <i className={iconType} aria-hidden="true"></i>
-        </div>
-        <div className="col-9 p-1">{this.props.name}</div>
-        <div className="col-2">
-          <button className="btn ml-4" onClick={this.handleRemoveFile}>
-            <i
-              className="fa fa-times"
-              style={{ color: "white" }}
-              aria-hidden="true"
-            ></i>
-          </button>
+      <div>
+        <div className="row p-1 mx-1 my-2 center justify-content-center filebar">
+          <div className="col-1">
+            <i className={iconType} aria-hidden="true"></i>
+          </div>
+          <div className="col-9 p-1">{this.props.name}</div>
+          <div className="col-2">
+            <Link
+              to={this.props.file}
+              target="_blank"
+              download={this.props.name}
+            >
+              <i
+                className="fa fa-download"
+                style={{ color: "white" }}
+                aria-hidden="true"
+              ></i>
+            </Link>
+          </div>
         </div>
       </div>
     );

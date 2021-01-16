@@ -17,8 +17,8 @@ class Board extends Component {
       "Listopad",
       "Prosinec",
     ],
-    monthIndex: 11,
-    year: 2020,
+    monthIndex: 0,
+    year: 2021,
     tasks: this.props.tasks,
     sortedTasks: [],
   };
@@ -91,6 +91,7 @@ class Board extends Component {
   };
 
   render() {
+    //Třídění úkolů
     const stages = [
       "not_started",
       "in_progress",
@@ -99,18 +100,19 @@ class Board extends Component {
       "done",
     ];
     const tasks = [...this.props.tasks];
+    //Roztřídění úkolů podle jejich fáze
     const sortedTasks = stages.map((stage) =>
       tasks.filter((task) => task.stage === stage)
     );
     let sortedRows = [];
-    //Zjištení počtu prvků největšího pole
+    //Zjištení počtu prvků největšího pole, který bude určovat počet řádků v tabulce
     let arraysLength = 0;
     sortedTasks.forEach((arr) => {
       if (arr.length > arraysLength) {
         arraysLength = arr.length;
       }
     });
-    //Seřazení dat (tasků) do řádků, které následně pošlu do komponentu BoardTable
+    //Seřazení úkolů do řádků, které jsou následně poslány do komponentu BoardTable
     for (let i = 0; i < arraysLength; i++) {
       let sortedRow = [];
       sortedTasks.map((task) => {

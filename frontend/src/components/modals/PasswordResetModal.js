@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { Modal, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-class RegModal extends Component {
+class PasswordResetModal extends Component {
+  handleClick = (event) => {
+    event.preventDefault();
+    this.props.onHide();
+  };
+
   render() {
     return (
       <Modal
@@ -16,24 +21,30 @@ class RegModal extends Component {
           <Row>
             <Col>
               <Modal.Title className="modal-title">
-                Registrace proběhla úspěšně!
+                Ověření profilu proběhlo úspěšně!
               </Modal.Title>
             </Col>
           </Row>
         </Modal.Header>
         <Modal.Body className="modal-body p-4">
-          Na Váš email byl zaslán email s verifikačním klíčem. Pro dokončení
-          registrace zadejte po přesměrování klíč.
+          Nyní se můžete přihlásit.
           <br />
-          <Link to="/verification">
-            <Button variant="primary" className="px-5 mt-4">
+          <Button
+            variant="primary"
+            className="px-5 mt-4"
+            onClick={this.handleClick}
+          >
+            <Link
+              to="/login"
+              style={{ color: "white", textDecoration: "none" }}
+            >
               Pokračovat
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </Modal.Body>
       </Modal>
     );
   }
 }
 
-export default RegModal;
+export default PasswordResetModal;

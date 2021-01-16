@@ -12,12 +12,6 @@ export const getUser = (user) => ({
   payload: user,
 });
 
-//Akce, sloužící ke aktualizaci profilových údajů
-export const updateUser = (user) => ({
-  type: UPDATE_USER,
-  payload: user,
-});
-
 //Akce, sloužící k nahrání obrázku do storu (pouze zkušební, přemění se v nastavení profilu)
 export const getImage = (image) => ({
   type: GET_IMAGE,

@@ -11,6 +11,7 @@ import SubmitButton from "./SubmitButton";
 import woke from "../images/woke.jpg";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 import { Link } from "react-router-dom";
+import { RouteComponentProps } from "react-router";
 import axios from "axios";
 
 class Main extends Component {
@@ -21,7 +22,7 @@ class Main extends Component {
         id={1}
         imgSrc={woke}
         name="Prokop"
-        content="GG"
+        content="Dobrý den"
         timestamp="21. 12. 2020"
       />,
       <UpdateLog
@@ -29,7 +30,7 @@ class Main extends Component {
         id={5}
         imgSrc={woke}
         name="Buben"
-        content="WP"
+        content="Hezký večer"
         timestamp="22. 12. 2020"
       />,
       <UpdateLog
@@ -305,7 +306,7 @@ class Main extends Component {
   //Načtení dat z backendu
 
   componentDidMount() {
-    /*axios.get("/profiles").then((res) => {
+    /*axios.get("/board/deatail/board.id").then((res) => {
       const users = res.data;
       //Uložení pole komponentů UpdateLog do this.state.logs
       const receivedData = users.map((user) => (
@@ -322,36 +323,6 @@ class Main extends Component {
       });
     });*/
   }
-
-  //Metoda na seřazení logů a k ním příslušným komentářům, která je teď naprosto zbytečná :))))))
-
-  /*postSorting() {
-    let output = [];
-    let logs = this.state.logs;
-    let comments = this.state.comments;
-    let usedIds = [];
-    let sortedComments = [];
-    let filtered = [];
-    let index;
-    comments.map((comment) => {
-      if (!usedIds.includes(comment.props.parentId)) {
-        filtered = comments.filter(
-          (filter) => filter.props.parentId === comment.props.parentId
-        );
-        sortedComments.push(filtered);
-        usedIds.push(comment.props.parentId);
-      }
-    });
-    logs.map((log) => {
-      output.push(log);
-      if (usedIds.find((item) => item === log.props.id)) {
-        index = usedIds.indexOf(log.props.id);
-        output.push(sortedComments[index]);
-      }
-    });
-
-    return output;
-  }*/
 
   handleSearch = (event) => {
     event.preventDefault();
@@ -511,6 +482,7 @@ class Main extends Component {
   }
 
   render() {
+    console.log(this.state.files[0]);
     let searchResult;
     let results = [...this.state.getSearchResult];
     let searchResultRow = results.map((obj) => (
@@ -713,6 +685,7 @@ class Main extends Component {
 
     return (
       <div>
+        {/**/}
         <UserRemoveModal
           show={this.state.removeModal.modal}
           onHide={() => {
@@ -744,7 +717,9 @@ class Main extends Component {
         <div className="wrapper">
           <Sidebar
             users={this.state.users}
+            //callback funkce, posílána do child komponentu jako parametr (prop)
             handleRemoveUser={(id, name) => {
+              //při zavolání se otevře modální okno a získá se ID a jméno uživatele, který má být odebrán ze skupiny, a uloží se do state
               this.setState((prevState) => ({
                 removeModal: {
                   ...prevState.removeModal,

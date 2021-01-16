@@ -15,7 +15,7 @@ import Homepage from "./components/Homepage";
 
 function App() {
   return (
-    //Routování pomocí React Router
+    //Routing pomocí React Router
     <Router>
       <div className="App">
         {
@@ -24,7 +24,7 @@ function App() {
         }
         <Switch>
           {
-            //Jednotlivé paths
+            //Jednotlivé URLs
           }
           <Route path="/login" component={Login} />
           <Route path="/registration" component={Registration} />

@@ -18,6 +18,7 @@ class Profile extends Component {
     bio: "",
     imageSrc: null,
     imageName: "Nahrát obrázek",
+    old_password: "",
     password1: "",
     password2: "",
     modal: false,
@@ -27,7 +28,10 @@ class Profile extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    /*if (this.state.password1.localeCompare(this.state.password2) === 0 && (this.state.firstName !== "" || this.state.lastName !== "")) {
+    if (
+      this.state.password1.localeCompare(this.state.password2) === 0 &&
+      (this.state.firstName !== "" || this.state.lastName !== "")
+    ) {
       axios
         .patch(
           "/auth/password/change",
@@ -49,24 +53,34 @@ class Profile extends Component {
       this.setState({
         modal: true,
       });
-    }*/
-    this.setState({
-      modal: true,
-    });
-    const userObj = {
-      id: store.getState().user.user.id,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      imageSrc: this.state.imageSrc === null ? user_icon : this.state.imageSrc,
-      bio: this.state.bio,
-      password1: this.state.password1,
-      password2: this.state.password2,
-    };
-    this.props.getUser(userObj);
-    console.log(store.getState());
+      const userObj = {
+        id: store.getState().user.user.id,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        imageSrc:
+          this.state.imageSrc === null ? user_icon : this.state.imageSrc,
+        bio: this.state.bio,
+        password1: this.state.password1,
+        password2: this.state.password2,
+      };
+      this.props.getUser(userObj);
+    } else {
+      if (this.state.password1.localeCompare(this.state.password2) !== 0) {
+        this.setState({
+          error: "Hesla nejsou stejná",
+        });
+      }
+      if (this.state.firstName !== "" || this.state.lastName !== "") {
+        this.setState({
+          error: "Jméno a příjmení nesmí být prázdné",
+        });
+      }
+    }
   };
 
+  //Metoda pro ukládání hodnoty ze vstupu
   handleChange = (event) => {
+    //Zjištění jména a hodnoty vstupu
     const { name, value } = event.target;
     this.setState({
       [name]: value,
@@ -80,7 +94,6 @@ class Profile extends Component {
     const maxFileSize = 10485760;
     const requiredTypes = ["image/png", "image/jpeg", "image/gif"];
     let correctType = false;
-    console.log(file);
 
     //MAXIMÁLNÍ VELIKOST OBRÁZKU - 10MB
     //Ověřování formátu souboru, protože parametr accept u inputu se dá jaksi obejít
@@ -90,17 +103,8 @@ class Profile extends Component {
       }
     });
 
-    //Metoda nahrávání souboru jako lokální url
     if (correctType && file.size < maxFileSize) {
-      /*const localImageUrl = window.URL.createObjectURL(file);
-      this.setState({
-        imageSrc: localImageUrl,
-        imageName: file.name,
-      });
-      this.props.getImage(localImageUrl);*/
-
-      //Metoda nahrávání souboru jako base64 string(oof)
-
+      //Nahrání souboru jako base64 string
       const reader = new FileReader();
       reader.onload = () => {
         this.setState({
@@ -144,12 +148,19 @@ class Profile extends Component {
       infoColour = "form-text text-danger";
     }
 
+    let borderColour = "";
+    if (this.state.error !== "") {
+      borderColour = "border-danger form-control";
+    } else {
+      borderColour = "border-primary form-control";
+    }
+
     let image;
     if (this.state.imageSrc !== null) {
       image = (
         <img
           src={this.state.imageSrc}
-          alt="profile_image"
+          alt="profile_image_thumbnail"
           id="profile-img-thumbnail"
           width={100}
           height={100}
@@ -242,7 +253,9 @@ class Profile extends Component {
                     id="firstName"
                     className="border-primary form-control"
                     placeholder="Zadejte jméno"
+                    //hodnota ve state, kam se uloží vstup
                     value={this.state.firstName}
+                    //ošetření změny hodnoty
                     onChange={this.handleChange}
                   ></input>
                 </div>
@@ -289,7 +302,26 @@ class Profile extends Component {
               <div className="form-group row">
                 <div className="col-4">
                   <label className="col-form-label col-form-label-lg">
-                    Heslo
+                    Staré heslo
+                  </label>
+                </div>
+                <div className="col-8">
+                  <input
+                    type="password"
+                    name="old_password"
+                    id="prof_old_password"
+                    className="border-primary form-control"
+                    placeholder="Zadejte heslo"
+                    minLength={8}
+                    value={this.state.old_password}
+                    onChange={this.handleChange}
+                  ></input>
+                </div>
+              </div>
+              <div className="form-group row">
+                <div className="col-4">
+                  <label className="col-form-label col-form-label-lg">
+                    Nové heslo
                   </label>
                 </div>
                 <div className="col-8">
@@ -299,6 +331,7 @@ class Profile extends Component {
                     id="prof_password1"
                     className="border-primary form-control"
                     placeholder="Zadejte heslo"
+                    minLength={8}
                     value={this.state.password1}
                     onChange={this.handleChange}
                   ></input>
@@ -317,6 +350,7 @@ class Profile extends Component {
                     id="prof_password2"
                     className="border-primary form-control"
                     placeholder="Zadejte znovu heslo"
+                    minLength={8}
                     value={this.state.password2}
                     onChange={this.handleChange}
                   ></input>

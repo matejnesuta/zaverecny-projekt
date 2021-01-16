@@ -20,7 +20,7 @@ class Groups extends Component {
       <Group
         key={1}
         id={1}
-        name="1"
+        name="IT1"
         icon="floppy-o"
         isOwner={true}
         handleDelete={(id, name) => {
@@ -47,7 +47,7 @@ class Groups extends Component {
       <Group
         key={2}
         id={2}
-        name="Braník"
+        name="IT2"
         icon="grav"
         isOwner={true}
         handleDelete={(id, name) => {
@@ -74,7 +74,7 @@ class Groups extends Component {
       <Group
         key={3}
         id={3}
-        name="3"
+        name="IT3"
         icon="code"
         isOwner={true}
         handleDelete={(id, name) => {
@@ -101,7 +101,7 @@ class Groups extends Component {
       <Group
         key={4}
         id={4}
-        name="4"
+        name="IT4 SIT"
         icon="camera-retro"
         isOwner={true}
         handleDelete={(id, name) => {
@@ -128,7 +128,7 @@ class Groups extends Component {
       <Group
         key={5}
         id={5}
-        name="5"
+        name="IT4 PRG"
         icon="code"
         isOwner={true}
         handleDelete={(id, name) => {
@@ -155,7 +155,7 @@ class Groups extends Component {
       <Group
         key={6}
         id={6}
-        name="6"
+        name="IT4"
         icon="wheelchair-alt"
         isOwner={false}
         handleDelete={(id, name) => {
@@ -314,7 +314,7 @@ class Groups extends Component {
             <table className="table table-hover table-dark">
               <thead className="thead-dark">
                 <tr scope="row">
-                  <th colSpan={12}>Výsledky vyhledávání</th>
+                  <th colSpan={12}>Výsledek vyhledávání</th>
                 </tr>
               </thead>
               <tbody>{searchResultRow}</tbody>

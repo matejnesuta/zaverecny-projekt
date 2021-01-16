@@ -1,6 +1,6 @@
 import { GET_TOKEN } from "../actions/types";
 
-//Defaultní stav
+//Počáteční state
 const initialState = {};
 
 //Reducer
@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
         ...state,
         token: action.payload,
       };
-    //Pokud se spustí jiná akce, reducer vrátí defaultní stav
+    //Pokud se spustí jiná akce, reducer vrátí počáteční state
     default:
       return state;
   }

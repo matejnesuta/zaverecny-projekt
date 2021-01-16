@@ -3,7 +3,6 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import SubmitButton from "./SubmitButton";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
 import RegModal from "./modals/RegModal";
 
 class Registration extends Component {
@@ -13,7 +12,6 @@ class Registration extends Component {
     password2: "",
     error: "",
     modal: false,
-    redirect: false,
   };
 
   handleChange = (event) => {
@@ -25,7 +23,14 @@ class Registration extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    if (this.state.password1.localeCompare(this.state.password2) !== 0) {
+    if (
+      this.state.password1.localeCompare(this.state.password2) === 0 &&
+      this.state.email !== "" &&
+      this.state.password1 !== "" &&
+      this.state.password2 !== "" &&
+      this.state.password1.length >= 8 &&
+      this.state.password2.length >= 8
+    ) {
       axios
         .post("/auth/registration/", {
           email: this.state.email,
@@ -36,30 +41,37 @@ class Registration extends Component {
           console.log(response);
         })
         .catch((error) => {
-          this.setState({
-            error: error,
-          });
           console.log(error);
         });
+      this.setState({
+        modal: true,
+      });
+    } else {
+      if (
+        this.state.email === "" ||
+        this.state.password1 === "" ||
+        this.state.password2 === ""
+      ) {
+        this.setState({
+          error: "Žádné pole nesmí být prázdné",
+        });
+      }
+
+      if (this.state.password1.length < 8 && this.state.password2.length < 8) {
+        this.setState({
+          error: "Heslo je příliš krátké",
+        });
+      }
+
+      if (this.state.password1.localeCompare(this.state.password2) !== 0) {
+        this.setState({
+          error: "Hesla nejsou stejná",
+        });
+      }
     }
-    this.setState({
-      //redirect: true,
-      modal: true,
-    });
   };
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect to="/verification" />;
-    }
-    //Kontrola, jestli jsou obě zadaná hesla stejná
-    let passwordsComp;
-    if (this.state.password1.localeCompare(this.state.password2) !== 0) {
-      passwordsComp = (
-        <small className="text-danger">Hesla se neshodují.</small>
-      );
-    }
-
     let borderColour = "";
     if (this.state.error !== "") {
       borderColour = "border-danger form-control";
@@ -69,7 +81,14 @@ class Registration extends Component {
 
     return (
       <div>
-        <RegModal show={this.state.modal} />
+        <RegModal
+          show={this.state.modal}
+          onHide={() => {
+            this.setState({
+              modal: false,
+            });
+          }}
+        />
         <Navbar isLoggedIn={false} />
         <div className="container">
           <div className="row center p-3 m-5">
@@ -116,7 +135,9 @@ class Registration extends Component {
                     value={this.state.password2}
                     onChange={this.handleChange}
                   ></input>
-                  {passwordsComp}
+                  <small className="form-text text-danger p-1">
+                    {this.state.error}
+                  </small>
                 </div>
               </div>
               <div className="form-group row justify-content-center">
@@ -127,7 +148,6 @@ class Registration extends Component {
                   </small>
                 </div>
               </div>
-
               <SubmitButton text="Odeslat" />
             </form>
           </div>

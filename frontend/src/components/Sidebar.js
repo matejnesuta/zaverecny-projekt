@@ -13,12 +13,14 @@ class Sidebar extends Component {
   };
 
   render() {
+    //
     let usersArr = this.props.users.map((user) => (
       <SidebarRow
         key={user.id}
         id={user.id}
         name={user.name}
         role={user.role}
+        //callback funkce pro vyvolání modálních oken
         handleDelete={this.handleRemoveUser}
         handleChangeRole={this.handleChangeUserRole}
       />

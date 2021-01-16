@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { RouteComponentProps } from "react-router";
 import woke from "../images/woke.jpg";
 import store from "../redux/store";
 
@@ -13,7 +14,6 @@ class UserPage extends Component {
   //Testování s daty ze storu! Normálně se budou získávat requestem
 
   render() {
-    console.log(window.navigator.userAgent);
     return (
       <div>
         <Navbar isLoggedIn={true} />
@@ -39,7 +39,9 @@ class UserPage extends Component {
             <div className="row center p-3 m-2">
               <div className="col-12">
                 <div className="border-primary p-4 user-card">
-                  <p>{store.getState().user.user.comment}</p>
+                  <div style={{ fontSize: "1.1em" }}>
+                    <p>{store.getState().user.user.bio}</p>
+                  </div>
                 </div>
               </div>
             </div>

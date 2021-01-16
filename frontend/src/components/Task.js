@@ -4,8 +4,11 @@ import Footer from "./Footer";
 import LogComment from "./LogComment";
 import SubmitButton from "./SubmitButton";
 import FileBar from "./FileBar";
+import FileBarView from "./FileBarView";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 import { Link } from "react-router-dom";
+import { RouteComponentProps } from "react-router";
+import axios from "axios";
 import woke from "../images/woke.jpg";
 
 class Task extends Component {
@@ -275,7 +278,7 @@ class Task extends Component {
             <div className="row justify-content-center">
               <div className="col-10">{this.state.fileBars}</div>
             </div>
-            <SubmitButton text="Přidat úkol" />
+            <SubmitButton text="Potvrdit" />
           </form>
         </div>
       );
@@ -295,23 +298,33 @@ class Task extends Component {
           <div className="card m-5 p-5 bg-dark border-primary text-white">
             <div className="row">
               <div className="col-12">
-                <div className="p-3 my-3 task-card">
-                  Autor:<Link></Link>
-                </div>
+                <div className="p-3 my-3 task-card">Autor:</div>
                 <div className="p-3 my-3 task-card">Termín:</div>
+                <div className="p-3 my-3 task-card">Fáze:</div>
                 <div className="p-3 my-3 task-card">
                   Popisek:
                   <br />
                   <div style={{ fontSize: "0.9em" }}>
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                    natoque penatibus et magnis dis parturient montes, nascetur
-                    ridiculus mus. Donec quam felis, ultricies nec, pellentesque
-                    eu, pretium quis, sem. Nulla consequat massa quis enim.
-                    Donec.
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                      Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+                      natoque penatibus et magnis dis parturient montes,
+                      nascetur ridiculus mus. Donec quam felis, ultricies nec,
+                      pellentesque eu, pretium quis, sem. Nulla consequat massa
+                      quis enim. Donec.
+                    </p>
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="my-5 p-3 task-card">
+              <div className="p-2">
+                <i className="fa fa-paperclip mr-2" aria-hidden="true"></i>
+                Přiložené soubory:
+              </div>
+              <br />
+              <FileBarView name="xd" type="image/jpeg" />
+              <FileBarView name="haha" type="text/plain" />
             </div>
           </div>
           <div className="row p-3 m-3 center">
@@ -326,10 +339,7 @@ class Task extends Component {
                   className="btn btn-success p-1 px-3"
                   onClick={this.editTask}
                 >
-                  <i
-                    className="fa fa-pencil-square-o p-1 m-1"
-                    aria-hidden="true"
-                  ></i>
+                  <i className="fa fa-clipboard p-1 m-1" aria-hidden="true"></i>
                   Upravit úkol
                 </button>
               </ScrollLink>

@@ -22,6 +22,7 @@ class UpdateLog extends Component {
             </div>
           </Link>
           <br />
+          {/*Odkaz na stránku úkolu*/}
           <Link to={`/tasks/${this.props.id}`} style={{ color: "white" }}>
             <div className="ml-5">{this.props.content}</div>
           </Link>

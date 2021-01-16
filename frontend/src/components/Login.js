@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import SubmitButton from "./SubmitButton";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
 import { getToken } from "../redux/actions/actions";
 import axios from "axios";
@@ -11,7 +12,6 @@ class Login extends Component {
   state = {
     email: "",
     password: "",
-    token: "",
     error: "",
   };
 
@@ -24,29 +24,28 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    axios
-      .post(
-        "/auth/login/",
-        { email: this.state.email, password: this.state.password },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        this.props.getToken(response.data.key);
-      })
-      .catch((error) => {
-        this.setState({
-          error: error,
+    if (this.state.email !== "" && this.state.password !== "") {
+      axios
+        .post(
+          "/auth/login/",
+          { email: this.state.email, password: this.state.password },
+          { withCredentials: true }
+        )
+        .then((response) => {
+          this.props.getToken(response.data.key);
+        })
+        .catch((error) => {
+          this.setState({
+            error: error,
+          });
+          console.log(error);
         });
-        console.log(error);
-        // fetch("https://jsonplaceholder.typicode.com/users/2")
-        //   .then((response) => response.json())
-        //   .then((data) => this.props.getToken(data.name));
-        // event.preventDefault();
-        // this.setState({
-        //   redirect: true,
-        // });
+      this.props.history.push("./groups");
+    } else {
+      this.setState({
+        error: "Žádné pole nemůže nesmí prázdné",
       });
-    this.props.history.push("./groups");
+    }
   };
 
   render() {
@@ -56,6 +55,7 @@ class Login extends Component {
     } else {
       borderColour = "border-primary form-control";
     }
+
     return (
       <div>
         <Navbar isLoggedIn={false} />
@@ -93,19 +93,14 @@ class Login extends Component {
                   ></input>
                 </div>
               </div>
-              <SubmitButton text="Odeslat" />
-              <div className="row m-3">
-                <div className="col-12">
-                  <button type="submit" className="btn btn-danger m-1">
-                    <i className="fa fa-google mr-2" aria-hidden="true"></i>
-                    Google
-                  </button>
-                  <button type="submit" className="btn btn-primary m-1">
-                    <i className="fa fa-facebook mr-2" aria-hidden="true"></i>
-                    Facebook
-                  </button>
+              <div className="form-group row justify-content-center">
+                <div className="col-4">
+                  <small className="form-text text-danger">
+                    {this.state.error}
+                  </small>
                 </div>
               </div>
+              <SubmitButton text="Odeslat" />
               <div className="p-3">
                 <Link to="/passwordreset" style={{ color: "white" }}>
                   Zapomněli jste heslo?
