@@ -113,15 +113,14 @@ Pro jejich používání musí být uživatel přihlášen.
    Endpoint pro zobrazení všech úkolů dané tabule. Uživatel, který na tabuli není aspoň členem, dostane místo dat 403 FORBIDDEN.
 
 - /app/board/users/<int:id_tabule>/ (GET)
-<br>
-Endpoint, který zobrazí všechny uživatele jedné tabule. Uživatelé jsou seřazeni podle rolí.
     - Návratové hodnoty:
         - first_name
         - last_name
         - bio
         - profile_pic
         - role
-  
+<br>
+Endpoint, který zobrazí všechny uživatele jedné tabule. Uživatelé jsou seřazeni podle rolí.
 
 - /app/log/<int:id_tabule>/ (GET)
     - Návratové hodnoty:
