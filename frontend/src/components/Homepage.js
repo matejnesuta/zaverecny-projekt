@@ -30,10 +30,13 @@ class Homepage extends Component {
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-6">
-                <p>
-                  Cílem tohoto projektu je vytvořit nástěnku úkolů pro více
+            <div className="row pb-4 pt-1">
+              <div
+                className="col-6"
+                style={{ borderRight: "#209cee 1px dotted" }}
+              >
+                <p className="px-5 text-justify">
+                  Cílem tohoto projektu bylo vytvořit nástěnku úkolů pro více
                   uživatelů, kde můžou mít různí uživatelé různé role a můžou
                   být přiřazováni do různých skupin. Back-end chci vytvořit v
                   Django REST, data ukládat do nějaké SQL databáze a aplikaci
@@ -46,7 +49,7 @@ class Homepage extends Component {
                 </p>
               </div>
               <div className="col-6">
-                <p>
+                <p className="px-5 text-justify">
                   Aplikace je rozdělena na 3 Docker kontejnery (front-end,
                   back-end ve formě REST API a databázový server). Pro REST API
                   je použitý framework Django REST a dj-rest-auth (dodatečný

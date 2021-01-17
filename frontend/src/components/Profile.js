@@ -5,7 +5,6 @@ import SubmitButton from "./SubmitButton";
 import ProfModal from "./modals/ProfModal";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getImage } from "../redux/actions/actions";
 import { getUser } from "../redux/actions/actions";
 import store from "../redux/store";
 import user_icon from "../images/user_icon.jpg";
@@ -55,13 +54,11 @@ class Profile extends Component {
       });
       const userObj = {
         id: store.getState().user.user.id,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        imageSrc:
+        first_name: this.state.firstName,
+        last_name: this.state.lastName,
+        profile_pic:
           this.state.imageSrc === null ? user_icon : this.state.imageSrc,
         bio: this.state.bio,
-        password1: this.state.password1,
-        password2: this.state.password2,
       };
       this.props.getUser(userObj);
     } else {

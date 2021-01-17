@@ -451,6 +451,21 @@ class Main extends Component {
           modalValue: value,
         },
       }));
+      if (this.state.removeModal.modalValue) {
+        axios.get("/board/deatail/board.id").then((res) => {
+          const users = res.data;
+          //Uložení pole komponentů UpdateLog do this.state.logs
+          const receivedData = users.map((user) => (
+            <UpdateLog
+              key={user.id}
+              id={user.id}
+              name={user.first_name}
+              content={user.last_name}
+              imgUrl={user.profile_pic}
+            />
+          ));
+        });
+      }
     }
     if (type === "changeRole") {
       this.setState((prevState) => ({
@@ -460,6 +475,19 @@ class Main extends Component {
           modalValue: value,
         },
       }));
+      axios.get("/board/deatail/board.id").then((res) => {
+        const users = res.data;
+        //Uložení pole komponentů UpdateLog do this.state.logs
+        const receivedData = users.map((user) => (
+          <UpdateLog
+            key={user.id}
+            id={user.id}
+            name={user.first_name}
+            content={user.last_name}
+            imgUrl={user.profile_pic}
+          />
+        ));
+      });
     }
   };
 
@@ -482,7 +510,6 @@ class Main extends Component {
   }
 
   render() {
-    console.log(this.state.files[0]);
     let searchResult;
     let results = [...this.state.getSearchResult];
     let searchResultRow = results.map((obj) => (
