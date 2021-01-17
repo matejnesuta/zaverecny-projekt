@@ -5,7 +5,7 @@ import SubmitButton from "./SubmitButton";
 import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
-import { getToken } from "../redux/actions/actions";
+import { getToken} from "../redux/actions/actions";
 import store from "../redux/store";
 import axios from "axios";
 
@@ -36,22 +36,9 @@ class Login extends Component {
           this.props.getToken(response.data.key);
         })
         .catch((error) => {
-          this.setState({
-            error: error,
-          });
           console.log(error);
         });
       setTimeout(() => {
-        axios
-          .get("/app/profile/", {
-            headers: {
-              Authorization: "Token " + store.getState().token.token,
-            },
-          })
-          .then((res) => {
-            console.log(res.data);
-            this.props.getUser(res.data);
-          });
         this.props.history.push("./groups");
       }, 2000);
     } else {
@@ -128,4 +115,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { getToken })(Login);
+export default connect(null, { getToken})(Login);

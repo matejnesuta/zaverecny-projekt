@@ -6,21 +6,16 @@ import user_icon from "../images/user_icon.jpg";
 
 class Navbar extends Component {
   handleLogout = () => {
-    /*axios
-    .post(
-      "/auth/logout/",
-      store.getState().token.token,
-      { withCredentials: true }
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      this.setState({
-        error: error,
+    axios
+      .post(
+        "/auth/logout/", { key: store.getState().token.token }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      console.log(error);
-    });*/
   };
 
   loggedIn() {
@@ -48,7 +43,6 @@ class Navbar extends Component {
             className="dropdown-menu dropdown-menu-right"
             aria-labelledby="navbarDropdownMenuLink"
           >
-            {/*Link bude na /users/:id*/}
             <Link
               className="dropdown-item text-dark"
               to={`/users/${store.getState().user.user.id}`}

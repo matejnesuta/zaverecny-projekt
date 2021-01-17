@@ -7,14 +7,16 @@ class SidebarRow extends Component {
 
   handleDelete = (event) => {
     event.preventDefault();
-    this.props.handleDelete(this.props.id, this.props.name);
+    let name = this.props.first_name + " " + this.props.last_name;
+    this.props.handleDelete(this.props.id, name);
   };
 
   handleChangeRole = (event) => {
     event.preventDefault();
+    let name = this.props.first_name + " " + this.props.last_name;
     this.props.handleChangeRole(
       this.props.id,
-      this.props.name,
+      name,
       this.props.role
     );
   };
@@ -22,7 +24,7 @@ class SidebarRow extends Component {
   render() {
     let roleBadge;
     switch (this.props.role) {
-      case "mod":
+      case "moderator":
         roleBadge = (
           <a className="dropdown-item" href="#">
             Role:
@@ -42,7 +44,7 @@ class SidebarRow extends Component {
           </a>
         );
         break;
-      case "user":
+      case "member":
         roleBadge = (
           <a className="dropdown-item" href="#">
             Role:
@@ -55,8 +57,7 @@ class SidebarRow extends Component {
     }
 
     let dropDown;
-    /*if (zjistit, jestli je přihlášený uživatel moderátorem nebo vlastníkem skupiny pomocí id uloženého ve storu a výpisu uživatelů (najít id uživatele v seznamu
-      uživatelů skupiny a najít si jeho roli)) {
+    if (this.props.userRole === "owner" || this.props.userRole === "moderator") {
       dropDown = (<div className="col-1">
           <button
             className="btn"
@@ -100,13 +101,13 @@ class SidebarRow extends Component {
           </div>
         </div>);
     }
-    */
+    
     return (
       <div className="row py-1">
         <div className="col-2">
           <Link to={`/users/${this.props.id}`}>
             <img
-              src={woke}
+              src={this.props.profile_pic}
               alt="profile_pic"
               className="p-1 img-responsive rounded-circle"
               width={33}
@@ -116,7 +117,7 @@ class SidebarRow extends Component {
         </div>
         <div className="col-8">
           <Link to={`/users/${this.props.id}`} style={{ color: "white" }}>
-            {this.props.name}
+            {this.props.first_name + " " + this.props.last_name}
           </Link>
         </div>
         <div className="col-1">

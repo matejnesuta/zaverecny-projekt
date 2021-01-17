@@ -12,6 +12,7 @@ import woke from "../images/woke.jpg";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
+import store from "../redux/store";
 import axios from "axios";
 
 class Main extends Component {
@@ -42,14 +43,7 @@ class Main extends Component {
         timestamp="23. 12. 2020"
       />,
     ],
-    users: [
-      { key: 1, id: 1, imgSrc: "", name: "Franta Vopršálek", role: "owner" },
-      { key: 2, id: 2, imgSrc: "", name: "Pepa Zdepa", role: "mod" },
-      { key: 3, id: 3, imgSrc: "", name: "Karel Jednička", role: "user" },
-      { key: 4, id: 4, imgSrc: "", name: "Honza Petržel", role: "user" },
-      { key: 5, id: 5, imgSrc: "", name: "Franta Brambor", role: "user" },
-      { key: 6, id: 6, imgSrc: "", name: "Péťa Trojka", role: "mod" },
-    ],
+    users: [],
     //deadline - date format
     tasks: [
       {
@@ -306,22 +300,19 @@ class Main extends Component {
   //Načtení dat z backendu
 
   componentDidMount() {
-    /*axios.get("/board/deatail/board.id").then((res) => {
+    axios.get("/app/board/users/" + this.props.match.params.id + "/", {
+      headers: { Authorization: "Token " + store.getState().token.token },
+    }).then((res) => {
       const users = res.data;
+      console.log(users);
       //Uložení pole komponentů UpdateLog do this.state.logs
       const receivedData = users.map((user) => (
-        <UpdateLog
-          key={user.id}
-          id={user.id}
-          name={user.first_name}
-          content={user.last_name}
-          imgUrl={user.profile_pic}
-        />
+        { key: user.profile.id, id: user.profile.id, first_name: user.profile.first_name, last_name: user.profile.last_name, profile_pic: user.profile.profile_pic, role: user.role }
       ));
       this.setState({
-        logs: receivedData,
+        users: receivedData,
       });
-    });*/
+    });
   }
 
   handleSearch = (event) => {
@@ -452,19 +443,14 @@ class Main extends Component {
         },
       }));
       if (this.state.removeModal.modalValue) {
-        axios.get("/board/deatail/board.id").then((res) => {
-          const users = res.data;
-          //Uložení pole komponentů UpdateLog do this.state.logs
-          const receivedData = users.map((user) => (
-            <UpdateLog
-              key={user.id}
-              id={user.id}
-              name={user.first_name}
-              content={user.last_name}
-              imgUrl={user.profile_pic}
-            />
-          ));
-        });
+        console.log(this.state.removeModal.removeUserId, parseInt(this.props.match.params.id, 10))
+        axios.delete("app/board/manage-user/", {
+          headers: { Authorization: "Token " + store.getState().token.token }
+        },
+          { profile: this.state.removeModal.removeUserId, taskboard: parseInt(this.props.match.params.id, 10) })
+          .catch((error) => {
+            console.log(error);
+          });;
       }
     }
     if (type === "changeRole") {
@@ -712,7 +698,6 @@ class Main extends Component {
 
     return (
       <div>
-        {/**/}
         <UserRemoveModal
           show={this.state.removeModal.modal}
           onHide={() => {
