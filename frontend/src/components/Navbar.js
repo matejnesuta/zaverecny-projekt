@@ -37,7 +37,7 @@ class Navbar extends Component {
             aria-expanded="false"
           >
             <img
-              src={store.getState().user.user.imageSrc}
+              src={store.getState().user.user.profile_pic}
               alt="profile_pic"
               width="40"
               height="40"
@@ -53,8 +53,8 @@ class Navbar extends Component {
               className="dropdown-item text-dark"
               to={`/users/${store.getState().user.user.id}`}
             >
-              {store.getState().user.user.firstName}{" "}
-              {store.getState().user.user.lastName}
+              {store.getState().user.user.first_name}{" "}
+              {store.getState().user.user.last_name}
             </Link>
             <div className="dropdown-divider"></div>
             <Link className="dropdown-item" to="/groups">

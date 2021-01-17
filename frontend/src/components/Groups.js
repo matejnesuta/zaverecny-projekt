@@ -16,170 +16,7 @@ import axios from "axios";
 
 class Groups extends Component {
   state = {
-    groups: [
-      <Group
-        key={1}
-        id={1}
-        name="IT1"
-        icon="floppy-o"
-        isOwner={true}
-        handleDelete={(id, name) => {
-          this.setState((prevState) => ({
-            deleteModal: {
-              ...prevState.deleteModal,
-              modal: true,
-              deleteId: id,
-              deleteName: name,
-            },
-          }));
-        }}
-        handleEdit={(id, name) => {
-          this.setState((prevState) => ({
-            editModal: {
-              ...prevState.editModal,
-              modal: true,
-              editId: id,
-              editName: name,
-            },
-          }));
-        }}
-      />,
-      <Group
-        key={2}
-        id={2}
-        name="IT2"
-        icon="grav"
-        isOwner={true}
-        handleDelete={(id, name) => {
-          this.setState((prevState) => ({
-            deleteModal: {
-              ...prevState.deleteModal,
-              modal: true,
-              deleteId: id,
-              deleteName: name,
-            },
-          }));
-        }}
-        handleEdit={(id, name) => {
-          this.setState((prevState) => ({
-            editModal: {
-              ...prevState.editModal,
-              modal: true,
-              editId: id,
-              editName: name,
-            },
-          }));
-        }}
-      />,
-      <Group
-        key={3}
-        id={3}
-        name="IT3"
-        icon="code"
-        isOwner={true}
-        handleDelete={(id, name) => {
-          this.setState((prevState) => ({
-            deleteModal: {
-              ...prevState.deleteModal,
-              modal: true,
-              deleteId: id,
-              deleteName: name,
-            },
-          }));
-        }}
-        handleEdit={(id, name) => {
-          this.setState((prevState) => ({
-            editModal: {
-              ...prevState.editModal,
-              modal: true,
-              editId: id,
-              editName: name,
-            },
-          }));
-        }}
-      />,
-      <Group
-        key={4}
-        id={4}
-        name="IT4 SIT"
-        icon="camera-retro"
-        isOwner={true}
-        handleDelete={(id, name) => {
-          this.setState((prevState) => ({
-            deleteModal: {
-              ...prevState.deleteModal,
-              modal: true,
-              deleteId: id,
-              deleteName: name,
-            },
-          }));
-        }}
-        handleEdit={(id, name) => {
-          this.setState((prevState) => ({
-            editModal: {
-              ...prevState.editModal,
-              modal: true,
-              editId: id,
-              editName: name,
-            },
-          }));
-        }}
-      />,
-      <Group
-        key={5}
-        id={5}
-        name="IT4 PRG"
-        icon="code"
-        isOwner={true}
-        handleDelete={(id, name) => {
-          this.setState((prevState) => ({
-            deleteModal: {
-              ...prevState.deleteModal,
-              modal: true,
-              deleteId: id,
-              deleteName: name,
-            },
-          }));
-        }}
-        handleEdit={(id, name) => {
-          this.setState((prevState) => ({
-            editModal: {
-              ...prevState.editModal,
-              modal: true,
-              editId: id,
-              editName: name,
-            },
-          }));
-        }}
-      />,
-      <Group
-        key={6}
-        id={6}
-        name="IT4"
-        icon="wheelchair-alt"
-        isOwner={false}
-        handleDelete={(id, name) => {
-          this.setState((prevState) => ({
-            deleteModal: {
-              ...prevState.deleteModal,
-              modal: true,
-              deleteId: id,
-              deleteName: name,
-            },
-          }));
-        }}
-        handleEdit={(id, name) => {
-          this.setState((prevState) => ({
-            editModal: {
-              ...prevState.editModal,
-              modal: true,
-              editId: id,
-              editName: name,
-            },
-          }));
-        }}
-      />,
-    ],
+      groups: [],
     createGroup: false,
     name: "",
     icon: "",
@@ -207,26 +44,17 @@ class Groups extends Component {
 
   //Načtení skupin uživatele
   componentDidMount() {
-    /*axios.get("/app/board/").then((res) => {
+      console.log(store.getState());
+    axios.get("/app/board/", {headers: {Authorization: "Token " + store.getState().token.token}}).then((res) => {
       const groups = res.data;
       //Uložení pole komponentů Group do this.state.groups
       const receivedData = groups.map((group) => (
-        <Group key={group.id} id={group.id} name={group.name} icon={group.icon}/>
+        <Group key={group.id} id={group.id} name={group.name} />
       ));
       this.setState({
-        logs: receivedData,
+        groups: receivedData,
       });
     });
-    console.log(store.getState().token.token);
-    axios.get("/app/profile/", {headers: {
-        token: store.getState().token.token
-        }
-        }).then((res) => {
-        this.props.getUser(res.data);
-    })*/
-    // fetch("https://jsonplaceholder.typicode.com/users/2")
-    //   .then((response) => response.json())
-    //   .then((data) => this.props.getUser(data));
   }
 
   handleOpenForm = () => {

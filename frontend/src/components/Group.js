@@ -54,7 +54,7 @@ class Group extends Component {
         <br />
         <Link to={`/groups/${this.props.id}`} style={{ color: "white" }}>
           <div>
-            <i className={iconType}></i>
+            {/*<i className={iconType}></i>*/}
           </div>
           <br />
           <div className="mt-2 pb-2 group-name">{this.props.name}</div>

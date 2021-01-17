@@ -7,6 +7,7 @@ import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
 import { getToken } from "../redux/actions/actions";
 import axios from "axios";
+import store from "../redux/store";
 
 class Login extends Component {
   state = {
@@ -40,7 +41,16 @@ class Login extends Component {
           });
           console.log(error);
         });
-      this.props.history.push("./groups");
+      setTimeout(() => {
+             axios.get("/app/profile/", {headers: {
+        Authorization: "Token " + store.getState().token.token
+        }
+        }).then((res) => {
+            console.log(res.data);
+        this.props.getUser(res.data);
+    });
+            this.props.history.push("./groups");
+          }, 3000);
     } else {
       this.setState({
         error: "Žádné pole nemůže nesmí prázdné",
