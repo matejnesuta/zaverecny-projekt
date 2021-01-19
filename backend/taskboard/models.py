@@ -64,6 +64,12 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Taskboard(models.Model):
     name = models.CharField(max_length=50, blank=False, null=False, default="Tabule", verbose_name="Name")
+    icon = models.CharField(max_length=20, blank=False, null=False,  verbose_name="Icon", 
+                            choices=(('grav', 'grav'),
+                                      ('wheelchair-alt', 'wheelchair-alt'),
+                                      ('camera-retro', 'camera-retro'),
+                                      ('code', 'code'),
+                                      ('floppy-o', 'floppy-o')),)
 
     class Meta:
         ordering = ["name"]
