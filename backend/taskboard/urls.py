@@ -1,5 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
+from .search import *
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+books = router.register(r'profile',
+                        ProfileDocumentView,
+                        basename='profiledocument')
 
 urlpatterns = [
     path('profile/detail/<int:pk>/', get_profile_detail),
@@ -17,6 +24,6 @@ urlpatterns = [
     path('task/attachment/<int:pk>/', attachment),
     path('task/comments/<int:pk>/', comments),
     path('task/comments/delete/<int:pk>/', delete_comment),
-    path('users/search/', search_for_users),
+    path('users/search/', include(router.urls)),
     path('users/invite/', invite),
 ]

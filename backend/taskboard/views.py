@@ -7,8 +7,7 @@ from accounts.models import User
 from .models import Profile, Taskboard, Membership, Task, Log, Comment
 from .serializers import *
 from django.db.models import Q
-from functools import reduce
-from .documents import ProfileDocument
+
 
 
 # Endpoint pro zobrazení profilu ostatních uživatelů.
