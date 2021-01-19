@@ -5,6 +5,7 @@ import LogComment from "./LogComment";
 import SubmitButton from "./SubmitButton";
 import FileBar from "./FileBar";
 import FileBarView from "./FileBarView";
+import TaskDeleteModal from "./modals/TaskDeleteModal";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
@@ -41,6 +42,8 @@ class Task extends Component {
     files: [],
     fileId: 1,
     fileBars: [],
+    modal: false,
+    modalValue: null,
   };
 
   //Nahrání údajů o úkolu a komentářů
@@ -50,6 +53,12 @@ class Task extends Component {
   editTask = () => {
     this.setState({
       editTask: true,
+    });
+  };
+
+  handleDeleteTask = () => {
+    this.setState({
+      modal: true,
     });
   };
 
@@ -288,6 +297,20 @@ class Task extends Component {
 
     return (
       <div>
+        <TaskDeleteModal
+          show={this.state.modal}
+          onHide={() => {
+            this.setState({
+              modal: false,
+            });
+          }}
+          value={(value) => {
+            this.setState({
+              modalValue: value,
+              modal: false,
+            });
+          }}
+        />
         <Navbar isLoggedIn={true} />
         <div className="container">
           <div className="row center p-3 m-5">
@@ -328,7 +351,7 @@ class Task extends Component {
             </div>
           </div>
           <div className="row p-3 m-3 center">
-            <div className="col-12">
+            <div className="col-6">
               <ScrollLink
                 activeClass="active"
                 to="editTask"
@@ -344,9 +367,18 @@ class Task extends Component {
                 </button>
               </ScrollLink>
             </div>
+            <div className="col-6">
+              <button
+                className="btn btn-danger p-1 px-3"
+                onClick={this.handleDeleteTask}
+              >
+                <i className="fa fa-times p-1 m-1" aria-hidden="true"></i>
+                Smazat úkol
+              </button>
+            </div>
           </div>
           <div name="editTask">{editTask}</div>
-          <div className="row center p-2">
+          <div className="row center p-2 pt-5">
             <div className="col-12">
               <h3>Komentáře</h3>
             </div>

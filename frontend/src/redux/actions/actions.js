@@ -1,4 +1,4 @@
-import { GET_TOKEN, GET_USER} from "./types";
+import { GET_TOKEN, GET_USER } from "./types";
 
 //Akce, sloužící k nahrání přihlašovacího tokenu do storu
 export const getToken = (token) => ({
@@ -11,4 +11,3 @@ export const getUser = (user) => ({
   type: GET_USER,
   payload: user,
 });
-

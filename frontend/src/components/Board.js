@@ -195,7 +195,11 @@ class Board extends Component {
                 </tr>
               </thead>
               <tbody>
-                <BoardTable data={sortedRows} year={2020} month={12} />
+                <BoardTable
+                  data={sortedRows}
+                  year={this.state.year}
+                  month={this.state.month}
+                />
               </tbody>
             </table>
           </div>

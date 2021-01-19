@@ -16,8 +16,7 @@ import axios from "axios";
 
 class Groups extends Component {
   state = {
-    groups: [
-    ],
+    groups: [],
     createGroup: false,
     name: "",
     icon: "",
@@ -54,6 +53,7 @@ class Groups extends Component {
       .then((res) => {
         this.props.getUser(res.data);
       });
+
     axios
       .get("/app/board/", {
         headers: { Authorization: "Token " + store.getState().token.token },
@@ -105,7 +105,7 @@ class Groups extends Component {
     });
   };
 
-  handleAddUser = () => { };
+  handleAddUser = () => {};
 
   getModalValue = (value, type) => {
     if (type === "delete") {

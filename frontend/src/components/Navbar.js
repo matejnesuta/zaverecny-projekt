@@ -1,15 +1,13 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import store from "../redux/store";
 import user_icon from "../images/user_icon.jpg";
 
 class Navbar extends Component {
   handleLogout = () => {
     axios
-      .post(
-        "/auth/logout/", { key: store.getState().token.token }
-      )
+      .post("/auth/logout/", { key: store.getState().token.token })
       .then((response) => {
         console.log(response);
       })
@@ -60,13 +58,11 @@ class Navbar extends Component {
               profil
             </Link>
             <div className="dropdown-divider"></div>
-            <Link
-              className="dropdown-item"
-              to="/login"
-              onClick={this.handleLogout}
-            >
-              <i className="fa fa-sign-out mx-1" aria-hidden="true"></i>
-              Odhlásit se
+            <Link to="/login">
+              <button className="dropdown-item" onClick={this.handleLogout}>
+                <i className="fa fa-sign-out mx-1" aria-hidden="true"></i>
+                Odhlásit se
+              </button>
             </Link>
           </div>
         </li>

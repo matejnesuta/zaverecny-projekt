@@ -300,19 +300,26 @@ class Main extends Component {
   //Načtení dat z backendu
 
   componentDidMount() {
-    axios.get("/app/board/users/" + this.props.match.params.id + "/", {
-      headers: { Authorization: "Token " + store.getState().token.token },
-    }).then((res) => {
-      const users = res.data;
-      console.log(users);
-      //Uložení pole komponentů UpdateLog do this.state.logs
-      const receivedData = users.map((user) => (
-        { key: user.profile.id, id: user.profile.id, first_name: user.profile.first_name, last_name: user.profile.last_name, profile_pic: user.profile.profile_pic, role: user.role }
-      ));
-      this.setState({
-        users: receivedData,
+    axios
+      .get("/app/board/users/" + this.props.match.params.id + "/", {
+        headers: { Authorization: "Token " + store.getState().token.token },
+      })
+      .then((res) => {
+        const users = res.data;
+        console.log(users);
+        //Uložení pole komponentů UpdateLog do this.state.logs
+        const receivedData = users.map((user) => ({
+          key: user.profile.id,
+          id: user.profile.id,
+          first_name: user.profile.first_name,
+          last_name: user.profile.last_name,
+          profile_pic: user.profile.profile_pic,
+          role: user.role,
+        }));
+        this.setState({
+          users: receivedData,
+        });
       });
-    });
   }
 
   handleSearch = (event) => {
@@ -433,6 +440,29 @@ class Main extends Component {
     });
   }
 
+  removeUser() {
+    if (this.state.removeModal.modalValue) {
+      console.log(
+        this.state.removeModal.removeUserId,
+        parseInt(this.props.match.params.id, 10)
+      );
+      axios
+        .delete(
+          "app/board/manage-user/",
+          {
+            headers: { Authorization: "Token " + store.getState().token.token },
+          },
+          {
+            profile: this.state.removeModal.removeUserId,
+            taskboard: parseInt(this.props.match.params.id, 10),
+          }
+        )
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
   getModalValue = (value, type) => {
     if (type === "remove") {
       this.setState((prevState) => ({
@@ -442,16 +472,7 @@ class Main extends Component {
           modalValue: value,
         },
       }));
-      if (this.state.removeModal.modalValue) {
-        console.log(this.state.removeModal.removeUserId, parseInt(this.props.match.params.id, 10))
-        axios.delete("app/board/manage-user/", {
-          headers: { Authorization: "Token " + store.getState().token.token }
-        },
-          { profile: this.state.removeModal.removeUserId, taskboard: parseInt(this.props.match.params.id, 10) })
-          .catch((error) => {
-            console.log(error);
-          });;
-      }
+      this.removeUser();
     }
     if (type === "changeRole") {
       this.setState((prevState) => ({

@@ -18,29 +18,16 @@ class Group extends Component {
     let iconType = "fa fa-" + this.props.icon + " fa-5x";
     let deleteButton;
     let editButton;
-    if (this.props.isOwner) {
-      deleteButton = (
-        <button className="btn" onClick={this.handleDelete}>
-          <i className="fa fa-trash fa-2x" aria-hidden="true"></i>
-        </button>
-      );
-      editButton = (
-        <button className="btn mt-1" onClick={this.handleEdit}>
-          <i className="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-        </button>
-      );
-    } else {
-      deleteButton = (
-        <button className="btn" disabled>
-          <i className="fa fa-trash fa-2x" aria-hidden="true"></i>
-        </button>
-      );
-      editButton = (
-        <button className="btn mt-1" disabled>
-          <i className="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-        </button>
-      );
-    }
+    deleteButton = (
+      <button className="btn" disabled>
+        <i className="fa fa-trash fa-2x" aria-hidden="true"></i>
+      </button>
+    );
+    editButton = (
+      <button className="btn mt-1" disabled>
+        <i className="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+      </button>
+    );
 
     return (
       <div

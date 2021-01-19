@@ -5,8 +5,7 @@ import SubmitButton from "./SubmitButton";
 import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
-import { getToken} from "../redux/actions/actions";
-import store from "../redux/store";
+import { getToken } from "../redux/actions/actions";
 import axios from "axios";
 
 class Login extends Component {
@@ -115,4 +114,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { getToken})(Login);
+export default connect(null, { getToken })(Login);
