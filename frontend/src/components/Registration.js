@@ -143,8 +143,7 @@ class Registration extends Component {
               <div className="form-group row justify-content-center">
                 <div className="col-4">
                   <small className="form-text">
-                    Heslo musí obsahovat nejméně 8 znaků, alespoň 1 číslo a
-                    alespoň 1 speciální znak.
+                    Heslo musí obsahovat nejméně 8 znaků
                   </small>
                 </div>
               </div>

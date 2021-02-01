@@ -10,28 +10,12 @@ import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 import axios from "axios";
-import woke from "../images/woke.jpg";
+import store from "../redux/store";
 
 class Task extends Component {
   state = {
-    comments: [
-      <LogComment
-        key={1}
-        id={1}
-        parentId={1}
-        imgSrc={woke}
-        name="Šustr"
-        content="LOL"
-      />,
-      <LogComment
-        key={2}
-        id={2}
-        parentId={1}
-        imgSrc={woke}
-        name="Honza"
-        content="XD"
-      />,
-    ],
+    task: {},
+    comments: [],
     editTask: false,
     taskName: "",
     taskDeadlineDate: "",
@@ -48,7 +32,29 @@ class Task extends Component {
 
   //Nahrání údajů o úkolu a komentářů
 
-  componentDidMount() {}
+  componentDidMount() {
+    axios.get("/app/task/" + this.props.match.params.id + "/", {
+      headers: { Authorization: "Token " + store.getState().token.token },
+    }).then((res) => {
+      const task = res.data;
+      console.log(task);
+      this.setState({
+        task: task
+      });
+    })
+    axios.get("/app/task/comments/" + this.props.match.params.id + "/", {
+      headers: { Authorization: "Token " + store.getState().token.token }
+    })
+      .then((res) => {
+        const comments = res.data;
+        const receivedData = comments.map((comment) => (
+          <LogComment key={comment.id} id={comment.id} author={comment.author} content={comment.text} timestamp={comment.time} />
+        ));
+        this.setState({
+          comments: receivedData
+        });
+      })
+  }
 
   editTask = () => {
     this.setState({
@@ -157,6 +163,12 @@ class Task extends Component {
       files: filesArr,
       fileBars: fileBarsArr,
     });
+  }
+
+  dateChange(input) {
+    let splitDate = input.split("-");
+    let finalDate = splitDate[2] + ". " + splitDate[1] + ". " + splitDate[0];
+    return finalDate;
   }
 
   render() {
@@ -295,6 +307,27 @@ class Task extends Component {
       editTask = "";
     }
 
+    let stageName;
+    let index;
+    const stages = [
+      "not_started",
+      "in_progress",
+      "on_hold",
+      "almost_finished",
+      "done",
+    ];
+
+    const stageNames = [
+      "Neodstartováno",
+      "V průběhu",
+      "Pozastaveno",
+      "Dokončuje se",
+      "Hotovo",
+    ];
+
+    index = stages.indexOf(this.state.task.stage);
+    stageName = stageNames[index];
+
     return (
       <div>
         <TaskDeleteModal
@@ -315,26 +348,21 @@ class Task extends Component {
         <div className="container">
           <div className="row center p-3 m-5">
             <div className="col-12">
-              <h2>Task name</h2>
+              <h2>{this.state.task.title}</h2>
             </div>
           </div>
           <div className="card m-5 p-5 bg-dark border-primary text-white">
             <div className="row">
               <div className="col-12">
-                <div className="p-3 my-3 task-card">Autor:</div>
-                <div className="p-3 my-3 task-card">Termín:</div>
-                <div className="p-3 my-3 task-card">Fáze:</div>
+                <div className="p-3 my-3 task-card">Autor: <Link to={`/users/${this.state.task.author.id}`} style={{ color: "white" }}>{this.state.task.author.first_name}{" "}{this.state.task.author.last_name}</Link></div>
+                <div className="p-3 my-3 task-card">Termín: {this.dateChange(this.state.task.deadline)}</div>
+                <div className="p-3 my-3 task-card">Fáze: {stageName}</div>
                 <div className="p-3 my-3 task-card">
                   Popisek:
                   <br />
                   <div style={{ fontSize: "0.9em" }}>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                      Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                      natoque penatibus et magnis dis parturient montes,
-                      nascetur ridiculus mus. Donec quam felis, ultricies nec,
-                      pellentesque eu, pretium quis, sem. Nulla consequat massa
-                      quis enim. Donec.
+                      {this.state.task.description}
                     </p>
                   </div>
                 </div>

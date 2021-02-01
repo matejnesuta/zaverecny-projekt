@@ -53,6 +53,19 @@ def get_boards(request):
         return Response(serializer.data)
 
 
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+def current_board(request, pk):
+    try:
+        board = Taskboard.objects.get(pk=pk)
+    except Taskboard.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if Membership.objects.values("profile").filter(taskboard=board, profile=request.user.pk).count() != 0:
+        serializer = TaskboardSerializer(board)
+        return Response(serializer.data)
+    return Response(status=status.HTTP_403_FORBIDDEN)
+
+
 # Endpoint, který vrátí profily členů jedné tabule seřazené podle rolí.
 @api_view(['GET', ])
 @permission_classes((IsAuthenticated,))

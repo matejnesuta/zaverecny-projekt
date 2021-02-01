@@ -9,7 +9,6 @@ class Navbar extends Component {
     axios
       .post("/auth/logout/", { key: store.getState().token.token })
       .then((response) => {
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -17,9 +16,55 @@ class Navbar extends Component {
   };
 
   loggedIn() {
+    
+  }
+
+  render() {
+    let navbar;
+
     if (this.props.isLoggedIn) {
-      return (
-        <li className="nav-item dropdown mx-2">
+      navbar = (
+        <nav className="navbar navbar-expand-md sticky-top">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item mx-2">
+              <a
+                className="nav-link"
+                href="https://github.com/martindzida/zaverecny_projekt"
+              >
+                Repositář projektu
+              </a>
+            </li>
+            <li className="nav-item dropdown mx-2">
+              <a
+                className="nav-link dropdown-toggle"
+                href="/#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Github's
+              </a>
+              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a
+                  className="dropdown-item"
+                  href="https://github.com/martindzida"
+                >
+                  <i className="fa fa-github mr-3" aria-hidden="true"></i>
+                  Můj
+                </a>
+                <a
+                  className="dropdown-item"
+                  href="https://github.com/matejnesuta"
+                >
+                  <i className="fa fa-github mr-3" aria-hidden="true"></i>
+                  Matějův
+                </a>
+              </div>
+            </li>
+            <li className="nav-item dropdown mx-2">
           <a
             className="nav-link dropdown-toggle"
             href="/"
@@ -66,22 +111,14 @@ class Navbar extends Component {
             </Link>
           </div>
         </li>
+          </ul>
+        </div>
+      </nav>
+        
       );
     } else {
-      return (
-        <li className="nav-item active mx-2">
-          <Link className="nav-link" to="/" style={{ color: "white" }}>
-            <i className="fa fa-home fa-2x" aria-hidden="true"></i>
-            <span className="sr-only">(current)</span>
-          </Link>
-        </li>
-      );
-    }
-  }
-
-  render() {
-    return (
-      <nav className="navbar navbar-expand-md sticky-top">
+      navbar = (
+        <nav className="navbar navbar-expand-md sticky-top">
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item mx-2">
@@ -131,11 +168,20 @@ class Navbar extends Component {
                 Přihlásit se
               </Link>
             </li>
-            {this.loggedIn()}
+            <li className="nav-item active mx-2">
+          <Link className="nav-link" to="/" style={{ color: "white" }}>
+            <i className="fa fa-home fa-2x" aria-hidden="true"></i>
+            <span className="sr-only">(current)</span>
+          </Link>
+        </li>
           </ul>
         </div>
       </nav>
-    );
+        
+      );
+    }
+
+    return navbar;
   }
 }
 

@@ -8,7 +8,6 @@ class UpdateLog extends Component {
     return (
       <div className="row logs m-1 mt-2 bg-dark text-white border-light">
         <div className="col-12">
-          {/*Důležité! Matěj musí přidat id assignmentu nebo tak něco*/}
           <Link to={`/users/${this.props.id}`} style={{ color: "white" }}>
             <div className="logs-header">
               <img
@@ -18,13 +17,13 @@ class UpdateLog extends Component {
                 width="40"
                 height="40"
               />
-              {this.props.name}
+              {this.props.author}
             </div>
           </Link>
           <br />
           {/*Odkaz na stránku úkolu*/}
           <Link to={`/tasks/${this.props.id}`} style={{ color: "white" }}>
-            <div className="ml-5">{this.props.content}</div>
+            <div className="ml-5">{this.props.author} přidal úkol {this.props.taskName}.</div>
           </Link>
         </div>
         <br />

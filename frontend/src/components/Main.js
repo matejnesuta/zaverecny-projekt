@@ -17,252 +17,36 @@ import axios from "axios";
 
 class Main extends Component {
   state = {
+    boardName: "",
     logs: [
       <UpdateLog
         key={1}
         id={1}
         imgSrc={woke}
-        name="Prokop"
-        content="Dobrý den"
+        author="Prokop Buben"
+        taskName="Dobrý den"
         timestamp="21. 12. 2020"
       />,
       <UpdateLog
         key={5}
         id={5}
         imgSrc={woke}
-        name="Buben"
-        content="Hezký večer"
+        author="Patrik Love"
+        taskName="Hezký večer"
         timestamp="22. 12. 2020"
       />,
       <UpdateLog
         key={7}
         id={7}
         imgSrc={woke}
-        name="Lukáš"
-        content="GLHF"
+        author="Lukáš Šustr"
+        taskName="Dobré ráno"
         timestamp="23. 12. 2020"
       />,
     ],
     users: [],
     //deadline - date format
-    tasks: [
-      {
-        id: 1,
-        author: "Franta Brambor",
-        title: "Velký špatný",
-        created: "2020-12-29 22:00:00",
-        description: "Hahahaha",
-        deadline: "",
-        stage: "in_progress",
-      },
-      {
-        id: 2,
-        author: "Franta Brambor",
-        title: "Hodně špatný",
-        created: "2020-12-29 22:00:00",
-        description: "SADGE",
-        deadline: "",
-        stage: "done",
-      },
-      {
-        id: 3,
-        author: "Franta Brambor",
-        title: "Mega špatný",
-        created: "2020-12-29 22:00:00",
-        description: "RAGEY",
-        deadline: "",
-        stage: "in_progress",
-      },
-      {
-        id: 4,
-        author: "Franta Brambor",
-        title: "Velký špatný",
-        created: "2020-12-29 22:00:00",
-        description: "Hahahaha",
-        deadline: "",
-        stage: "done",
-      },
-      {
-        id: 5,
-        author: "Franta Brambor",
-        title: "Hodně špatný",
-        created: "2020-12-29 22:00:00",
-        description: "SADGE",
-        deadline: "",
-        stage: "almost_finished",
-      },
-      {
-        id: 6,
-        author: "Franta Brambor",
-        title: "Mega špatný",
-        created: "2020-12-29 22:00:00",
-        description: "RAGEY",
-        deadline: "",
-        stage: "in_progress",
-      },
-      {
-        id: 7,
-        author: "Franta Brambor",
-        title: "Velký špatný",
-        created: "2020-12-29 22:00:00",
-        description: "Hahahaha",
-        deadline: "",
-        stage: "in_progress",
-      },
-      {
-        id: 8,
-        author: "Franta Brambor",
-        title: "Hodně špatný",
-        created: "2020-12-29 22:00:00",
-        description: "SADGE",
-        deadline: "",
-        stage: "on_hold",
-      },
-      {
-        id: 9,
-        author: "Franta Brambor",
-        title: "Mega špatný",
-        created: "2020-12-29 22:00:00",
-        description: "RAGEY",
-        deadline: "",
-        stage: "in_progress",
-      },
-      {
-        id: 10,
-        author: "Franta Brambor",
-        title: "Velký špatný",
-        created: "2020-12-29 22:00:00",
-        description: "Hahahaha",
-        deadline: "",
-        stage: "done",
-      },
-      {
-        id: 11,
-        author: "Franta Brambor",
-        title: "Hodně špatný",
-        created: "2020-12-29 22:00:00",
-        description: "SADGE",
-        deadline: "",
-        stage: "in_progress",
-      },
-      {
-        id: 12,
-        author: "Franta Brambor",
-        title: "Mega špatný",
-        created: "2020-12-29 22:00:00",
-        description: "RAGEY",
-        deadline: "",
-        stage: "done",
-      },
-      {
-        id: 13,
-        author: "Franta Brambor",
-        title: "Velký špatný",
-        created: "2020-12-29 22:00:00",
-        description: "Hahahaha",
-        deadline: "",
-        stage: "in_progress",
-      },
-      {
-        id: 14,
-        author: "Franta Brambor",
-        title: "Hodně špatný",
-        created: "2020-12-29 22:00:00",
-        description: "SADGE",
-        deadline: "",
-        stage: "done",
-      },
-      {
-        id: 15,
-        author: "Franta Brambor",
-        title: "Mega špatný",
-        created: "2020-12-29 22:00:00",
-        description: "RAGEY",
-        deadline: "",
-        stage: "on_hold",
-      },
-      {
-        id: 16,
-        author: "Franta Brambor",
-        title: "Velký špatný",
-        created: "2020-12-29 22:00:00",
-        description: "Hahahaha",
-        deadline: "",
-        stage: "done",
-      },
-      {
-        id: 17,
-        author: "Franta Brambor",
-        title: "Hodně špatný",
-        created: "2020-12-29 22:00:00",
-        description: "SADGE",
-        deadline: "",
-        stage: "almost_finished",
-      },
-      {
-        id: 18,
-        author: "Franta Brambor",
-        title: "Mega špatný",
-        created: "2020-12-29 22:00:00",
-        description: "RAGEY",
-        deadline: "",
-        stage: "in_progress",
-      },
-      {
-        id: 19,
-        author: "Franta Brambor",
-        title: "Velký špatný",
-        created: "2020-12-29 22:00:00",
-        description: "Hahahaha",
-        deadline: "",
-        stage: "in_progress",
-      },
-      {
-        id: 20,
-        author: "Franta Brambor",
-        title: "Hodně špatný",
-        created: "2020-12-29 22:00:00",
-        description: "SADGE",
-        deadline: "",
-        stage: "on_hold",
-      },
-      {
-        id: 21,
-        author: "Franta Brambor",
-        title: "Mega špatný",
-        created: "2020-12-29 22:00:00",
-        description: "RAGEY",
-        deadline: "",
-        stage: "almost_finished",
-      },
-      {
-        id: 22,
-        author: "Franta Brambor",
-        title: "Velký špatný",
-        created: "2020-12-29 22:00:00",
-        description: "Hahahaha",
-        deadline: "",
-        stage: "done",
-      },
-      {
-        id: 23,
-        author: "Franta Brambor",
-        title: "Hodně špatný",
-        created: "2020-12-29 22:00:00",
-        description: "SADGE",
-        deadline: "",
-        stage: "done",
-      },
-      {
-        id: 24,
-        author: "Franta Brambor",
-        title: "Mega špatný",
-        created: "2020-12-29 22:00:00",
-        description: "RAGEY",
-        deadline: "",
-        stage: "not_started",
-      },
-    ],
+    tasks: [],
     removeModal: {
       modal: false,
       modalValue: null,
@@ -292,8 +76,7 @@ class Main extends Component {
     fileUploadInfo: "Max. velikost souboru: 10MB",
     addTask: false,
     taskName: "",
-    taskDeadlineDate: "",
-    taskDeadlineTime: "",
+    taskDeadline: "",
     taskComment: "",
   };
 
@@ -306,7 +89,6 @@ class Main extends Component {
       })
       .then((res) => {
         const users = res.data;
-        console.log(users);
         //Uložení pole komponentů UpdateLog do this.state.logs
         const receivedData = users.map((user) => ({
           key: user.profile.id,
@@ -320,6 +102,34 @@ class Main extends Component {
           users: receivedData,
         });
       });
+
+    axios.get("/app/board/current/" + this.props.match.params.id + "/",
+      { headers: { Authorization: "Token " + store.getState().token.token }, })
+      .then((res) => {
+        const boardName = res.data.name;
+        this.setState({
+          boardName: boardName
+        });
+      })
+
+    axios.get("/app/board/detail/" + this.props.match.params.id + "/",
+      { headers: { Authorization: "Token " + store.getState().token.token }, })
+      .then((res) => {
+        const tasks = res.data;
+        const receivedData = tasks.map((task) => ({
+          key: task.id,
+          id: task.id,
+          authorId: task.author.id,
+          author: task.author.first_name + " " + task.author.last_name,
+          title: task.title,
+          description: task.description,
+          deadline: task.deadline,
+          stage: task.stage,
+        }));
+        this.setState({
+          tasks: receivedData
+        });
+      })
   }
 
   handleSearch = (event) => {
@@ -355,7 +165,10 @@ class Main extends Component {
 
   handleSubmitAddTask = (event) => {
     event.preventDefault();
-    //axios.stuff
+    axios.post("/app/task/create/", { headers: { Authorization: "Token " + store.getState().token.token } },
+      {
+        title: this.state.taskName, deadline: this.state.taskDeadline, description: this.state.taskComment, stage: "in_progress", taskboard: this.props.match.params.id
+      }).then((res) => { console.log(res) });
   };
 
   handleAddUserForm = () => {
@@ -517,6 +330,7 @@ class Main extends Component {
   }
 
   render() {
+    console.log(this.state.tasks);
     let searchResult;
     let results = [...this.state.getSearchResult];
     let searchResultRow = results.map((obj) => (
@@ -655,22 +469,13 @@ class Main extends Component {
                   Termín
                 </label>
               </div>
-              <div className="col-5 input-group">
+              <div className="col-8 input-group">
                 <input
                   type="date"
-                  name="taskDeadlineDate"
+                  name="taskDeadline"
                   className="border-primary form-control"
-                  value={this.state.taskDeadlineDate}
+                  value={this.state.taskDeadline}
                   min={min_date_deadline}
-                  onChange={this.handleChange}
-                ></input>
-              </div>
-              <div className="col-3 input-group">
-                <input
-                  type="time"
-                  name="taskDeadlineTime"
-                  className="border-primary form-control"
-                  value={this.state.taskDeadlineTime}
                   onChange={this.handleChange}
                 ></input>
               </div>
@@ -778,7 +583,7 @@ class Main extends Component {
             <div className="row center p-3 m-5">
               <div className="col-12">
                 {/*Název boardu*/}
-                <h1>Tabule</h1>
+                <h1>{this.state.boardName}</h1>
               </div>
             </div>
             <Board tasks={this.state.tasks} />

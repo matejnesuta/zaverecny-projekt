@@ -12,8 +12,8 @@ import axios from "axios";
 
 class Profile extends Component {
   state = {
-    firstName: store.getState().user.user.firstName,
-    lastName: store.getState().user.user.lastName,
+    firstName: store.getState().user.user.first_name,
+    lastName: store.getState().user.user.last_name,
     bio: "",
     imageSrc: null,
     imageName: "Nahrát obrázek",
@@ -31,17 +31,15 @@ class Profile extends Component {
       this.state.password1.localeCompare(this.state.password2) === 0 &&
       (this.state.firstName !== "" || this.state.lastName !== "")
     ) {
+      console.log(store.getState().token.token);
       axios
-        .patch(
-          "/auth/password/change",
+        .put(
+          "/app/profile/", { headers: { Authorization: "Token " + store.getState().token.token } },
           {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             bio: this.state.bio,
-            new_password1: this.state.password1,
-            new_password2: this.state.password2,
           },
-          { withCredentials: true }
         )
         .then((response) => {
           console.log(response);
@@ -57,7 +55,7 @@ class Profile extends Component {
         first_name: this.state.firstName,
         last_name: this.state.lastName,
         profile_pic:
-          this.state.imageSrc === null ? user_icon : this.state.imageSrc,
+          this.state.imageSrc === null || this.state.imageSrc === false ? store.getState().user.user.profile_pic  : this.state.imageSrc,
         bio: this.state.bio,
       };
       this.props.getUser(userObj);
@@ -73,6 +71,15 @@ class Profile extends Component {
         });
       }
     }
+    
+    axios.post("/auth/password/change/",
+      { headers: { Authorization: "Token " + store.getState().token.token } },
+      { old_password: this.state.old_password, new_password1: this.state.password1, new_password2: this.state.password2 })
+      .then((res) => {
+        console.log(res);
+      }).catch((error) => {
+        console.log(error);
+      });
   };
 
   //Metoda pro ukládání hodnoty ze vstupu

@@ -69,14 +69,14 @@ class Board extends Component {
     //Práce s aktuálním datem
     let cur_date = new Date();
     let cur_month = cur_date.getMonth();
-    let max_year = cur_date.getFullYear();
+    let max_year = cur_date.getFullYear() + 20;
     if (this.state.monthIndex === 11 && this.state.year < max_year) {
       this.setState({
         monthIndex: 0,
         year: this.state.year + 1,
       });
     } else {
-      if (this.state.year < 2020) {
+      if (this.state.year < max_year) {
         this.setState({
           monthIndex: this.state.monthIndex + 1,
         });

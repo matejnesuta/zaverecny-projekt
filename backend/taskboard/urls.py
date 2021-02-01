@@ -11,6 +11,7 @@ books = router.register(r'profile',
 urlpatterns = [
     path('profile/detail/<int:pk>/', get_profile_detail),
     path('profile/', profile),
+    path("board/current/<int:pk>/", current_board),
     path('board/', get_boards),
     path('board/<int:pk>/', board),
     path('board/create/', create_board),

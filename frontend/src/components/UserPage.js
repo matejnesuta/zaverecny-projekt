@@ -2,14 +2,25 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { RouteComponentProps } from "react-router";
-import woke from "../images/woke.jpg";
+import axios from "axios";
 import store from "../redux/store";
 
 class UserPage extends Component {
-  state = {};
+  state = {
+    user: {}
+  };
 
   // Nahrání údajů o uživateli podle id (jméno, příjmení, obrázek, popisek atd.)
-  //componentDidMount() {}
+  componentDidMount() {
+    axios.get("/app/profile/detail/" + this.props.match.params.id + "/", 
+    { headers: { Authorization: "Token " + store.getState().token.token } })
+    .then((res) => {
+      const user = res.data;
+      this.setState({
+        user : user
+      });
+    })
+  }
 
   //Testování s daty ze storu! Normálně se budou získávat requestem
 
@@ -22,8 +33,8 @@ class UserPage extends Component {
             <div className="row p-5 m-2">
               <div className="col-4">
                 <img
-                  src={store.getState().user.user.imageSrc}
-                  alt="nefunguje to xd"
+                  src={this.state.user.profile_pic}
+                  alt="profile_pic"
                   width={120}
                   height={120}
                   className="rounded-circle"
@@ -31,8 +42,8 @@ class UserPage extends Component {
               </div>
               <div className="col-8">
                 <h2>
-                  {store.getState().user.user.firstName}{" "}
-                  {store.getState().user.user.lastName}
+                  {this.state.user.first_name}{" "}
+                  {this.state.user.last_name}
                 </h2>
               </div>
             </div>
@@ -40,7 +51,7 @@ class UserPage extends Component {
               <div className="col-12">
                 <div className="border-primary p-4 user-card">
                   <div style={{ fontSize: "1.1em" }}>
-                    <p>{store.getState().user.user.bio}</p>
+                    <p>{this.state.user.bio}</p>
                   </div>
                 </div>
               </div>

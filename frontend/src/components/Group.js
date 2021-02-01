@@ -16,15 +16,13 @@ class Group extends Component {
 
   render() {
     let iconType = "fa fa-" + this.props.icon + " fa-5x";
-    let deleteButton;
-    let editButton;
-    deleteButton = (
-      <button className="btn" disabled>
+    let  deleteButton = (
+      <button className="btn" onClick={this.handleDelete}>
         <i className="fa fa-trash fa-2x" aria-hidden="true"></i>
       </button>
     );
-    editButton = (
-      <button className="btn mt-1" disabled>
+  let  editButton = (
+      <button className="btn mt-1" onClick={this.handleEdit}>
         <i className="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
       </button>
     );
@@ -41,7 +39,7 @@ class Group extends Component {
         <br />
         <Link to={`/groups/${this.props.id}`} style={{ color: "white" }}>
           <div>
-            <i className={iconType}></i>
+            <i className={iconType}  aria-hidden="true"></i>
           </div>
           <br />
           <div className="mt-2 pb-2 group-name">{this.props.name}</div>

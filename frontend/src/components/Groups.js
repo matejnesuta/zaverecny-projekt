@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { getUser } from "../redux/actions/actions";
 import { Link } from "react-router-dom";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
+import user_icon from "../images/user_icon.jpg"
 import woke from "../images/woke.jpg";
 import store from "../redux/store";
 import axios from "axios";
@@ -51,7 +52,13 @@ class Groups extends Component {
         },
       })
       .then((res) => {
-        this.props.getUser(res.data);
+        const response = res.data;
+        if (response.profile_pic === null) {
+          const new_obj = { ...response,  profile_pic: user_icon }
+          this.props.getUser(new_obj);
+        } else {
+          this.props.getUser(res.data);
+        }
       });
 
     axios
@@ -62,7 +69,7 @@ class Groups extends Component {
         const groups = res.data;
         //Uložení pole komponentů Group do this.state.groups
         const receivedData = groups.map((group) => (
-          <Group key={group.id} id={group.id} name={group.name} />
+          <Group key={group.id} id={group.id} name={group.name} icon={group.icon} />
         ));
         this.setState({
           groups: receivedData,
@@ -105,7 +112,7 @@ class Groups extends Component {
     });
   };
 
-  handleAddUser = () => {};
+  handleAddUser = () => { };
 
   getModalValue = (value, type) => {
     if (type === "delete") {

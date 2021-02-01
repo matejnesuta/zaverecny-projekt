@@ -25,7 +25,8 @@ class MembershipSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['id', 'author', 'title', 'description', 'deadline', 'stage', 'taskboard']
+        fields = ['id', "author", 'title', 'description', 'deadline', 'stage']
+        depth = 1
 
 
 class LogSerializer(serializers.ModelSerializer):
@@ -62,6 +63,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         exclude = ['task']
+        depth = 1
 
 
 class PostCommentSerializer(serializers.ModelSerializer):

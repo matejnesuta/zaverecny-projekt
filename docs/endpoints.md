@@ -65,7 +65,7 @@ Pro jejich používání musí být uživatel přihlášen.
   Endpoint pro zobrazení cizích profilů.
   
   
-- /app/profile/detail/ (GET, PUT)
+- /app/profile/ (GET, PUT)
   - first_name (Not NULL, string)
   - last_name  (Not NULL, string)
   - bio (string, maximální délka 150 znaků)
@@ -210,7 +210,7 @@ Endpoint, který zobrazí všechny uživatele jedné tabule. Uživatelé jsou se
         <br>
     Endpoint pro zobrazení všech komentářů u příspěvku a nebo pro napsání komentáře u příspěvku.
     
-- /app/task/comments/delete/<int:id_komentare/ (GET, POST)
+- /app/task/comments/delete/<int:id_komentare/ (DELETE)
         <br>
         Endpoint pro smazání komentáře. Komentáře může smazat autor, moderátor a vlastník skupiny.
 

@@ -39,7 +39,7 @@ class Login extends Component {
         });
       setTimeout(() => {
         this.props.history.push("./groups");
-      }, 2000);
+      }, 3000);
     } else {
       this.setState({
         error: "Žádné pole nemůže nesmí prázdné",

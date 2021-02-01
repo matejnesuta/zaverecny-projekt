@@ -23,8 +23,8 @@ def attachment_path(instance, filename):
 # potřebná pro přihlášení a zbytek takhle navázat.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="First name")
-    last_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="Last name")
+    first_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="First name", default="Unnamed")
+    last_name = models.CharField(max_length=50, blank=False, null=False, verbose_name="Last name", default="User")
     profile_pic = ConstrainedImageField(upload_to=profile_pic_path,
                                         verbose_name="Profile picture",
                                         blank=True,
@@ -64,7 +64,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Taskboard(models.Model):
     name = models.CharField(max_length=50, blank=False, null=False, default="Tabule", verbose_name="Name")
-    icon = models.CharField(max_length=20, blank=False, null=False,  verbose_name="Icon", 
+    icon = models.CharField(max_length=20, blank=False, null=False, default="grav", verbose_name="Icon", 
                             choices=(('grav', 'grav'),
                                       ('wheelchair-alt', 'wheelchair-alt'),
                                       ('camera-retro', 'camera-retro'),
